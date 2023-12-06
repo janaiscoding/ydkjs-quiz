@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import styles from "./navbar.module.css";
+import styles from "./navigation.module.css";
 
 const Navbar = () => {
   const fromTop = {
