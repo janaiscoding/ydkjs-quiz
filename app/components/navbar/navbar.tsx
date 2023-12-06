@@ -1,6 +1,6 @@
 "use client";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import styles from "./navbar.module.css";
 
 const Navbar = () => {
   const fromTop = {
@@ -22,7 +22,7 @@ const Navbar = () => {
         variants={fromTop}
         initial="hidden"
         animate="visible"
-        className="navbar navbar-bg rounded-full p-3"
+        className={`${styles.navbar__bg} rounded-full p-3`}
       >
         <div className="flex text-neutral-950 px-6 w-full text-center text-sm">
           <a className="hover:cursor-pointer hover:scale-105 transition">
