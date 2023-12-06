@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
+    <nav className="flex items-center justify-center">
       <motion.div
         variants={fromTop}
         initial="hidden"
