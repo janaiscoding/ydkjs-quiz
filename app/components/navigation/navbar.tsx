@@ -9,9 +9,9 @@ const Navbar = () => {
         variants={fromTop}
         initial="hidden"
         animate="visible"
-        className="navbar__bg rounded-full p-3"
+        className="gradient__bg"
       >
-        <div className="flex text-neutral-950 px-6 w-full text-center text-sm">
+        <div className="flex px-6 w-full text-center text-sm">
           <a className="hover:cursor-pointer hover:scale-105 transition">
             You Don&apos;t Know JavaScript Yet! Quiz
           </a>

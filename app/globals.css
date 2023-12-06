@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 
-.navbar__bg {
+.gradient__bg {
+  @apply text-neutral-950 rounded-full p-3;
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
   background-size: 300% 300%;
   animation: gradient 5s ease infinite;
@@ -28,4 +29,31 @@
   100% {
     background-position: 0 50%;
   }
+}
+
+.border_animate::before {
+  content: "";
+  background-image: conic-gradient(#FFD800 20deg, transparent 80deg);
+  position: absolute;
+  inset: -110px;
+  z-index: -1;
+  border-radius: 12px;
+  animation: rotate 4s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: -360deg;
+  }
+}
+
+.border_animate::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 12px;
+  z-index: -1;
 }
