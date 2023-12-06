@@ -1,29 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.bg-gradient {
-  background: linear-gradient(300deg, #0000, rgb(13, 13, 13));
+.stars {
+  @apply pointer-events-none absolute left-0 top-0 h-px w-px opacity-30 md:opacity-10;
 }
-.navbar-bg {
-  background: linear-gradient(300deg, #ab4bff, #5ca2ff);
-  background-size: 300% 300%;
-  animation: gradient 5s ease infinite;
+.stars_2 {
+  @apply pointer-events-none absolute left-0 top-0 h-0.5 w-0.5 opacity-30 md:opacity-10;
 }
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
-  }
-}
-
-
 .stars {
   box-shadow: 779px 1331px #fff, 324px 42px #fff, 303px 586px #fff,
     1312px 276px #fff, 451px 625px #fff, 521px 1931px #fff, 1087px 1871px #fff,
