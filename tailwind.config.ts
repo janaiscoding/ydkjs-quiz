@@ -10,7 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         background: "#111010",
-        foreground: "#FFD800"
+        foreground: "#FFD800",
+        purple: "#ab4bff",
+        blue: "#5ca2ff",
       },
     },
   },

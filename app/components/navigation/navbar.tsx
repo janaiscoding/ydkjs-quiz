@@ -1,28 +1,15 @@
 "use client";
+import { fromTop } from "@/app/utils/animation_variants";
 import { motion } from "framer-motion";
-import styles from "./navigation.module.css";
 
 const Navbar = () => {
-  const fromTop = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-    hidden: {
-      y: -10,
-      opacity: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
     <nav className="flex items-center justify-center">
       <motion.div
         variants={fromTop}
         initial="hidden"
         animate="visible"
-        className={`${styles.navbar__bg} rounded-full p-3`}
+        className="navbar__bg rounded-full p-3"
       >
         <div className="flex text-neutral-950 px-6 w-full text-center text-sm">
           <a className="hover:cursor-pointer hover:scale-105 transition">

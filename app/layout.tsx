@@ -9,7 +9,8 @@ const roboto = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "YDKJS - The Quiz!",
-  description: "A fun, educative quiz game inspired by You Don't Know JS book, by Kyle Simpson. Made by @janaiscoding",
+  description:
+    "A fun, educative quiz game inspired by You Don't Know JS book, by Kyle Simpson. Made by @janaiscoding",
 };
 
 export default function RootLayout({
@@ -19,11 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.className} bg-background py-4 max-md:px-4`}
-      >
+      <body className={`${roboto.className} bg-background py-4 max-md:px-4 text-stone-400`}>
         <Navbar />
-        <main>{children}</main>
+        <main className="mx-auto max-w-5xl py-10">{children}</main>
         <Footer />
         <Background />
       </body>
