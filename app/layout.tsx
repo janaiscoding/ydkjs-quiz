@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={`${roboto.className} tracking-tighter bg-background p-4 text-stone-400 min-h-screen flex flex-col items-center justify-between`}
       >
-        <main className="mx-auto max-w-5xl">{children}</main>
+        <main className="mx-auto max-w-6xl">{children}</main>
         <Footer />
         <Background />
       </body>

@@ -49,31 +49,27 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
 
       <Breadcrumbs chapter={title} />
 
-      <h1 className="self-end">
-        question <span className="text-foreground">{index + 1}</span> /{" "}
-        {questions.length}
-      </h1>
-
       <form
-        className="flex flex-col items-center gap-4 rounded-2xl gradient__bg text-slate-50 min-h-4/5 p-0.5 z-50"
+        className="flex flex-col items-center gap-1 rounded-2xl gradient__bg text-slate-50 min-h-4/5 px-0.5 pt-0.5 pb-10 z-50"
         onSubmit={(e) => handleQuestionSubmit(e)}
       >
-        <legend className="text-2xl md:text-4xl p-6 md:p-10 bg-background rounded-t-2xl">
+        <legend className="text-lg md:text-xl bg-background rounded-t-2xl p-10">
           {" "}
           {activeQ.title}
         </legend>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 px-10 pt-10">
           {activeQ.answers.map((answer, index) => (
             <label
               key={index}
-              className="flex gap-1 p-2 text-slate-950 hover:text-foreground hover:cursor-pointer"
+              className="flex gap-1 items-center p-2 text-slate-800 hover:text-slate-950 hover:cursor-pointer"
             >
               <input
-                type="radio"
+                type="checkbox"
                 value={answer}
                 id={answer}
                 onChange={onValueChange}
                 checked={answer === selectedAnswer}
+                className="checkbox checkbox-sm checkbox-primary"
               />
               {answer}
             </label>
@@ -83,6 +79,12 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
           Submit
         </button>
       </form>
+
+      <h1 className="self-end text-sm">
+        question <span className="text-foreground">{index + 1}</span> /{" "}
+        {questions.length}
+      </h1>
+
     </div>
   );
 };

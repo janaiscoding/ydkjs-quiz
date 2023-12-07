@@ -4,7 +4,7 @@ export const data = {
     {
       id: 0,
       isCurrent: false,
-      title: "Title of question number 1",
+      title: "How much is x+y",
       answers: ["answer 1", "answer 2", "answer 3"],
       correctAnswer: "answer 1",
       isCompleted: false,
