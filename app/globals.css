@@ -7,9 +7,10 @@
 }
 .gradient__bg {
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
-  background-size: 300% 300%;
-  animation: gradient 5s ease infinite;
+  /* background-size: 300% 300%; */
+  /* animation: gradient 5s ease infinite; */
 }
+
 .float__image {
   animation: float 4s alternate infinite;
 }

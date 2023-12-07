@@ -13,15 +13,11 @@ const Quiz = () => {
           <li>Quiz</li>
         </ul>
       </div>
-      <div className="text-4xl text-foreground">Select your chapter</div>
-      <div>
-        <a
-          href="/quiz/getting-started"
-          className="text-2xl hover:text-foreground"
-        >
-          Getting Started
-        </a>
-      </div>
+      <div className="text-4xl gradient__text">Select your chapter</div>
+
+      <a href="/quiz/getting-started" className="text-2xl hover:text-foreground">
+        Getting Started
+      </a>
     </div>
   );
 };
