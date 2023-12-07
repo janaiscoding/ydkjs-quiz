@@ -5,7 +5,7 @@ import { fromBottom } from "@/app/utils/animation_variants";
 
 export default function Footer() {
   return (
-    <footer className="flex items-center justify-center m-auto">
+    <footer className="flex items-center justify-center mt-auto">
       <motion.div
         animate="visible"
         initial="hidden"

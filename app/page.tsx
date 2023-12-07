@@ -1,25 +1,28 @@
 "use client";
 import { motion } from "framer-motion";
-import { fromBottom,  fromRight } from "./utils/animation_variants";
-import Image from "next/image";
+import { fromBottom, fromLeft, fromRight, fromTop } from "./utils/animation_variants";
 import HeroText from "./components/hero-text";
-import HowToPlay from "./components/how-to-play";
+import Image from "next/image";
 
 export default function App() {
   return (
-    <div className="items-center justify-center flex flex-col gap-10">
-      <HeroText />
-      <HowToPlay />
-      <motion.button
+    <div className="flex flex-col items-center justify-center gap-4 md:gap-10 my-6 md:my-20">
+      <motion.div
         initial="hidden"
         animate="visible"
-        variants={fromBottom}
-        className="gradient__bg rounded-full p-3"
+        variants={fromTop}
+        className="basis-full"
       >
-        <span className="flex px-6 w-full text-center text-2xl font-bold hover:scale-105 transition">
-          Let&apos;s start!
-        </span>
-      </motion.button>
+        <Image
+          src={"/illustration.png"}
+          alt="illustration"
+          width={600}
+          height={600}
+          className="object-fit w-60 md:w-96 float__image"
+          priority={true}
+        />
+      </motion.div>
+      <HeroText />
     </div>
   );
 }

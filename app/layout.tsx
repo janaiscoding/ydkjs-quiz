@@ -20,9 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} bg-background py-4 max-md:px-4 text-stone-400`}>
-        <Navbar />
-        <main className="mx-auto max-w-5xl py-10">{children}</main>
+      <body
+        className={`${roboto.className} tracking-tighter bg-background p-4 text-stone-400 min-h-screen flex flex-col items-center justify-between`}
+      >
+        <main className="mx-auto max-w-7xl">{children}</main>
         <Footer />
         <Background />
       </body>

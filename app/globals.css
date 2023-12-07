@@ -2,14 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .gradient__bg {
-  @apply text-neutral-950 rounded-full p-3;
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
   background-size: 300% 300%;
   animation: gradient 5s ease infinite;
 }
+.float__image {
+  animation: float 4s alternate infinite;
+}
 
+@keyframes float {
+  0% {
+    transform: translateY(-1rem);
+    scale: 1.01;
+  }
+  50% {
+    transform: translateY(0px);
+    scale: 1;
+  }
+  100% {
+    transform: translateY(-1rem);
+    scale: 1.01;
+  }
+}
 .gradient__text {
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
   background-size: 300% 300%;
@@ -33,7 +48,7 @@
 
 .border_animate::before {
   content: "";
-  background-image: conic-gradient(#FFD800 20deg, transparent 80deg);
+  background-image: conic-gradient(#ffd800 20deg, transparent 80deg);
   position: absolute;
   inset: -110px;
   z-index: -1;
