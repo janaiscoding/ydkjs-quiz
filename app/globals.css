@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn__quiz {
+  @apply px-4 py-2 md:px-6 border border-foreground bg-background hover:bg-foreground text-foreground hover:text-slate-950 transition;
+}
 .gradient__bg {
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
   background-size: 300% 300%;

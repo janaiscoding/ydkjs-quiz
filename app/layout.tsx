@@ -7,9 +7,8 @@ import Footer from "./components/navigation/footer";
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "YDKJS - The Quiz!",
-  description:
-    "A fun, educative quiz game inspired by You Don't Know JS book, by Kyle Simpson. Made by @janaiscoding",
+  title: "YDKJS Quiz!",
+  description: "A fun, educative JavaScript quiz game. Made by @janaiscoding",
 };
 
 export default function RootLayout({

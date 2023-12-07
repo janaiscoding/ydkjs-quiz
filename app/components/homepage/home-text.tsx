@@ -32,19 +32,14 @@ const HomeText = () => {
           }}
         />
       </div>
-      <motion.button
-        className="
-      px-4 py-2 md:px-6 
-      border border-foreground 
-      bg-background hover:bg-foreground 
-      text-foreground hover:text-slate-950 
-      transition
-      "
+      <motion.a
+        className="btn__quiz"
+        href="/quiz"
         onMouseEnter={() => setButtonText("Let's play")}
         onMouseLeave={() => setButtonText("I'm ready!")}
       >
         {buttonText}
-      </motion.button>
+      </motion.a>
     </motion.div>
   );
 };
