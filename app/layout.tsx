@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Background from "./ui/background";
-import Navbar from "./components/navigation/navbar";
 import Footer from "./components/navigation/footer";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
@@ -23,7 +22,7 @@ export default function RootLayout({
       <body
         className={`${roboto.className} tracking-tighter bg-background p-4 text-stone-400 min-h-screen flex flex-col items-center justify-between`}
       >
-        <main className="mx-auto max-w-7xl">{children}</main>
+        <main className="mx-auto max-w-5xl">{children}</main>
         <Footer />
         <Background />
       </body>

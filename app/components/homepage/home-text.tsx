@@ -1,10 +1,9 @@
-"use client";
 import { motion } from "framer-motion";
-import { fromBottom } from "../utils/animation_variants";
+import { fromBottom } from "@/app/utils/animation_variants";
 import { useState } from "react";
 import TypewriterComponent from "typewriter-effect";
 
-const HeroText = () => {
+const HomeText = () => {
   const [buttonText, setButtonText] = useState("I'm ready!");
 
   const words: string[] = [
@@ -50,4 +49,4 @@ const HeroText = () => {
   );
 };
 
-export default HeroText;
+export default HomeText;

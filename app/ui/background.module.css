@@ -1,8 +1,8 @@
 .stars {
-  @apply pointer-events-none absolute left-0 top-0 h-px w-px opacity-30 md:opacity-10;
+  @apply pointer-events-none absolute left-0 top-0 h-px w-px opacity-30 md:opacity-10 z-[-1];
 }
 .stars_2 {
-  @apply pointer-events-none absolute left-0 top-0 h-0.5 w-0.5 opacity-30 md:opacity-10;
+  @apply pointer-events-none absolute left-0 top-0 h-0.5 w-0.5 opacity-30 md:opacity-10 z-[-1];
 }
 .stars {
   box-shadow: 779px 1331px #fff, 324px 42px #fff, 303px 586px #fff,
