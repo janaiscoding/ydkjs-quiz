@@ -10,7 +10,9 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   const [index, setIndex] = useState<number>(0);
   const [questions, setQuestions] = useState(data.questions);
   const [activeQ, setActiveQ] = useState(questions[index]);
+
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
+  const [isCorrect, setCorrect] = useState<boolean | undefined>();
 
   const handleNextQuestion = () => {
     const newIndex = index + 1;
@@ -21,9 +23,11 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   const handleQuestionSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (selectedAnswer === activeQ.correctAnswer) {
-      console.log("selected correct!");
+      setCorrect(true);
       //update score
       //update userselectecorrect
+    } else {
+      setCorrect(false);
     }
     // display correct status
     // display button to move to next q
@@ -46,22 +50,20 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   // console.log(questions[index], questions);
   return (
     <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20">
-
       <Breadcrumbs chapter={title} />
 
       <form
-        className="flex flex-col items-center gap-1 rounded-2xl gradient__bg text-slate-50 min-h-4/5 px-0.5 pt-0.5 pb-10 z-50"
+        className="flex flex-col items-center gap-1 rounded-2xl bg-slate-800 min-h-4/5 p-0.5 z-50"
         onSubmit={(e) => handleQuestionSubmit(e)}
       >
-        <legend className="text-lg md:text-xl bg-background rounded-t-2xl p-10">
-          {" "}
+        <legend className="text-lg md:text-4xl bg-background rounded-t-2xl p-10 text-foreground">
           {activeQ.title}
         </legend>
-        <div className="flex flex-col gap-4 px-10 pt-10">
+        <div className="flex flex-col gap-4 px-4 md:px-10 pt-4 md:pt-10 ">
           {activeQ.answers.map((answer, index) => (
             <label
               key={index}
-              className="flex gap-1 items-center p-2 text-slate-800 hover:text-slate-950 hover:cursor-pointer"
+              className="flex gap-1 items-center p-2 text-slate-200 hover:text-slate-50 hover:cursor-pointer"
             >
               <input
                 type="checkbox"
@@ -75,16 +77,26 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
             </label>
           ))}
         </div>
-        <button className="btn__quiz" type="submit">
+        <button
+          className="px-4 p-2 mb-10 md:px-6 border border-foreground bg-background hover:bg-foreground text-foreground hover:text-slate-950 transition;"
+          type="submit"
+        >
           Submit
         </button>
+        {isCorrect !== undefined && (
+          <div className="validation__message w-full bg-background rounded-b-2xl text-center p-2">
+            {isCorrect ? (
+              <p className="text-green-600">Correct answer! Well done!</p>
+            ) : (
+              <p className="text-red-600">Wrong Answer! </p>
+            )}
+          </div>
+        )}
       </form>
-
       <h1 className="self-end text-sm">
         question <span className="text-foreground">{index + 1}</span> /{" "}
         {questions.length}
       </h1>
-
     </div>
   );
 };
