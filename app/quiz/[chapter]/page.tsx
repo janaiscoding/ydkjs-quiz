@@ -1,34 +1,35 @@
 "use client";
 import Breadcrumbs from "@/app/components/quiz/breadcrumbs";
 import { useEffect, useState } from "react";
-import data from "@/app/data/data";
-import { TQuestion } from "@/app/utils/types";
-import QuizForm from "@/app/components/quiz/QuizForm";
+import { TQuiz } from "@/app/utils/types";
+import quiz from "@/app/data/full-quiz-data";
+import QuizGame from "@/app/components/quiz/quiz-game";
 
 const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   const [pageTitle, setPageTitle] = useState("");
-  // All questions for current chapter
-  const [questions, setQuestions] = useState<TQuestion[] | undefined>(
-    [] as TQuestion[]
-  );
+  const [activeQuiz, setActiveQuiz] = useState<TQuiz | undefined>();
 
   useEffect(() => {
-    const quizData = data.find((chapter) => chapter.url === params.chapter);
-
-    if (!quizData) {
-      // in case the user puts a manual /chapter url
-      console.log("redirecting...");
-    } else {
-      setPageTitle(quizData.title);
-      setQuestions(quizData.questions);
+    if (quiz) {
+      const quizData: TQuiz = quiz.find(
+        (chapter) => chapter.url === params.chapter
+      )!;
+      if (!quizData) {
+        // in case the user puts a manual /chapter url
+        console.log("redirecting...");
+      } else {
+        setActiveQuiz(quizData);
+        setPageTitle(quizData.title);
+      }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [quiz]);
 
   return (
     <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20 md:min-w-5xl">
       <Breadcrumbs chapter={pageTitle} />
-      {questions && questions.length > 0 && <QuizForm questions={questions} />}
+      {activeQuiz && <QuizGame activeQuiz={activeQuiz} />}
     </div>
   );
 };

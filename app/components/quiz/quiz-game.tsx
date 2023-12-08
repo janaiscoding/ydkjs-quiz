@@ -1,10 +1,11 @@
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
-import { TQuestion } from "@/app/utils/types";
+import { TQuestion, TQuiz } from "@/app/utils/types";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import QuizNavigation from "./quiz-navigation";
 import { IoCheckmark } from "react-icons/io5";
 
-const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
+
+const QuizGame = ({ activeQuiz }: { activeQuiz: TQuiz }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
   const [index, setIndex] = useState<number>(1);
   // Moves active question based on array index from above - by default starts at 0 - set in useEffect
@@ -14,6 +15,14 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   // After uses presses submit, they will see if answer is correct or not
   const [isCorrect, setCorrect] = useState<boolean | undefined>();
+  // All questions for current chapter
+  const [questions, setQuestions] = useState<TQuestion[]>(activeQuiz.questions);
+
+  const [userScore, setUserScore] = useState<number>(activeQuiz.userScore);
+  //
+  const handleScore = () => {
+    setUserScore((prevScore) => prevScore! + 1);
+  };
 
   const handleNextQuestion = () => {
     const newIndex = index + 1;
@@ -124,4 +133,4 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   );
 };
 
-export default QuizForm;
+export default QuizGame;

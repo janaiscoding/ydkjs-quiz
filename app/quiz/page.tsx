@@ -1,4 +1,4 @@
-import questions from "../data/data";
+import quiz from "@/app/data/full-quiz-data"
 const Quiz = () => {
   return (
     <div className="flex flex-col justify-center gap-4 md:gap-10 my-6 md:my-20">
@@ -15,7 +15,7 @@ const Quiz = () => {
       <div className="text-4xl gradient__text">select your chapter</div>
 
       <ul>
-        {questions.map((chap) => (
+        {quiz.map((chap) => (
           <li key={chap.id} className="text-2xl hover:text-foreground transition p-1">
             <a
               href={`/quiz/${chap.url}`}
