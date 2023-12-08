@@ -1,5 +1,11 @@
+import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { TQuestion } from "@/app/utils/types";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+
+interface CodeBlockProps {
+  language: string;
+  value: string;
+}
 
 const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
@@ -44,53 +50,56 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
     }
     // But also everytime index changes
   }, [index, questions]);
-  return (
-    <form
-      className="flex flex-col items-center gap-1 rounded-2xl bg-slate-800 min-h-4/5 p-0.5 z-50"
-      onSubmit={(e) => handleQuestionSubmit(e)}
-    >
-      <legend className="text-lg md:text-4xl bg-background rounded-t-2xl p-10 text-foreground">
-        {activeQ?.title}
-      </legend>
-      <div className="flex flex-col gap-4 px-4 md:px-10 pt-4 md:pt-10 ">
-        {activeQ?.answers.map((ans, i) => (
-          <label
-            key={i}
-            className="flex gap-1 items-center p-2 text-slate-200 hover:text-slate-50 hover:cursor-pointer"
-          >
-            <input
-              type="checkbox"
-              value={ans}
-              id={ans}
-              onChange={onValueChange}
-              checked={ans === selectedAnswer}
-              className="checkbox checkbox-sm checkbox-primary"
-            />
-            <pre>{ans}</pre>
-          </label>
-        ))}
-      </div>
-      <button
-        className="px-4 p-2 mb-10 md:px-6 border border-foreground bg-background hover:bg-foreground text-foreground hover:text-slate-950 transition;"
-        type="submit"
-      >
-        Submit
-      </button>
-      {isCorrect !== undefined && (
-        <div className="validation__message w-full bg-background rounded-b-2xl text-center p-2">
-          {isCorrect ? (
-            <p className="text-green-600">Correct answer! Well done!</p>
-          ) : (
-            <p className="text-red-600">Wrong Answer! </p>
-          )}
-        </div>
-      )}
 
-      <h1 className="self-end text-sm">
-        question <span className="text-foreground">{index + 1}</span> /{" "}
-        {questions?.length}
-      </h1>
-    </form>
+  return (
+    activeQ && (
+      <form
+        className="flex flex-col items-center gap-1 rounded-2xl bg-slate-900 p-0.5 z-50"
+        onSubmit={(e) => handleQuestionSubmit(e)}
+      >
+        <legend className="text-lg md:text-4xl bg-background rounded-t-2xl p-10 text-foreground">
+          <MarkdownWrapper content={activeQ.title} />
+        </legend>
+        <div className="flex flex-col gap-4 px-4 md:px-10 pt-4 md:pt-10 ">
+          {activeQ?.answers.map((ans, i) => (
+            <label
+              key={i}
+              className="flex gap-1 items-center p-2 text-slate-200 hover:text-slate-50 hover:cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                value={ans}
+                id={ans}
+                onChange={onValueChange}
+                checked={ans === selectedAnswer}
+                className="checkbox checkbox-sm checkbox-primary"
+              />
+              {ans}
+            </label>
+          ))}
+        </div>
+        <button
+          className="px-4 p-2 mb-10 md:px-6 border border-foreground bg-background hover:bg-foreground text-foreground hover:text-slate-950 transition;"
+          type="submit"
+        >
+          Submit
+        </button>
+        {isCorrect !== undefined && (
+          <div className="validation__message w-full bg-background rounded-b-2xl text-center p-2">
+            {isCorrect ? (
+              <p className="text-green-600">Correct answer! Well done!</p>
+            ) : (
+              <p className="text-red-600">Wrong Answer! </p>
+            )}
+          </div>
+        )}
+
+        <h1 className="self-end text-sm">
+          question <span className="text-foreground">{index + 1}</span> /{" "}
+          {questions?.length}
+        </h1>
+      </form>
+    )
   );
 };
 
