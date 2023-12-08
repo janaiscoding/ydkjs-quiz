@@ -1,11 +1,8 @@
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { TQuestion } from "@/app/utils/types";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-
-interface CodeBlockProps {
-  language: string;
-  value: string;
-}
+import { MdNavigateNext } from "react-icons/md";
+import { IoCheckmark } from "react-icons/io5";
 
 const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
@@ -21,13 +18,14 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   const handleNextQuestion = () => {
     const newIndex = index + 1;
     setIndex(newIndex);
-    // setActiveQ(questions[newIndex]);
+    setCorrect(undefined);
   };
 
   const handleQuestionSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (selectedAnswer === activeQ?.correctAnswer) {
       setCorrect(true);
+      console.log(selectedAnswer);
       //update score
       //update userselectecorrect
     } else {
@@ -48,23 +46,23 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
     if (questions) {
       setActiveQ(questions[index]);
     }
-    // But also everytime index changes
+    // But also everytime index changes - aka on next click
   }, [index, questions]);
 
   return (
     activeQ && (
       <form
-        className="flex flex-col items-center gap-1 rounded-2xl bg-slate-900 p-0.5 z-50"
+        className="flex flex-col items-start gap-4 gradient__bg text-neutral-50 p-4 z-50 md:p-10"
         onSubmit={(e) => handleQuestionSubmit(e)}
       >
-        <legend className="text-lg md:text-4xl bg-background rounded-t-2xl p-10 text-foreground">
+        <legend className="text-lg">
           <MarkdownWrapper content={activeQ.title} />
         </legend>
-        <div className="flex flex-col gap-4 px-4 md:px-10 pt-4 md:pt-10 ">
-          {activeQ?.answers.map((ans, i) => (
+        <div className="flex flex-col gap-4">
+          {activeQ.answers.map((ans, i) => (
             <label
               key={i}
-              className="flex gap-1 items-center p-2 text-slate-200 hover:text-slate-50 hover:cursor-pointer"
+              className="flex gap-2 items-center hover:text-slate-50 hover:cursor-pointer opacity-80 hover:opacity-100"
             >
               <input
                 type="checkbox"
@@ -72,30 +70,54 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
                 id={ans}
                 onChange={onValueChange}
                 checked={ans === selectedAnswer}
-                className="checkbox checkbox-sm checkbox-primary"
+                className="checkbox checkbox-warning checkbox-sm"
               />
-              {ans}
+              <MarkdownWrapper content={ans} />
             </label>
           ))}
         </div>
-        <button
-          className="px-4 p-2 mb-10 md:px-6 border border-foreground bg-background hover:bg-foreground text-foreground hover:text-slate-950 transition;"
-          type="submit"
-        >
-          Submit
-        </button>
         {isCorrect !== undefined && (
-          <div className="validation__message w-full bg-background rounded-b-2xl text-center p-2">
+          <div className="w-full rounded-b-2xl text-center">
             {isCorrect ? (
-              <p className="text-green-600">Correct answer! Well done!</p>
+              <p className="text-codeGreen">Correct answer! Well done!</p>
             ) : (
-              <p className="text-red-600">Wrong Answer! </p>
+              <p className="text-codeError">Wrong Answer! </p>
             )}
           </div>
         )}
+        <div className="flex justify-between items-center w-full">
+          <button
+            className="px-4 p-2
+            flex gap-1 items-center
+            text-codeGreen bg-codeBlue
+            hover:translate-x-1 
+            border border-codeGreen 
+            transition"
+            type="submit"
+          >
+            <IoCheckmark />
+            <p>Submit</p>
+          </button>
+          {isCorrect !== undefined && (
+            <button
+              className="
+              flex items-center gap-1
+              px-4 py-2
+              border border-foreground
+              bg-background hover:bg-foreground
+              text-foreground hover:text-slate-950
+              transition"
+              type="button"
+              onClick={handleNextQuestion}
+            >
+              <p>Next</p>
+              <MdNavigateNext />
+            </button>
+          )}
+        </div>
 
         <h1 className="self-end text-sm">
-          question <span className="text-foreground">{index + 1}</span> /{" "}
+          question <span className="text-codeGreen">{index + 1}</span> /{" "}
           {questions?.length}
         </h1>
       </form>

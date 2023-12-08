@@ -3,10 +3,15 @@ import uniqid from "uniqid";
 const getStartedArray: TQuestion[] = [
   {
     id: uniqid(),
-    title: "What is the output of the following JavaScript code?\n\n```javascript\nfunction sayHello() {\n    console.log('Hello, World!');\n}\n\nsayHello();\n```",
+    title:
+      "What is the output of the following JavaScript code?\n\n```javascript\nfunction sayHello() {\n    console.log('Hello, World!');\n}\n\nsayHello();\n```",
     code: "let a = b * 2;",
-    answers: ["answer 1", "answer 2", "answer 3"],
-    correctAnswer: "answer 1",
+    answers: [
+      "Will print `'Hello, World!'` to the console.",
+      "Will alert `Hello, World!` to the browser.",
+      "Will print `Hello, World!` to the console.",
+    ],
+    correctAnswer: "Will print `Hello, World!` to the console.",
     isCompleted: false,
     userSelectedCorrect: false,
   },

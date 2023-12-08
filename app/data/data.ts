@@ -5,10 +5,10 @@ import { TQuiz } from "../utils/types";
 const quiz: TQuiz[] = [
   {
     id: uniqid(),
-    url: "getting-started",
-    title: "Getting Started",
-    questions: getStartedArray,
-    isCompleted: false,
+    url: "getting-started",  
+    title: "Getting Started", 
+    questions: getStartedArray, 
+    isCompleted: false, 
     userScore: 0,
     userCorrectQuestions: [],
     userWrongQuestions: [],

@@ -14,6 +14,10 @@ const config: Config = {
         border: "#404040",
         purple: "#ab4bff",
         blue: "#5ca2ff",
+        codeGreen: "#91d076", 
+        codeBlue: "#111b27", 
+        codeError: "#e9ae7e", 
+        codePurple: "#c699e3"
       },
     },
   },
