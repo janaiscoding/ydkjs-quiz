@@ -1,8 +1,7 @@
-import Breadcrumbs from "../components/quiz/breadcrumbs";
-
+import questions from "../data/data";
 const Quiz = () => {
   return (
-    <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20">
+    <div className="flex flex-col justify-center gap-4 md:gap-10 my-6 md:my-20">
       <div className="text-sm breadcrumbs">
         <ul>
           <li>
@@ -13,11 +12,20 @@ const Quiz = () => {
           <li>Quiz</li>
         </ul>
       </div>
-      <div className="text-4xl gradient__text">Select your chapter</div>
+      <div className="text-4xl gradient__text">select your chapter</div>
 
-      <a href="/quiz/getting-started" className="text-2xl hover:text-foreground">
-        Getting Started
-      </a>
+      <ul>
+        {questions.map((chap) => (
+          <li key={chap.id} className="text-2xl hover:text-foreground transition p-1">
+            <a
+              href={`/quiz/${chap.url}`}
+              aria-labelledby={`link for the ${chap.title} quiz chapter`}
+            >
+              {chap.title}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
