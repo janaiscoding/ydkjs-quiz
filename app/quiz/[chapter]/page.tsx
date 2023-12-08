@@ -1,6 +1,6 @@
 "use client";
 import Breadcrumbs from "@/app/components/quiz/breadcrumbs";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import data from "@/app/data/data";
 import { TQuestion } from "@/app/utils/types";
 import QuizForm from "@/app/components/quiz/QuizForm";
@@ -26,7 +26,7 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20">
+    <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20 md:min-w-5xl">
       <Breadcrumbs chapter={pageTitle} />
       {questions && questions.length > 0 && <QuizForm questions={questions} />}
     </div>

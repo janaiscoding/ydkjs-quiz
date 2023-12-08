@@ -7,8 +7,8 @@
 }
 .gradient__bg {
   /* background: linear-gradient(300deg, #cf59e6, #6bc5f8); */
-  
-  background: linear-gradient(60deg,rgb(23, 24, 32),rgba(15,15,24,1));
+
+  background: linear-gradient(60deg, rgb(23, 24, 32), rgba(15, 15, 24, 1));
   /* background-size: 300% 300%; */
   /* animation: gradient 5s ease infinite; */
 }
@@ -17,13 +17,15 @@ legend > div > p {
   font-size: 1.5rem;
 }
 form {
-  box-shadow: 0 4px 6px -1px rgb(157 172 124 / 26%), 0 2px 4px -2px rgb(175 173 70 / 56%);
+  box-shadow: 0 4px 6px -1px rgb(157 172 124 / 26%),
+    0 2px 4px -2px rgb(175 173 70 / 56%);
 }
 
-label > p > code {
+label > p > code,
+legend > p > code {
   background-color: #0d0d0b68;
-  border: solid 1px #20201f;
-  padding: 0.2rem;
+  border: solid 1px #5ca3ff4f;
+  padding: 0.3rem;
   border-radius: 2px;
 }
 

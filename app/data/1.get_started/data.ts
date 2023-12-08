@@ -5,7 +5,6 @@ const getStartedArray: TQuestion[] = [
     id: uniqid(),
     title:
       "What is the output of the following JavaScript code?\n\n```javascript\nfunction sayHello() {\n    console.log('Hello, World!');\n}\n\nsayHello();\n```",
-    code: "let a = b * 2;",
     answers: [
       "Will print `'Hello, World!'` to the console.",
       "Will alert `Hello, World!` to the browser.",
@@ -17,10 +16,10 @@ const getStartedArray: TQuestion[] = [
   },
   {
     id: uniqid(),
-    title: "Title of question number 2",
-    code: "`a = b * 2;`",
-    answers: ["answer 1", "answer 2", "answer 3"],
-    correctAnswer: "answer 1",
+    title:
+      "What will be the value of `yourName` after the re-assignment of `myName` in the following code?\n\n```javascript\nvar myName = 'Kyle';\nvar yourName = myName;\nmyName = 'Frank';\n```",
+    answers: ["Frank", "Kyle", "`ReferenceError`"],
+    correctAnswer: "Kyle",
     isCompleted: false,
     userSelectedCorrect: false,
   },

@@ -1,12 +1,12 @@
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { TQuestion } from "@/app/utils/types";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { MdNavigateNext } from "react-icons/md";
+import QuizNavigation from "./quiz-navigation";
 import { IoCheckmark } from "react-icons/io5";
 
 const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(1);
   // Moves active question based on array index from above - by default starts at 0 - set in useEffect
   const [activeQ, setActiveQ] = useState<TQuestion | undefined>();
 
@@ -19,6 +19,9 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
     const newIndex = index + 1;
     setIndex(newIndex);
     setCorrect(undefined);
+  };
+  const handleDisplayResults = () => {
+    console.log("will send user to results page");
   };
 
   const handleQuestionSubmit = (e: SyntheticEvent) => {
@@ -58,6 +61,7 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
         <legend className="text-lg">
           <MarkdownWrapper content={activeQ.title} />
         </legend>
+
         <div className="flex flex-col gap-4">
           {activeQ.answers.map((ans, i) => (
             <label
@@ -76,6 +80,7 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
             </label>
           ))}
         </div>
+
         {isCorrect !== undefined && (
           <div className="w-full rounded-b-2xl text-center">
             {isCorrect ? (
@@ -85,6 +90,7 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
             )}
           </div>
         )}
+
         <div className="flex justify-between items-center w-full">
           <button
             className="px-4 p-2
@@ -98,21 +104,14 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
             <IoCheckmark />
             <p>Submit</p>
           </button>
-          {isCorrect !== undefined && (
-            <button
-              className="
-              flex items-center gap-1
-              px-4 py-2
-              border border-foreground
-              bg-background hover:bg-foreground
-              text-foreground hover:text-slate-950
-              transition"
-              type="button"
-              onClick={handleNextQuestion}
-            >
-              <p>Next</p>
-              <MdNavigateNext />
-            </button>
+          {questions && (
+            <QuizNavigation
+              qLength={questions.length}
+              index={index}
+              isCorrect={isCorrect}
+              handleNextQuestion={handleNextQuestion}
+              handleDisplayResults={handleDisplayResults}
+            />
           )}
         </div>
 

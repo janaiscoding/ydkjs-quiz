@@ -12,7 +12,6 @@ type TQuiz = {
 type TQuestion = {
   id: string;
   title: string;
-  code: string;
   answers: string[];
   correctAnswer: string;
   isCompleted: boolean;
