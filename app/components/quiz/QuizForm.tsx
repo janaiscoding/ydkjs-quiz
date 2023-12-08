@@ -66,7 +66,7 @@ const QuizForm = ({ questions }: { questions: TQuestion[] | undefined }) => {
               checked={ans === selectedAnswer}
               className="checkbox checkbox-sm checkbox-primary"
             />
-            {ans}
+            <pre>{ans}</pre>
           </label>
         ))}
       </div>

@@ -3,7 +3,7 @@ import uniqid from "uniqid";
 const getStartedArray: TQuestion[] = [
   {
     id: uniqid(),
-    title: "How much is` x+y`",
+    title: "How much is `x+y`",
     answers: ["answer 1", "answer 2", "answer 3"],
     correctAnswer: "answer 1",
     isCompleted: false,

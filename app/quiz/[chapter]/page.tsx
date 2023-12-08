@@ -28,7 +28,7 @@ const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   return (
     <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20">
       <Breadcrumbs chapter={pageTitle} />
-      {questions?.length > 0 && <QuizForm questions={questions} />}
+      {questions && questions.length > 0 && <QuizForm questions={questions} />}
     </div>
   );
 };
