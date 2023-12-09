@@ -44,15 +44,16 @@ const get_quiz = asyncHandler(async (req: Request, res: Response) => {
 // @description Creates a new, empty question and links it to the parent_quiz
 const create_question = asyncHandler(async (req: Request, res: Response) => {
   const quiz = await Quiz.findById(req.params.id);
-  if (!quiz) res.status(404).json({ message: "Quiz was not found" });
+  if (!quiz) res.status(404).json({ message: "Quiz not found." });
 
   // Quiz exists, we're allowed to create a question and update the quiz
   const newQuestion = await Question.create({
     title: req.body.title,
-    parent_quiz: quiz,
+    parent_quiz: req.params.id,
   });
+
   await quiz!.updateOne({ $push: { questions: newQuestion } });
-  res.status(201).json({ message: "New question was created." });
+  res.status(201).json({ message: "New question was created.", newQuestion });
 });
 
 // To do: delete_quiz, update_quiz(title)

@@ -14,23 +14,19 @@ const get_question = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const create_answer = asyncHandler(async (req: Request, res: Response) => {
-  const { answer, isCorrect } = req.body;
-
   const question = await Question.findById(req.params.id);
+  if (!question) res.status(404).json({ message: "Question not found." });
+
+  // Question exists, we're allowed to create an answer and update the question
   const newAnswer = await Answer.create({
-    answer,
-    isCorrect,
-    parent_question: question,
+    answer: req.body.answer,
+    isCorrect: req.body.isCorrect,
+    parent_question: req.params.id,
   });
 
-  if (!question) res.status(404).json({ message: "Question not found." });
-  else await question.updateOne({ $push: { answers: newAnswer } });
-
+  await question!.updateOne({ $push: { answers: newAnswer } });
   res.status(200).json({ message: "New answer was created", newAnswer });
 });
 
-// delete question
-// must be deleted from quiz as well, must delete all answers
-
-// update question
+// To do: delete_question, update_question(title)
 export { get_question, create_answer };
