@@ -1,4 +1,4 @@
-const Breadcrumbs = ({ chapter }: { chapter: string }) => {
+const Breadcrumbs = ({ chapter }: { chapter: string | undefined }) => {
   return (
     <div className="text-sm breadcrumbs">
       <ul>
@@ -12,7 +12,8 @@ const Breadcrumbs = ({ chapter }: { chapter: string }) => {
             Quiz
           </a>
         </li>
-        <li> {chapter}</li>
+        {!chapter && <li>Loading quiz...</li>}
+        {chapter && <li> {chapter}</li>}
       </ul>
     </div>
   );

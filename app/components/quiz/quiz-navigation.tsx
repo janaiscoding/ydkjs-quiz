@@ -24,6 +24,7 @@ const QuizNavigation = ({
                   px-4 py-2
                   border border-foreground
                   bg-background hover:bg-foreground
+                  active:translate-y-1
                   text-foreground hover:text-slate-950
                   transition"
       type="button"
@@ -38,6 +39,7 @@ const QuizNavigation = ({
                   flex items-center gap-1
                   px-4 py-2
                   border border-foreground
+                  active:translate-y-1
                   bg-background hover:bg-foreground
                   text-foreground hover:text-slate-950
                   transition"

@@ -4,7 +4,6 @@ import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import QuizNavigation from "./quiz-navigation";
 import { IoCheckmark } from "react-icons/io5";
 
-
 const QuizGame = ({ activeQuiz }: { activeQuiz: TQuiz }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
   const [index, setIndex] = useState<number>(1);
@@ -105,7 +104,8 @@ const QuizGame = ({ activeQuiz }: { activeQuiz: TQuiz }) => {
             className="px-4 p-2
             flex gap-1 items-center
             text-codeGreen bg-codeBlue
-            hover:translate-x-1 
+            hover:bg-neutral-950
+            active:translate-y-1
             border border-codeGreen 
             transition"
             type="submit"
