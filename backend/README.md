@@ -20,7 +20,18 @@
 
 ## Answers
 
-| endpoint     | request  | description       | protected | postman |         body          |
-| ------------ | -------- | ----------------- | :-------: | :-----: | :-------------------: |
-| /answers/:id | `UPDATE` | updates an answer |    ❌     |   ✅    | `answer`, `isCorrect` |
-| /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |           -           |
+| endpoint     | request  | description       | protected | postman | body |
+| ------------ | -------- | ----------------- | :-------: | :-----: | :--: |
+| /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |  -   |
+
+
+
+## To Do list
+
+- [ ] update quiz title
+- [ ] update question title
+- [ ] update answer
+- [ ] delete quiz
+- [ ] delete question
+- [ ] user auth login/signup/verify
+- [ ] protect routes for create/update/delete
