@@ -11,12 +11,14 @@ import compression from "compression";
 import RateLimit from "express-rate-limit";
 
 import passport from "passport";
-import { jwtStrategy} from "./passport"
+import { jwtStrategy } from "./passport";
 
 //Add your routes here
 import userRouter from "./routes/users.route";
 import authRouter from "./routes/auth.route";
 import quizRouter from "./routes/quiz.route";
+import questionRouter from "./routes/question.route";
+import answerRouter from "./routes/answers.route";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -47,6 +49,8 @@ app.use(passport.initialize());
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/quizzes", quizRouter);
+app.use("/answers", answerRouter);
+app.use("/questions", questionRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {

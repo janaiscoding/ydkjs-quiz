@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 
-const queryValidationMiddleware = (
+const query_validation_middleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -13,4 +13,4 @@ const queryValidationMiddleware = (
   return next();
 };
 
-export default queryValidationMiddleware;
+export default query_validation_middleware;
