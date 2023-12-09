@@ -10,10 +10,19 @@ import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
 
+import passport from "passport";
+import { jwtStrategy} from "./passport"
+
+//Add your routes here
+import userRouter from "./routes/users";
+import authRouter from "./routes/auth";
+import quizRouter from "./routes/quiz";
+
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 100,
 });
+
 const app = express();
 
 app.use(cors());
@@ -32,10 +41,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-//Add your routes here
-import userRouter from "./routes/users";
-import authRouter from "./routes/auth";
-import quizRouter from "./routes/quiz";
+passport.use(jwtStrategy);
+app.use(passport.initialize());
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
@@ -47,14 +54,14 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 
 // error handler
-app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+app.use(function (error: any, req: Request, res: Response, next: any) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.message = error.message;
+  res.locals.error = req.app.get("env") === "development" ? error : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.status(error.status || 500);
+  res.json({ error });
 });
 
 // db connection
