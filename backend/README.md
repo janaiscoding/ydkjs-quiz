@@ -1,12 +1,11 @@
-# Express.js + TypeScript
+# Backend for Quiz app
 
-quickstart template
+will handle auth 
+will handle user 
+will handle quiz + questions + answers
 
-```
-fork this repo
-npm install
-create .env
-add your mongodb connection string as MONGODB_URI
-npm run dev
-enjoy
-```
+# API 
+
+`/auth` - handles login/signup 
+`/users`  - gets all users (the plan for this is to fetch user scores)
+`/quiz` - will fetch all quizes 

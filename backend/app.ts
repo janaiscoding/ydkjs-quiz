@@ -10,7 +10,6 @@ import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
 
-
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 100,
@@ -33,9 +32,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-//Add your routes here 
-import indexRouter from "./routes/index";
-app.use("/", indexRouter);
+//Add your routes here
+import userRouter from "./routes/users";
+import authRouter from "./routes/auth";
+import quizRouter from "./routes/quiz";
+
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use("/quizzes", quizRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
