@@ -5,7 +5,6 @@ const questionSchema = new Schema(
   {
     title: { type: String, required: true, minLength: 1 },
     answers: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-    correctAnswer: { type: Schema.Types.ObjectId, ref: "Answer" },
   },
   { timestamps: true }
 );
