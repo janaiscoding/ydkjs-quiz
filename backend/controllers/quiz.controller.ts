@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { body, validationResult } from "express-validator";
 import validator from "validator";
@@ -7,40 +7,20 @@ import asyncHandler from "express-async-handler";
 import Quiz from "../models/quiz";
 import Question from "../models/question";
 
-const get_quizzes = async (req: Request, res: Response) => {
+const get_quizzes = asyncHandler(async (req: Request, res: Response) => {
   const quizzes = await Quiz.find();
-  return res.status(200).json({ quizzes });
-};
+  res.status(200).json({ quizzes });
+});
 
-const create_quiz = [
-  body("title", "Quiz title must be present")
-    .trim()
-    .isLength({ min: 1 })
-    .isLength({ max: 50 }),
-  async (req: Request, res: Response) => {
-    const { title } = req.body;
+const create_quiz = asyncHandler(async (req: Request, res: Response) => {
+  const { title } = req.body;
 
-    const validationErrors = validationResult(req);
-    console.log(validationErrors);
-    if (!validationErrors.isEmpty()) {
-      return res.status(400).json({
-        message: "Validation errors",
-        errors: validationErrors.array(),
-      });
-    }
+  const newQuiz = await Quiz.create({
+    title,
+  });
 
-    try {
-      const newQuiz = new Quiz({
-        title,
-      });
-      await newQuiz.save();
-
-      return res.status(201).json({ message: "New quiz created" });
-    } catch (error) {
-      return res.status(500).json({ error });
-    }
-  },
-];
+  res.status(201).json({ message: "New quiz created", newQuiz });
+});
 
 const get_quiz = async (req: Request, res: Response) => {
   try {

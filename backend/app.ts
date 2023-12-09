@@ -14,9 +14,9 @@ import passport from "passport";
 import { jwtStrategy} from "./passport"
 
 //Add your routes here
-import userRouter from "./routes/users";
-import authRouter from "./routes/auth";
-import quizRouter from "./routes/quiz";
+import userRouter from "./routes/users.route";
+import authRouter from "./routes/auth.route";
+import quizRouter from "./routes/quiz.route";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
