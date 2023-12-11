@@ -7,23 +7,23 @@ I want to create a beautiful educative quiz with a leaderboard, with curated ref
 Will have a backend and a CMS where admins can update the content. (Add questions, answers, create quizes, update everything etc.)
 
 
-# Table of contents
+#### Table of contents
 
-## [How to Play & App Preview](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#how-to-play--app-preview)
+- [How to Play & App Preview](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#how-to-play--app-preview)
 
-## [API Reference & Endpoints](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#api-reference--endpoints)
+- [API Reference & Endpoints](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#api-reference--endpoints)
 
-## [Database & Visual Graph](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#database--visual-graph)
+- [Database & Visual Graph](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#database--visual-graph)
 
-## [Getting Started & Installation](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#getting-started--installation)
+- [Getting Started & Installation](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#getting-started--installation)
 
-## [Tech Stack & Tools](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#tech-stack--tools)
+- [Tech Stack & Tools](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#tech-stack--tools)
 
-## [Other Information & More](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#others)
+- [Other Information & More](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#others)
 
 # How to Play & App Preview
 
-- to be completed
+* to be completed when the project gets released
 
 # API Reference & Endpoints
 
