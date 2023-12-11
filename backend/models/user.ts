@@ -6,20 +6,7 @@ const userSchema = new Schema(
     name: { type: String, required: true, minLength: 3, maxLength: 25 },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minLength: 8 },
-    history: [
-      {
-        quiz: { type: Schema.Types.ObjectId, ref: "Quiz" },
-        isComplete: { type: Boolean, default: false },
-        correctQuestions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
-        incorrectQuestions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
-        bestScore: {
-          type: Number,
-          required: true,
-          min: [0, "Must be a positive score"],
-          default: 0,
-        },
-      },
-    ],
+    history: [{ type: Schema.Types.ObjectId, ref: "History" }],
   },
   { timestamps: true }
 );

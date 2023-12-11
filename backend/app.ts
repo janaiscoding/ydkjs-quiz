@@ -19,7 +19,7 @@ import authRouter from "./routes/auth.route";
 import quizRouter from "./routes/quiz.route";
 import questionRouter from "./routes/question.route";
 import answerRouter from "./routes/answers.route";
-
+import scoreRouter from "./routes/scores.route";
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 100,
@@ -49,6 +49,7 @@ app.use(passport.initialize());
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/quizzes", quizRouter);
+app.use("/scores", scoreRouter);
 app.use("/answers", answerRouter);
 app.use("/questions", questionRouter);
 
