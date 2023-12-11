@@ -56,5 +56,35 @@ const create_question = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json({ message: "New question was created.", newQuestion });
 });
 
-// To do: delete_quiz, update_quiz(title)
-export { get_quizzes, create_quiz, get_quiz, create_question };
+// @route DELETE /quizzes/:id
+// @access Public --> will be private
+// @description Deletes an existing quiz
+const delete_quiz = asyncHandler(async (req: Request, res: Response) => {
+  const quiz = await Quiz.findByIdAndDelete(req.params.id);
+
+  if (!quiz) res.status(404).json({ message: "Quiz not found." });
+
+  res.status(202).json({ message: "Quiz was deleted." });
+});
+
+// @route PUT /quizzes/:id
+// @access Public --> will be private
+// @description Updates an existing quiz title
+const update_quiz = asyncHandler(async (req: Request, res: Response) => {
+  const quiz = await Quiz.findByIdAndUpdate(req.params.id, {
+    title: req.body.title,
+  });
+
+  if (!quiz) res.status(404).json({ message: "Quiz not found." });
+
+  res.status(201).json({ message: "Quiz was updated.", quiz });
+});
+
+export {
+  get_quizzes,
+  create_quiz,
+  get_quiz,
+  delete_quiz,
+  update_quiz,
+  create_question,
+};

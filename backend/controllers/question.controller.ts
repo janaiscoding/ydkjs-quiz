@@ -5,6 +5,10 @@ import asyncHandler from "express-async-handler";
 import Question from "../models/question";
 import Answer from "../models/answer";
 
+
+// @route GET /questions
+// @access Public 
+// @description Gets all the questions for easier access when testing.
 const get_questions = asyncHandler(async (req: Request, res: Response) => {
   const questions = await Question.find().populate("answers");
 
@@ -13,6 +17,10 @@ const get_questions = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ questions });
 });
 
+
+// @route GET /questions/:id
+// @access Public --> will be private
+// @description Creates a new empty quiz, needs a title for the quiz.
 const get_question = asyncHandler(async (req: Request, res: Response) => {
   const question = await Question.findById(req.params.id).populate("answers");
 

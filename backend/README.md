@@ -26,6 +26,8 @@
 | /quizzes     | `POST` | create a new, empty quiz     |    ❌     |   ✅    | `title` |
 | /quizzes/:id | `GET`  | get a specific quiz          |    ❌     |   ✅    |    -    |
 | /quizzes/:id | `POST` | create a new, empty question |    ❌     |   ✅    | `title` |
+| /quizzes/:id | `PUT`  | update a quiz title          |    ❌     |   ✅    | `title` |
+| /quizzes/:id | `GET`  | delete a quiz                |    ❌     |   ✅    |    -    |
 
 ## Questions
 

@@ -7,8 +7,7 @@ import expressAsyncHandler from "express-async-handler";
 
 // @route POST /signup
 // @access Public
-// @description Create a new user signup
-
+// @description Create a new user account
 const create_user = expressAsyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 

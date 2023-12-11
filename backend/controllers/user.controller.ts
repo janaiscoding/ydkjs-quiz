@@ -4,6 +4,9 @@ import expressAsyncHandler from "express-async-handler";
 import History from "../models/history";
 import Scores from "../models/scores";
 
+// @route GET /users/:id
+// @access Public
+// @description Gets an user, populated with history.
 const get_profile = expressAsyncHandler(async (req: Request, res: Response) => {
   const user = await User.findById(req.params.id).populate("history");
   if (!user) res.status(404).json({ message: "User not found." });
@@ -11,12 +14,16 @@ const get_profile = expressAsyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ message: "User data.", user });
 });
 
-// For the entire quiz game, data storage will happen on the frontend
-// When a user submits a quiz at the end, we will push a new history or update an existing one
-// This will store a new history model instance with:
-// 1. The quiz ID; 2. All the ID's of the correct questions; 3. All the ID's of the incorrect questions
+// @route POST /users/:id
+// @access Public --> will be private
+// @description Add a new history instance
 const create_history = expressAsyncHandler(
   async (req: Request, res: Response) => {
+    // For the entire quiz game, data storage will happen on the frontend
+    // When a user submits a quiz at the end, we will push a new history or update an existing one
+    // This will store a new history model instance with:
+    // 1. The quiz ID; 2. All the ID's of the correct questions; 3. All the ID's of the incorrect questions
+
     const user = await User.findById(req.params.id);
     const { quiz_id, correctQuestions, incorrectQuestions, bestScore } =
       req.body;
@@ -35,10 +42,13 @@ const create_history = expressAsyncHandler(
   }
 );
 
-// If a user already has a history instance of the quiz we will perform a PUT request
-// Can also use this to progressivelly update (in)correct questions in case i want to validate step by step
+// @route PUT /users/:id
+// @access Public --> will be private
+// @description Updates an existing history instance
 const update_history = expressAsyncHandler(
   async (req: Request, res: Response) => {
+    // If a user already has a history instance of the quiz we will perform a PUT request
+    // Can also use this to progressivelly update (in)correct questions in case i want to validate step by step
     const user = await User.findById(req.params.id);
     const { quiz_id, correctQuestions, incorrectQuestions, bestScore } =
       req.body;

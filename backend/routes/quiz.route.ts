@@ -8,8 +8,9 @@ import {
   create_quiz,
   get_quiz,
   create_question,
+  delete_quiz,
+  update_quiz,
 } from "../controllers/quiz.controller";
-
 
 const router = Router();
 
@@ -29,5 +30,10 @@ router.post(
   query_validation_middleware,
   create_question
 );
+// update an existing quiz
+router.put("/:id", quiz_validator, query_validation_middleware, update_quiz);
+
+// delete an existing quiz
+router.delete("/:id", delete_quiz);
 
 export default router;

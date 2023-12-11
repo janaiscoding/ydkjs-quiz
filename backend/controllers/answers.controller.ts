@@ -4,6 +4,9 @@ import asyncHandler from "express-async-handler";
 
 import Answer from "../models/answer";
 
+// @route GET /answers
+// @access Public
+// @description Gets all the answers, needed for easier access when testing
 const get_answers = asyncHandler(async (req: Request, res: Response) => {
   const answers = await Answer.find();
 
@@ -11,6 +14,9 @@ const get_answers = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ answers });
 });
 
+// @route PUT /answers/:id
+// @access Public --> will be private
+// @description Updates an existing answer
 const update_answer = asyncHandler(async (req: Request, res: Response) => {
   const answer = await Answer.findByIdAndUpdate(req.params.id, {
     answer: req.body.answer,
@@ -22,6 +28,9 @@ const update_answer = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json({ message: "Answer was updated", answer });
 });
 
+// @route DELETE /answers:id
+// @access Public --> will be private
+// @description Deletes an answer
 const delete_answer = asyncHandler(async (req: Request, res: Response) => {
   const answer = await Answer.findByIdAndDelete(req.params.id);
 
