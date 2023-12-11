@@ -5,6 +5,14 @@ import asyncHandler from "express-async-handler";
 import Question from "../models/question";
 import Answer from "../models/answer";
 
+const get_questions = asyncHandler(async (req: Request, res: Response) => {
+  const questions = await Question.find().populate("answers");
+
+  if (!questions) res.status(404).json({ message: "Question not found." });
+
+  res.status(200).json({ questions });
+});
+
 const get_question = asyncHandler(async (req: Request, res: Response) => {
   const question = await Question.findById(req.params.id).populate("answers");
 
@@ -29,4 +37,4 @@ const create_answer = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // To do: delete_question, update_question(title)
-export { get_question, create_answer };
+export { get_questions, get_question, create_answer };

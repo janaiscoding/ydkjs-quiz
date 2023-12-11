@@ -4,8 +4,22 @@ import asyncHandler from "express-async-handler";
 
 import Answer from "../models/answer";
 
+const get_answers = asyncHandler(async (req: Request, res: Response) => {
+  const answers = await Answer.find();
+
+  if (!answers) res.status(404).json({ message: "Answer not found." });
+  res.status(200).json({ answers });
+});
+
 const update_answer = asyncHandler(async (req: Request, res: Response) => {
-  // to be completed
+  const answer = await Answer.findByIdAndUpdate(req.params.id, {
+    answer: req.body.answer,
+    isCorrect: req.body.isCorrect,
+  });
+
+  if (!answer) res.status(404).json({ message: "Answer not found." });
+
+  res.status(201).json({ message: "Answer was updated", answer });
 });
 
 const delete_answer = asyncHandler(async (req: Request, res: Response) => {
@@ -19,4 +33,4 @@ const delete_answer = asyncHandler(async (req: Request, res: Response) => {
   // Can send 204 as well
 });
 
-export { update_answer, delete_answer };
+export { get_answers, update_answer, delete_answer };

@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 
 const history_validator = [
-  body("quiz_id", "Quiz id must be present").trim(),
+  body("quiz_id", "Quiz id must be present").trim().exists(),
   body("correctQuestions").isArray(),
   body("incorrectQuestions").isArray(),
   body("bestScore", "Score must be present and a positive number").isInt({

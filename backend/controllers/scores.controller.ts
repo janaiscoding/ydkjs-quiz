@@ -16,6 +16,20 @@ const get_scores = expressAsyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ scores });
 });
 
+const create_score = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const { user_id, quiz_id, score } = req.body;
+    const newScore = await Scores.create({
+      user_id,
+      quiz_id,
+      score,
+    });
+
+    if (!newScore) res.status(404).json({ message: "Scores not found" });
+    res.status(201).json({ newScore });
+  }
+);
+
 const get_quiz_scores = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const scores = await Scores.find({ quiz_id: req.params.id })
@@ -48,4 +62,4 @@ const get_user_scores = expressAsyncHandler(
   }
 );
 
-export { get_scores, get_quiz_scores, get_user_scores };
+export { get_scores, create_score, get_quiz_scores, get_user_scores };

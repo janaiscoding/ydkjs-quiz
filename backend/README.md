@@ -12,11 +12,11 @@
 
 ## User
 
-| endpoint   | method | description            | protected | postman |                               body                               |
-| ---------- | ------ | ---------------------- | :-------: | :-----: | :--------------------------------------------------------------: |
-| /users/:id | `GET`  | get a user profile     |    ❌     |   ✅    |                                -                                 |
-| /users/:id | `POST` | add a new quiz history |    ❌     |   ✅    | `quiz_id`, `correctQuestions`, `incorrectQuestions`, `bestScore` |
-| /users/:id | `PUT`  | update a history entry |    ❌     |   ✅    | `quiz_id`, `correctQuestions`, `incorrectQuestions`, `bestScore` |
+| endpoint   | method | description            | protected | postman |                             body                              |
+| ---------- | ------ | ---------------------- | :-------: | :-----: | :-----------------------------------------------------------: |
+| /users/:id | `GET`  | get a user profile     |    ❌     |   ✅    |                               -                               |
+| /users/:id | `POST` | add a new quiz history |    ❌     |   ✅    | `quiz_id` `correctQuestions` `incorrectQuestions` `bestScore` |
+| /users/:id | `PUT`  | update a history entry |    ❌     |   ✅    | `quiz_id` `correctQuestions` `incorrectQuestions` `bestScore` |
 
 ## Quizzes
 
@@ -31,22 +31,26 @@
 
 | endpoint       | method | description                    | protected | postman |         body          |
 | -------------- | ------ | ------------------------------ | :-------: | :-----: | :-------------------: |
+| /questions     | `GET`  | gets all questions             |    ❌     |   ✅    |           -           |
 | /questions/:id | `GET`  | gets one question with answers |    ❌     |   ✅    |           -           |
 | /questions/:id | `POST` | creates a new answer           |    ❌     |   ✅    | `answer`, `isCorrect` |
 
 ## Answers
 
-| endpoint     | method   | description       | protected | postman | body |
-| ------------ | -------- | ----------------- | :-------: | :-----: | :--: |
-| /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |  -   |
+| endpoint     | method   | description       | protected | postman |         body         |
+| ------------ | -------- | ----------------- | :-------: | :-----: | :------------------: |
+| /answers     | `GET`    | gets all answers  |    ❌     |   ✅    |          -           |
+| /answers/:id | `PUT`    | updates an answer |    ❌     |   ✅    | `answer` `isCorrect` |
+| /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |          -           |
 
 ## Scores
 
-| endpoint         | method | description                | protected | postman | body |
-| ---------------- | ------ | -------------------------- | :-------: | :-----: | :--: |
-| /scores          | `GET`  | gets all scores            |    ❌     |   ✅    |  -   |
-| /scores/quiz/:id | `GET`  | gets all scores for a quiz |    ❌     |   ✅    |  -   |
-| /scores/user/:id | `GET`  | gets all scores for a user |    ❌     |   ✅    |  -   |
+| endpoint         | method | description                | protected | postman |            body             |
+| ---------------- | ------ | -------------------------- | :-------: | :-----: | :-------------------------: |
+| /scores          | `GET`  | gets all scores            |    ❌     |   ✅    |              -              |
+| /scores          | `POST` | creates a new scores       |    ❌     |   ✅    | `user_id` `quiz_id` `score` |
+| /scores/quiz/:id | `GET`  | gets all scores for a quiz |    ❌     |   ✅    |              -              |
+| /scores/user/:id | `GET`  | gets all scores for a user |    ❌     |   ✅    |              -              |
 
 ## To Do list
 
@@ -55,5 +59,5 @@
 - [ ] update answer
 - [ ] delete quiz
 - [ ] delete question
-- [ ] user auth login/signup/verify
+- [x] user auth login/signup/verify
 - [ ] protect routes for create/update/delete
