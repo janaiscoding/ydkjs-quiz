@@ -78,6 +78,16 @@ const create_answer = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ message: "New answer was added" });
 });
 
+const update_parent_quiz = asyncHandler(async (req: Request, res: Response) => {
+  const question = await Question.findById(req.params.id);
+  const { parent_quiz } = req.body.parent_quiz;
+  if (!question) res.status(404).json({ message: "Question not found." });
+
+  // update question to contain new answer!
+  await question!.updateOne({ parent_quiz });
+  res.status(200).json({ message: "Parent quiz was updated" });
+});
+
 export {
   get_questions,
   get_question,

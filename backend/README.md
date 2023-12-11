@@ -12,40 +12,40 @@
 
 ## User
 
-| endpoint   | method | description            | protected | postman |                             body                              |
-| ---------- | ------ | ---------------------- | :-------: | :-----: | :-----------------------------------------------------------: |
-| /users/:id | `GET`  | get a user profile     |    ❌     |   ✅    |                               -                               |
-| /users/:id | `POST` | add a new quiz history |    ❌     |   ✅    | `quiz_id` `correctQuestions` `incorrectQuestions` `bestScore` |
-| /users/:id | `PUT`  | update a history entry |    ❌     |   ✅    | `quiz_id` `correctQuestions` `incorrectQuestions` `bestScore` |
+| endpoint   | method | description                 | protected | postman |         body         |
+| ---------- | ------ | --------------------------- | :-------: | :-----: | :------------------: |
+| /users/:id | `GET`  | get a user profile          |    ❌     |   ✅    |          -           |
+| /users/:id | `POST` | add a new quiz history      |    ❌     |   ✅    |  `quiz_id` `score`   |
+| /users/:id | `PUT`  | update a quiz history entry |    ❌     |   ✅    | `quiz_id` `newScore` |
 
 ## Quizzes
 
-| endpoint     | method   | description                                          | protected | postman |  body   |
-| ------------ | -------- | ---------------------------------------------------- | :-------: | :-----: | :-----: |
-| /quizzes     | `GET`    | get all quizzes                                      |    ❌     |   ✅    |    -    |
-| /quizzes     | `POST`   | create a new, empty quiz                             |    ❌     |   ✅    | `title` |
-| /quizzes/:id | `GET`    | get a specific quiz                                  |    ❌     |   ✅    |    -    |
-| /quizzes/:id | `POST`   | create a new, empty question                         |    ❌     |   ✅    | `title` |
-| /quizzes/:id | `PUT`    | update a quiz title                                  |    ❌     |   ✅    | `title` |
-| /quizzes/:id | `DELETE` | delete a specific quiz, clears questions and answers |    ❌     |   ✅    |    -    |
+| endpoint     | method   | description                                                       | protected | postman |  body   |
+| ------------ | -------- | ----------------------------------------------------------------- | :-------: | :-----: | :-----: |
+| /quizzes     | `GET`    | get all quizzes                                                   |    ❌     |   ✅    |    -    |
+| /quizzes     | `POST`   | create a new, empty quiz                                          |    ❌     |   ✅    | `title` |
+| /quizzes/:id | `GET`    | get a specific quiz                                               |    ❌     |   ✅    |    -    |
+| /quizzes/:id | `POST`   | create a new, empty question                                      |    ❌     |   ✅    | `title` |
+| /quizzes/:id | `PUT`    | update a quiz title                                               |    ❌     |   ✅    | `title` |
+| /quizzes/:id | `DELETE` | delete a specific quiz, won't delete questions and linked answers |    ❌     |   ✅    |    -    |
 
 ## Questions
 
-| endpoint       | method   | description                                    | protected | postman |         body          |
-| -------------- | -------- | ---------------------------------------------- | :-------: | :-----: | :-------------------: |
-| /questions     | `GET`    | gets all questions                             |    ❌     |   ✅    |           -           |
-| /questions/:id | `GET`    | gets one question with answers                 |    ❌     |   ✅    |           -           |
-| /questions/:id | `POST`   | creates a new answer                           |    ❌     |   ✅    | `answer`, `isCorrect` |
-| /questions/:id | `PUT`    | updates a question's title                     |    ❌     |   ✅    |        `title`        |
-| /questions/:id | `DELETE` | deletes question, updates quiz, clears answers |    ❌     |   ✅    |           -           |
+| endpoint       | method   | description                                                 | protected | postman |         body          |
+| -------------- | -------- | ----------------------------------------------------------- | :-------: | :-----: | :-------------------: |
+| /questions     | `GET`    | gets all questions                                          |    ❌     |   ✅    |           -           |
+| /questions/:id | `GET`    | gets one question with answers                              |    ❌     |   ✅    |           -           |
+| /questions/:id | `POST`   | creates a new answer                                        |    ❌     |   ✅    | `answer`, `isCorrect` |
+| /questions/:id | `PUT`    | updates a question's title                                  |    ❌     |   ✅    |        `title`        |
+| /questions/:id | `DELETE` | deletes question, updates parent quiz, clears child answers |    ❌     |   ✅    |           -           |
 
 ## Answers
 
-| endpoint     | method   | description       | protected | postman |         body         |
-| ------------ | -------- | ----------------- | :-------: | :-----: | :------------------: |
-| /answers     | `GET`    | gets all answers  |    ❌     |   ✅    |          -           |
-| /answers/:id | `PUT`    | updates an answer |    ❌     |   ✅    | `answer` `isCorrect` |
-| /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |          -           |
+| endpoint     | method   | description                                | protected | postman |         body         |
+| ------------ | -------- | ------------------------------------------ | :-------: | :-----: | :------------------: |
+| /answers     | `GET`    | gets all answers                           |    ❌     |   ✅    |          -           |
+| /answers/:id | `PUT`    | updates an answer                          |    ❌     |   ✅    | `answer` `isCorrect` |
+| /answers/:id | `DELETE` | deletes an answer. updates parent question |    ❌     |   ✅    |          -           |
 
 ## Scores
 

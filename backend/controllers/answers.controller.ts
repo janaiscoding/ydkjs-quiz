@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 
 import Answer from "../models/answer";
-import question from "../models/question";
+import Question from "../models/question";
 
 // @route GET /answers
 // @access Public
@@ -39,7 +39,7 @@ const delete_answer = asyncHandler(async (req: Request, res: Response) => {
   // By this point, both answer and question are not null
   // We can procede with delete answer and update question
   Promise.all([
-    question.findByIdAndUpdate(answer!.parent_question, {
+    Question.findByIdAndUpdate(answer!.parent_question, {
       $pull: { answers: req.params.id },
     }),
     answer!.deleteOne(),
