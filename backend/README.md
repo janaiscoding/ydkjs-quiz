@@ -59,6 +59,8 @@
 
 ## To Do list
 
+- [ ] verify admin before accessing specific content manipulation routes
+- [ ] figure out how to deal with text to Markdown  
 - [x] update quiz title
 - [x] update question title
 - [x] update answer
