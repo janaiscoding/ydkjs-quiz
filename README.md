@@ -1,22 +1,25 @@
 # JavaScript Quiz
 
-A fun, educative JavaScript quiz
+A Full Stack JavaScript Quiz game.
 
-Currently working on the backend for auth, quiz creation (questions, answers, scores, user history, content management).
+I want to create a beautiful educative quiz with a leaderboard, with curated references and questions.
+
+Will have a backend and a CMS where admins can update the content. (Add questions, answers, create quizes, update everything etc.)
+
 
 # Table of contents
 
-1. How to Play & App Preview
+## [How to Play & App Preview](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#how-to-play--app-preview)
 
-2. API Reference & Endpoints
+## [API Reference & Endpoints](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#api-reference--endpoints)
 
-3. Database & Visual Graph
+## [Database & Visual Graph](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#database--visual-graph)
 
-4. Getting Started & Installation
+## [Getting Started & Installation](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#getting-started--installation)
 
-5. Tech Stack & Tools
+## [Tech Stack & Tools](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#tech-stack--tools)
 
-6. Other
+## [Other Information & More](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#others)
 
 # How to Play & App Preview
 
@@ -95,18 +98,36 @@ Currently working on the backend for auth, quiz creation (questions, answers, sc
 
 `app listening on localhost:3000`
 
-# Tech Stack & Tools 
+# Tech Stack & Tools
 
 [![My Skills](https://skillicons.dev/icons?i=ts,nodejs,express,mongodb,react,nextjs,jest,postman,tailwind,git)](https://skillicons.dev)
 
-`TypeScript` | `Node.js` | `Express.js` | `MongoDB` | `React` | `Next.js` | `Jest` | `Postman` | `TailwindCSS` | `Git`     
+`TypeScript` | `Node.js` | `Express.js` | `MongoDB` | `React` | `Next.js` | `Jest` | `Postman` | `TailwindCSS` | `Git`
 
-# Others
+# Other Information
+
+## Disclaimer
+
+Hey there! 👋 This project is a work in progress 😊 
+
+It might take long to complete the questions since I plan to add them one by one
+
+Feel free to contact me to provide feedback if you notice something that can be improved!
 
 ### ✅ To Do list
 
-- [ ] verify admin before accessing specific content manipulation routes
-- [ ] figure out how to deal with text to Markdown
+- [ ] frontend main
+    - [ ] main quiz logic 
+    - [ ] user auth 
+    - [ ] leaderboard page
+
+- [ ] frontend cms 
+    - [ ] create a CMS for adding content 
+
+- [ ] backend
+    - [ ] verify admin before accessing specific content manipulation routes
+    - [ ] figure out how to deal with text to Markdown
+
 - [x] update quiz title
 - [x] update question title
 - [x] update answer
