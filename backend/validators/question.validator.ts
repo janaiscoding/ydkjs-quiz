@@ -7,4 +7,8 @@ const question_validator = [
     .withMessage("Quiz question title must be between 5 and 5000 characters"),
 ];
 
-export { question_validator };
+const question_parent_validator = [
+  body("parent_quiz", "Parent quiz id must be present").trim().exists(),
+];
+
+export { question_validator, question_parent_validator };

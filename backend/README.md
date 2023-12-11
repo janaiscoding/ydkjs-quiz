@@ -31,13 +31,14 @@
 
 ## Questions
 
-| endpoint       | method   | description                                                 | protected | postman |         body          |
-| -------------- | -------- | ----------------------------------------------------------- | :-------: | :-----: | :-------------------: |
-| /questions     | `GET`    | gets all questions                                          |    ❌     |   ✅    |           -           |
-| /questions/:id | `GET`    | gets one question with answers                              |    ❌     |   ✅    |           -           |
-| /questions/:id | `POST`   | creates a new answer                                        |    ❌     |   ✅    | `answer`, `isCorrect` |
-| /questions/:id | `PUT`    | updates a question's title                                  |    ❌     |   ✅    |        `title`        |
-| /questions/:id | `DELETE` | deletes question, updates parent quiz, clears child answers |    ❌     |   ✅    |           -           |
+| endpoint            | method   | description                                                 | protected | postman |         body          |
+| ------------------- | -------- | ----------------------------------------------------------- | :-------: | :-----: | :-------------------: |
+| /questions          | `GET`    | gets all questions                                          |    ❌     |   ✅    |           -           |
+| /questions/:id      | `GET`    | gets one question with answers                              |    ❌     |   ✅    |           -           |
+| /questions/:id      | `POST`   | creates a new answer                                        |    ❌     |   ✅    | `answer`, `isCorrect` |
+| /questions/:id      | `PUT`    | updates a question's title                                  |    ❌     |   ✅    |        `title`        |
+| /questions/:id      | `DELETE` | deletes question, updates parent quiz, clears child answers |    ❌     |   ✅    |           -           |
+| /questions/:id/quiz | `PUT`    | updates a question's parent quiz                            |    ❌     |   ✅    |     `parent_quiz`     |
 
 ## Answers
 

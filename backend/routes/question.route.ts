@@ -6,11 +6,12 @@ import {
   get_questions,
   update_question,
   delete_question,
+  update_parent_quiz,
 } from "../controllers/question.controller";
 
 import query_validation_middleware from "../middleware/validation.middleware";
 import { answer_validator } from "../validators/answer.validator";
-import { question_validator } from "../validators/question.validator";
+import { question_validator, question_parent_validator } from "../validators/question.validator";
 
 const router = Router();
 
@@ -32,6 +33,15 @@ router.put(
   question_validator,
   query_validation_middleware,
   update_question
+);
+
+
+// updates one question's parent quiz
+router.put(
+  "/:id/quiz",
+  question_parent_validator,
+  query_validation_middleware,
+  update_parent_quiz
 );
 
 // deletes one question
