@@ -58,7 +58,7 @@ const create_question = asyncHandler(async (req: Request, res: Response) => {
 
 // @route DELETE /quizzes/:id
 // @access Public --> will be private
-// @description Deletes an existing quiz
+// @description Deletes an existing quiz. Will not delete existing questions and answers, as they may be re-used.
 const delete_quiz = asyncHandler(async (req: Request, res: Response) => {
   const quiz = await Quiz.findByIdAndDelete(req.params.id);
 

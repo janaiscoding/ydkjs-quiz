@@ -7,7 +7,7 @@ import expressAsyncHandler from "express-async-handler";
 
 // @route POST /signup
 // @access Public
-// @description Create a new user account
+// @description Create a new user account. Works.
 const create_user = expressAsyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
@@ -22,7 +22,7 @@ const create_user = expressAsyncHandler(async (req: Request, res: Response) => {
 
 // @route POST /login
 // @access Public
-// @description Log in to user with credentials, receives auth token as valid response.
+// @description Log in to user with credentials, receives auth token as valid response. Works.
 const login_user = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -47,7 +47,7 @@ const login_user = expressAsyncHandler(
 
 // @route POST /verify
 // @access Public
-// @description Verifies existing auth JWT token, returns user data on success.
+// @description Verifies existing auth JWT token, returns user data on success. Works.
 const verify_token = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const token = req.headers.authorization?.split(" ")[1];

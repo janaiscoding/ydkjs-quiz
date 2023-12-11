@@ -30,7 +30,7 @@ const get_question = asyncHandler(async (req: Request, res: Response) => {
 
 // @route PUT /questions/:id
 // @access Public --> will be private
-// @description Updates an existing question.
+// @description Updates an existing question. Works.
 const update_question = asyncHandler(async (req: Request, res: Response) => {
   const question = await Question.findByIdAndUpdate(req.params.id, {
     title: req.body.title,
@@ -44,7 +44,7 @@ const update_question = asyncHandler(async (req: Request, res: Response) => {
 
 // @route POST /questions/:id
 // @access Public --> will be private
-// @description Deletes a question. Updates quiz. Deletes all linked answers.
+// @description Deletes a question. Updates quiz. Deletes all linked answers. Works.
 const delete_question = asyncHandler(async (req: Request, res: Response) => {
   const question = await Question.findById(req.params.id);
   if (!question) res.status(404).json({ message: "Question not found." });
@@ -62,7 +62,7 @@ const delete_question = asyncHandler(async (req: Request, res: Response) => {
 
 // @route POST /questions/:id
 // @access Public --> will be private
-// @description Creates a new answer for a specific question.
+// @description Creates a new answer for a specific question. Works.
 const create_answer = asyncHandler(async (req: Request, res: Response) => {
   const question = await Question.findById(req.params.id);
   if (!question) res.status(404).json({ message: "Question not found." });
