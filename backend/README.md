@@ -2,6 +2,14 @@
 
 # API Endpoints:
 
+## Auth
+
+| endpoint     | request | description        | protected | postman |           body            |
+| ------------ | ------- | ------------------ | :-------: | :-----: | :-----------------------: |
+| /auth/signup | `POST`  | create new user    |    ❌     |   ✅    | `name` `email` `password` |
+| /auth/login  | `POST`  | sign in to account |    ❌     |   ✅    |    `email` `password`     |
+| /auth/verify | `POST`  | verify jwt token   |    ❌     |   ✅    |          `token`          |
+
 ## Quizzes
 
 | endpoint     | request | description                  | protected | postman |  body   |
@@ -23,8 +31,6 @@
 | endpoint     | request  | description       | protected | postman | body |
 | ------------ | -------- | ----------------- | :-------: | :-----: | :--: |
 | /answers/:id | `DELETE` | deletes an answer |    ❌     |   ✅    |  -   |
-
-
 
 ## To Do list
 

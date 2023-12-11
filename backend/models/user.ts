@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    name: { type: String, required: true, minLength: 1 },
+    name: { type: String, required: true, minLength: 3, maxLength: 25 },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, minLength: 8 },
     history: [
       {
         quiz: { type: Schema.Types.ObjectId, ref: "Quiz" },
