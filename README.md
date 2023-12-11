@@ -19,7 +19,7 @@ Will have a backend and a CMS where admins can update the content. (Add question
 
 - [Tech Stack & Tools](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#tech-stack--tools)
 
-- [Other Information & More](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#others)
+- [Other Information & More](https://github.com/janaiscoding/ydkjs-quiz?tab=readme-ov-file#other-information)
 
 # How to Play & App Preview
 
