@@ -83,14 +83,14 @@ const update_parent_quiz = asyncHandler(async (req: Request, res: Response) => {
   const { parent_quiz } = req.body; // new parent quiz
 
   if (!question) res.status(404).json({ message: "Question not found." });
-  
+
   // see if the old quiz still exists
   const old_quiz = await Quiz.findById(question!.parent_quiz);
   // if it does, remove the question from it
   if (old_quiz) {
     await old_quiz.updateOne({ $pull: { questions: req.params.id } });
   }
-  console.log("updated old quiz");
+
   // update question to have a new parent_quiz, update the quiz
   Promise.all([
     Quiz.findByIdAndUpdate(parent_quiz, {
@@ -98,6 +98,7 @@ const update_parent_quiz = asyncHandler(async (req: Request, res: Response) => {
     }),
     question!.updateOne({ parent_quiz }),
   ]);
+
   res
     .status(200)
     .json({ message: "Parent quiz was updated, question was moved" });
