@@ -35,8 +35,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const fetchQuestion = async () => {
     const myQuestion = await getQuestion(params.id);
     setQuestion(myQuestion);
-    setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n")); // update the question title
-    console.log(myQuestion);
+    setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n")); 
   };
 
   const onSuccess = () => {
