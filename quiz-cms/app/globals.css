@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.link {
+  @apply text-2xl text-blue-400 hover:text-blue-500;
+}

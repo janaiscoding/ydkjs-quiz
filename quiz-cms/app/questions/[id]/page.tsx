@@ -111,7 +111,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
           {question?.answers.length > 0 && (
             <div className="flex flex-col gap-2">
               {question?.answers?.map((a, idx) => (
-                <div className="text-blue-400 hover:text-blue-500" key={a._id}>
+                <div className="" key={a._id}>
                   {idx + 1}. {a.answer} ... edit button ... delete button
                 </div>
               ))}

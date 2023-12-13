@@ -8,6 +8,7 @@ import ToggleButton from "@/app/components/ToggleButton";
 
 import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { Quiz } from "@/app/utils/types";
+import { CiWarning } from "react-icons/ci";
 import { SyntheticEvent, useEffect, useState } from "react";
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
@@ -15,6 +16,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   const [showQuestions, setShowQuestions] = useState(false);
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
+  const [isLoading, setLoading] = useState(true);
 
   const [showAddQuestion, setShowAddQuestion] = useState(false);
   const [questionTitle, setQuestionTitle] = useState("");
@@ -23,8 +25,10 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [quizTitle, setQuizTitle] = useState("");
 
   const fetchQuiz = async () => {
+    setLoading(true);
     const myQuiz = await getQuizz(params.id);
     setQuiz(myQuiz);
+    setLoading(false);
     setQuizTitle(myQuiz.title.trim().split("\\n").join("\n"));
   };
 
@@ -47,7 +51,10 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     let formattedTitle = questionTitle.trim().split(/\n/).join("\\n");
     createQuestion(params.id, formattedTitle, onSuccess);
   };
-
+  const onDelete = () => {
+    //delete quiz
+    //redirect to homepage
+  };
   useEffect(() => {
     fetchQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,61 +63,75 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
       <a href="/" className="text-neutral-400 hover:text-blue-500 underline">
-        Back Home
+        Home
       </a>
-      <h1 className="text-2xl text-yellow-400">
-        You are now editing: {quiz?.title}
-      </h1>
+      {isLoading && <p>please wait...</p>}
 
-      <ToggleButton
-        target={showEditTitle}
-        toggler={setShowEditTitle}
-        buttonText="Edit title"
-      />
-      {showEditTitle && (
-        <EditTitleForm
-          defaultTitle={quizTitle}
-          legend={"quiz"}
-          setTitle={setQuizTitle}
-          onSubmit={onEditQuizTitle}
-        />
-      )}
+      {!isLoading && (
+        <>
+          <h1 className="text-2xl text-yellow-400">
+            You are now editing: {quiz?.title}
+          </h1>
 
-      <ToggleButton
-        target={showAddQuestion}
-        toggler={setShowAddQuestion}
-        buttonText="Add question"
-      />
+          <ToggleButton
+            target={showEditTitle}
+            toggler={setShowEditTitle}
+            buttonText="Edit title"
+          />
+          {showEditTitle && (
+            <EditTitleForm
+              defaultTitle={quizTitle}
+              legend={"quiz"}
+              setTitle={setQuizTitle}
+              onSubmit={onEditQuizTitle}
+            />
+          )}
 
-      {showAddQuestion && (
-        <AddQuestionForm
-          setQuestion={setQuestionTitle}
-          onSubmit={onAddQuestion}
-        />
-      )}
+          <ToggleButton
+            target={showAddQuestion}
+            toggler={setShowAddQuestion}
+            buttonText="Add question"
+          />
 
-      <ToggleButton
-        target={showQuestions}
-        toggler={setShowQuestions}
-        buttonText="Show questions"
-      />
-      {showQuestions && (
-        <div className="max-w-md">
-          {quiz?.questions?.length === 0 && <p> No questions yet </p>}
-          {quiz?.questions?.length > 0 && (
-            <div className="flex flex-col gap-2">
-              {quiz?.questions?.map((q, idx) => (
-                <a
-                  className="text-blue-400 hover:text-blue-500"
-                  href={`/questions/${q._id}`}
-                  key={q._id}
-                >
-                  {idx + 1}. {q.title}
-                </a>
-              ))}
+          {showAddQuestion && (
+            <AddQuestionForm
+              setQuestion={setQuestionTitle}
+              onSubmit={onAddQuestion}
+            />
+          )}
+
+          <ToggleButton
+            target={showQuestions}
+            toggler={setShowQuestions}
+            buttonText="Show questions"
+          />
+          {showQuestions && (
+            <div>
+              {quiz?.questions?.length === 0 && <p> No questions yet </p>}
+              {quiz?.questions?.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  {quiz?.questions?.map((q, idx) => (
+                    <a
+                      className="link"
+                      href={`/questions/${q._id}`}
+                      key={q._id}
+                    >
+                      {idx + 1}. {q.title}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
+
+          <button
+            onClick={onDelete}
+            className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-400"
+          >
+            <CiWarning />
+            Delete quiz
+          </button>
+        </>
       )}
     </main>
   );
