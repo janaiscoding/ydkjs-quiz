@@ -7,7 +7,8 @@ export default function Home() {
   useEffect(() => {}, []);
   return (
     <main className="min-h-screen py-2">
-      <h1 className="text-3xl"> Add your new question</h1>
+      <h1> My Quiz CMS</h1>
+      <h2> My existing quizzes </h2>
     </main>
   );
 }

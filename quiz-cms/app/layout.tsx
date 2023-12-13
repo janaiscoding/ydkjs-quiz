@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { UserContextProvider } from "./context/userContext";
+import { QuizzesContextProvider } from "./context/quizzesContext";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
       <body
         className={`${roboto.className} flex flex-col items-center bg-neutral-950 text-neutral-50`}
       >
-        <UserContextProvider>{children}</UserContextProvider>
+        <UserContextProvider>
+          <QuizzesContextProvider>{children}</QuizzesContextProvider>
+        </UserContextProvider>
       </body>
     </html>
   );

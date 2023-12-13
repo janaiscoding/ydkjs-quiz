@@ -10,4 +10,24 @@ type History = {
   quiz_id: string;
   score: number;
 };
-export type { User };
+
+type Quiz = {
+  _id: string;
+  title: string;
+  questions: Question[];
+};
+
+type Question = {
+  _id: string;
+  title: string;
+  parent_quiz: string;
+  answers: Answer[];
+};
+
+type Answer = {
+  _id: string;
+  answer: string;
+  isCorrect: boolean;
+  parent_question: string;
+};
+export type { User, Quiz };
