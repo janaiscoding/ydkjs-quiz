@@ -1,4 +1,5 @@
-import { TQuestion } from "@/frontend/app/utils/types";
+
+import { TQuestion } from "@/app/utils/types";
 import uniqid from "uniqid";
 const getStartedArray: TQuestion[] = [
   {
