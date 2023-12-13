@@ -6,7 +6,7 @@ type EditTitleFormProps = {
   setTitle: React.Dispatch<SetStateAction<string>>;
   onSubmit: (e: SyntheticEvent) => void;
 };
-
+import { IoCheckboxOutline } from "react-icons/io5";
 const EditTitleForm = ({
   defaultTitle,
   legend,
@@ -19,16 +19,22 @@ const EditTitleForm = ({
       onSubmit={(e) => onSubmit(e)}
     >
       <legend>Edit {legend} Title</legend>
-      <label className="flex flex-col gap-4">
+      <label className="flex flex-col gap-2">
         {legend} Title
         <input
           defaultValue={defaultTitle}
           onChange={(e) => setTitle(e.target.value)}
-          className="text-slate-950"
+          className="text-slate-950 h-10 p-2"
         ></input>
       </label>
 
-      <button type="submit">Save title</button>
+      <button
+        type="submit"
+        className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-400"
+      >
+        <IoCheckboxOutline />
+        Save title
+      </button>
     </form>
   );
 };

@@ -1,4 +1,5 @@
 import { SetStateAction, SyntheticEvent } from "react";
+import { IoCheckboxOutline } from "react-icons/io5";
 
 type AddQuestionFormProps = {
   setQuestion: React.Dispatch<SetStateAction<string>>;
@@ -20,7 +21,13 @@ const AddQuestionForm = ({ setQuestion, onSubmit }: AddQuestionFormProps) => {
         ></textarea>
       </label>
 
-      <button type="submit">Add question</button>
+      <button
+        type="submit"
+        className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-400"
+      >
+        <IoCheckboxOutline />
+        Save title
+      </button>
     </form>
   );
 };

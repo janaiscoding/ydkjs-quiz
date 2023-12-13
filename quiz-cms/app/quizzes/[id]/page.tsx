@@ -65,7 +65,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       <ToggleButton
         target={showEditTitle}
         toggler={setShowEditTitle}
-        buttonText="Edit quiz title"
+        buttonText="Edit title"
       />
       {showEditTitle && (
         <EditTitleForm
@@ -79,7 +79,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       <ToggleButton
         target={showAddQuestion}
         toggler={setShowAddQuestion}
-        buttonText="Add new question"
+        buttonText="Add question"
       />
 
       {showAddQuestion && (
@@ -92,7 +92,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       <ToggleButton
         target={showQuestions}
         toggler={setShowQuestions}
-        buttonText="Show quiz questions"
+        buttonText="Show questions"
       />
       {showQuestions && (
         <div className="max-w-md">
