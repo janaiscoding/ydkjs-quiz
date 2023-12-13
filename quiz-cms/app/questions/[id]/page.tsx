@@ -3,6 +3,7 @@ import createAnswer from "@/app/api_functions/create_answer";
 import editQuestionTitle from "@/app/api_functions/edit_question_title";
 import getQuestion from "@/app/api_functions/get_question";
 import AddAnswerForm from "@/app/components/AddAnswerForm";
+import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import useTokenVerification from "@/app/hooks/useTokenVerification";
@@ -13,6 +14,7 @@ import { SyntheticEvent, useEffect, useState } from "react";
 const QuestionPage = ({ params }: { params: { id: string } }) => {
   useTokenVerification();
 
+  const [isLoading, setLoading] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [question, setQuestion] = useState({} as Question);
 
@@ -36,9 +38,11 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   };
 
   const fetchQuestion = async () => {
+    setLoading(true);
     const myQuestion = await getQuestion(params.id);
     setQuestion(myQuestion);
     setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n"));
+    setLoading(false);
   };
 
   const onSuccess = () => {
@@ -48,7 +52,10 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     setShowAnswers(false);
     setAnswer("");
   };
-
+  const onDelete = () => {
+    //delete question
+    //redirect to parent quiz
+  };
   useEffect(() => {
     fetchQuestion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,66 +65,73 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
       <div className="flex gap-1">
         <a href="/" className="text-neutral-400 hover:text-blue-500 underline">
-          Back home
+          Home
         </a>
         <a
           href={`/quizzes/${question?.parent_quiz}`}
           className="text-neutral-400 hover:text-blue-500 underline"
         >
-          Back to parent quiz
+          Parent Quiz
         </a>
       </div>
-      <div className="text-2xl text-yellow-400">
-        You are now editing:
-        <p>{question?.title?.trim().split("\\n").join("\n")}</p>
-      </div>
+      {isLoading && <p>Loading your question...</p>}
+      {!isLoading && (
+        <>
+          <div className="text-2xl text-yellow-400">
+            You are now editing:
+            <p>{question?.title?.trim().split("\\n").join("\n")}</p>
+          </div>
 
-      <ToggleButton
-        target={showEditTitle}
-        toggler={setShowEditTitle}
-        buttonText="Edit title"
-      />
-      {showEditTitle && (
-        <EditTitleForm
-          defaultTitle={questionTitle}
-          legend="question"
-          setTitle={setQuestionTitle}
-          onSubmit={onEditQuestion}
-        />
-      )}
+          <ToggleButton
+            target={showEditTitle}
+            toggler={setShowEditTitle}
+            buttonText="Edit title"
+          />
+          {showEditTitle && (
+            <EditTitleForm
+              defaultTitle={questionTitle}
+              legend="question"
+              setTitle={setQuestionTitle}
+              onSubmit={onEditQuestion}
+            />
+          )}
 
-      <ToggleButton
-        target={showAddAnswer}
-        toggler={setShowAddAnswer}
-        buttonText="Add answer"
-      />
+          <ToggleButton
+            target={showAddAnswer}
+            toggler={setShowAddAnswer}
+            buttonText="Add answer"
+          />
 
-      {showAddAnswer && (
-        <AddAnswerForm
-          setAnswer={setAnswer}
-          setIsCorrect={setIsCorrect}
-          onSubmit={onAddAnswer}
-        />
-      )}
+          {showAddAnswer && (
+            <AddAnswerForm
+              setAnswer={setAnswer}
+              setIsCorrect={setIsCorrect}
+              onSubmit={onAddAnswer}
+            />
+          )}
 
-      <ToggleButton
-        target={showAnswers}
-        toggler={setShowAnswers}
-        buttonText="Show answers"
-      />
-      {showAnswers && (
-        <div className="max-w-md">
-          {question?.answers.length === 0 && <p> No questions yet </p>}
-          {question?.answers.length > 0 && (
-            <div className="flex flex-col gap-2">
-              {question?.answers?.map((a, idx) => (
-                <div className="" key={a._id}>
-                  {idx + 1}. {a.answer} ... edit button ... delete button
+          <ToggleButton
+            target={showAnswers}
+            toggler={setShowAnswers}
+            buttonText="Show answers"
+          />
+          {showAnswers && (
+            <div className="max-w-md">
+              {question?.answers.length === 0 && <p> No questions yet </p>}
+              {question?.answers.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  {question?.answers?.map((a, idx) => (
+                    <div className="" key={a._id}>
+                      {idx + 1}. {a.answer} ... +edit button ... +delete button
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           )}
-        </div>
+
+          <DeleteButton onDelete={onDelete} />
+        </>
       )}
     </main>
   );

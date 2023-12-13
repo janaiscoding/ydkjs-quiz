@@ -3,12 +3,12 @@ import createQuestion from "@/app/api_functions/create_question";
 import editQuizTitle from "@/app/api_functions/edit_quiz_title";
 import getQuizz from "@/app/api_functions/get_quiz";
 import AddQuestionForm from "@/app/components/AddQuestionForm";
+import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 
 import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { Quiz } from "@/app/utils/types";
-import { CiWarning } from "react-icons/ci";
 import { SyntheticEvent, useEffect, useState } from "react";
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
@@ -65,7 +65,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       <a href="/" className="text-neutral-400 hover:text-blue-500 underline">
         Home
       </a>
-      {isLoading && <p>please wait...</p>}
+      {isLoading && <p>Loading your quiz...</p>}
 
       {!isLoading && (
         <>
@@ -124,13 +124,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             </div>
           )}
 
-          <button
-            onClick={onDelete}
-            className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-400"
-          >
-            <CiWarning />
-            Delete quiz
-          </button>
+          <DeleteButton onDelete={onDelete} />
         </>
       )}
     </main>
