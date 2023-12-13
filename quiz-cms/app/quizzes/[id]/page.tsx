@@ -70,7 +70,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       {showEditTitle && (
         <EditTitleForm
           defaultTitle={quizTitle}
-          legend={"Quiz"}
+          legend={"quiz"}
           setTitle={setQuizTitle}
           onSubmit={onEditQuizTitle}
         />

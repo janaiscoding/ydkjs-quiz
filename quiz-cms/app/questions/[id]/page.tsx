@@ -2,6 +2,9 @@
 import createAnswer from "@/app/api_functions/create_answer";
 import editQuestionTitle from "@/app/api_functions/edit_question_title";
 import getQuestion from "@/app/api_functions/get_question";
+import AddAnswerForm from "@/app/components/AddAnswerForm";
+import EditTitleForm from "@/app/components/EditTitleForm";
+import ToggleButton from "@/app/components/ToggleButton";
 import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { Question } from "@/app/utils/types";
 
@@ -35,7 +38,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const fetchQuestion = async () => {
     const myQuestion = await getQuestion(params.id);
     setQuestion(myQuestion);
-    setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n")); 
+    setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n"));
   };
 
   const onSuccess = () => {
@@ -69,71 +72,39 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
         <p>{question?.title?.trim().split("\\n").join("\n")}</p>
       </div>
 
-      <button
-        onClick={() => setShowEditTitle(!showEditTitle)}
-        className="p-2 text-slate-950 bg-yellow-400"
-      >
-        Edit question title
-      </button>
-
+      <ToggleButton
+        target={showEditTitle}
+        toggler={setShowEditTitle}
+        buttonText="Edit title"
+      />
       {showEditTitle && (
-        <form
-          className="p-4 border border-solid border-yellow-400 flex flex-col gap-4 w-full"
-          onSubmit={(e) => onEditQuestion(e)}
-        >
-          <legend>Edit question title</legend>
-          <label className="flex flex-col gap-4">
-            Question title
-            <textarea
-              rows={10}
-              defaultValue={questionTitle}
-              onChange={(e) => setQuestionTitle(e.target.value)}
-              className="text-slate-950"
-            ></textarea>
-          </label>
-
-          <button type="submit">Save question title</button>
-        </form>
+        <EditTitleForm
+          defaultTitle={questionTitle}
+          legend="question"
+          setTitle={setQuestionTitle}
+          onSubmit={onEditQuestion}
+        />
       )}
 
-      <button
-        onClick={() => setShowAddAnswer(!showAddAnswer)}
-        className="p-2 text-slate-950 bg-yellow-400"
-      >
-        Add new answer
-      </button>
+      <ToggleButton
+        target={showAddAnswer}
+        toggler={setShowAddAnswer}
+        buttonText="Add answer"
+      />
+
       {showAddAnswer && (
-        <form
-          className="p-4 border border-solid border-yellow-400 flex flex-col gap-4 w-full text-slate-50"
-          onSubmit={(e) => onAddAnswer(e)}
-        >
-          <legend>Add a new answer</legend>
-          <div>
-            <label className="flex flex-col">
-              Answer
-              <textarea
-                className="text-slate-950"
-                onChange={(e) => setAnswer(e.target.value)}
-              ></textarea>
-            </label>
-            <label className="flex gap-2">
-              Is correct?
-              <input
-                className="text-slate-950"
-                type="checkbox"
-                onChange={(e) => setIsCorrect(e.target.checked)}
-              ></input>
-            </label>
-          </div>
-          <button type="submit">Add answer</button>
-        </form>
+        <AddAnswerForm
+          setAnswer={setAnswer}
+          setIsCorrect={setIsCorrect}
+          onSubmit={onAddAnswer}
+        />
       )}
-      <button
-        onClick={() => setShowAnswers(!showAnswers)}
-        className="p-2 text-slate-950 bg-yellow-400"
-      >
-        Show question answers
-      </button>
+
+      <ToggleButton
+        target={showAnswers}
+        toggler={setShowAnswers}
+        buttonText="Show answers"
+      />
       {showAnswers && (
         <div className="max-w-md">
           {question?.answers.length === 0 && <p> No questions yet </p>}

@@ -18,14 +18,15 @@ const EditTitleForm = ({
       className="p-4 border border-solid border-yellow-400 flex flex-col gap-4 w-full"
       onSubmit={(e) => onSubmit(e)}
     >
-      <legend>Edit {legend} Title</legend>
+      <legend>Edit {legend} title</legend>
       <label className="flex flex-col gap-2">
-        {legend} Title
-        <input
+        {legend} title
+        <textarea
           defaultValue={defaultTitle}
           onChange={(e) => setTitle(e.target.value)}
-          className="text-slate-950 h-10 p-2"
-        ></input>
+          rows={legend === "question" ? 10 : 3}
+          className="text-slate-950 p-2"
+        ></textarea>
       </label>
 
       <button
