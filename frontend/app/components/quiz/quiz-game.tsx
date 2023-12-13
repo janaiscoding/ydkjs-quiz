@@ -1,8 +1,9 @@
-import MarkdownWrapper from "@/frontend/app/utils/MarkdownWrapper";
-import { TQuestion, TQuiz } from "@/frontend/app/utils/types";
+
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import QuizNavigation from "./quiz-navigation";
 import { IoCheckmark } from "react-icons/io5";
+import { TQuestion, TQuiz } from "@/app/utils/types";
+import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 
 const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
   console.log(quiz)
@@ -40,7 +41,7 @@ const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
 
   const handleQuestionSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (selectedAnswer === currentQ.correctAnswer) {
+    if (selectedAnswer === currentQ!.correctAnswer) {
       setCorrect(true);
       console.log(selectedAnswer);
       //update score
@@ -72,7 +73,7 @@ const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
       onSubmit={(e) => handleQuestionSubmit(e)}
     >
       <legend className="text-lg">
-        <MarkdownWrapper content={currentQ?.title} />
+        <MarkdownWrapper content={currentQ!.title} />
       </legend>
 
       <div className="flex flex-col gap-4">

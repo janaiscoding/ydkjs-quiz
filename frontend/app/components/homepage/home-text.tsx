@@ -1,5 +1,5 @@
+import { fromBottom } from "@/app/utils/animation_variants";
 import { motion } from "framer-motion";
-import { fromBottom } from "@/frontend/app/utils/animation_variants";
 import { useState } from "react";
 import TypewriterComponent from "typewriter-effect";
 

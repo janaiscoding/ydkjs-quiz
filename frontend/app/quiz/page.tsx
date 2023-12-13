@@ -1,4 +1,5 @@
-import quiz from "@/frontend/app/data/full-quiz-data"
+import quiz from "../data/full-quiz-data";
+
 const Quiz = () => {
   return (
     <div className="flex flex-col justify-center gap-4 md:gap-10 my-6 md:my-20">

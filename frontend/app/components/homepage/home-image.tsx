@@ -1,6 +1,7 @@
+import { fromTop } from "@/app/utils/animation_variants";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { fromTop } from "@/frontend/app/utils/animation_variants";
+
 
 const HomeImage = () => {
   return (

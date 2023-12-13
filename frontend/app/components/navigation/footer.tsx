@@ -1,7 +1,8 @@
 "use client";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { fromBottom } from "@/frontend/app/utils/animation_variants";
+import { fromBottom } from "@/app/utils/animation_variants";
+
 
 export default function Footer() {
   return (

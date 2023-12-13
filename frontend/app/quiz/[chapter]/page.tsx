@@ -1,7 +1,8 @@
 "use client";
-import Breadcrumbs from "@/frontend/app/components/quiz/breadcrumbs";
-import QuizGame from "@/frontend/app/components/quiz/quiz-game";
-import { useQuizFetcher } from "@/frontend/app/hooks/useQuizFetcher";
+
+import Breadcrumbs from "@/app/components/quiz/breadcrumbs";
+import QuizGame from "@/app/components/quiz/quiz-game";
+import { useQuizFetcher } from "@/app/hooks/useQuizFetcher";
 
 const ChapterPage = ({ params }: { params: { chapter: string } }) => {
   const quiz = useQuizFetcher(params.chapter);
