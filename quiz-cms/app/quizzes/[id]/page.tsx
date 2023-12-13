@@ -41,8 +41,8 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   const onAddQuestion = (e: SyntheticEvent) => {
     e.preventDefault();
-    let title = questionTitle.trim().split(/\n/).join("\\n");
-    createQuestion(params.id, title, onSuccess);
+    let formattedTitle = questionTitle.trim().split(/\n/).join("\\n");
+    createQuestion(params.id, formattedTitle, onSuccess);
   };
 
   useEffect(() => {
