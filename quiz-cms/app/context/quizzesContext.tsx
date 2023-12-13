@@ -11,7 +11,7 @@ type QuizzesContextType = {
   setQuizzes: React.Dispatch<React.SetStateAction<Quiz[] | null>>;
 };
 
-export const PostsContext = createContext<QuizzesContextType>(
+export const QuizzesContext = createContext<QuizzesContextType>(
   {} as QuizzesContextType
 );
 
@@ -21,8 +21,8 @@ export const QuizzesContextProvider = ({
   const [quizzes, setQuizzes] = useState<Quiz[] | null>([] as Quiz[]);
 
   return (
-    <PostsContext.Provider value={{ quizzes, setQuizzes }}>
+    <QuizzesContext.Provider value={{ quizzes, setQuizzes }}>
       {children}
-    </PostsContext.Provider>
+    </QuizzesContext.Provider>
   );
 };

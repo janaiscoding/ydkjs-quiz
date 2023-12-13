@@ -14,7 +14,6 @@ const verifyToken = (
   })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data)
       data.user ? onSuccess(data.user) : onError();
     })
     .catch((err) => {
