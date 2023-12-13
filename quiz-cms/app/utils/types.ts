@@ -30,4 +30,4 @@ type Answer = {
   isCorrect: boolean;
   parent_question: string;
 };
-export type { User, Quiz };
+export type { User, Quiz, Question, Answer, History };
