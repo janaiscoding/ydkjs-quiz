@@ -14,7 +14,11 @@ const verifyToken = (
   })
     .then((res) => res.json())
     .then((data) => {
-      data.user ? onSuccess(data.user) : onError();
+      if (data.user.isAdmin) {
+        onSuccess(data.user);
+      } else {
+        onError();
+      }
     })
     .catch((err) => {
       onError();
