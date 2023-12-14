@@ -135,7 +135,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             </div>
           )}
 
-          <DeleteButton onDelete={onDelete} />
+          <DeleteButton onDelete={onDelete} deleteText={'quiz'}/>
         </>
       )}
     </main>

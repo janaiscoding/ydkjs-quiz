@@ -3,6 +3,7 @@ import createAnswer from "@/app/api_functions/create_answer";
 import editQuestionTitle from "@/app/api_functions/edit_question_title";
 import getQuestion from "@/app/api_functions/get_question";
 import AddAnswerForm from "@/app/components/AddAnswerForm";
+import AnswerWrapper from "@/app/components/AnswerWrapper";
 import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
@@ -14,49 +15,51 @@ import {
 } from "@/app/utils/stringFormatters";
 
 import { Question } from "@/app/utils/types";
+import { useRouter } from "next/navigation";
 
 import { SyntheticEvent, useEffect, useState } from "react";
 
 const QuestionPage = ({ params }: { params: { id: string } }) => {
   useTokenAuth();
-
-  const [isLoading, setLoading] = useState(true);
-  const [showAnswers, setShowAnswers] = useState(false);
+  const router = useRouter();
+  // Current page question, will be fetched
   const [question, setQuestion] = useState({} as Question);
-
-  const [showEditTitle, setShowEditTitle] = useState(false);
+  // Edit question title
   const [questionTitle, setQuestionTitle] = useState(" ");
-
-  const [showAddAnswer, setShowAddAnswer] = useState(false);
+  // New answer content
   const [answer, setAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
+  // Loaders, state togglers
+  const [isLoading, setLoading] = useState(true);
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [showEditTitle, setShowEditTitle] = useState(false);
+  const [showAddAnswer, setShowAddAnswer] = useState(false);
+
   const onEditQuestion = (e: SyntheticEvent) => {
     e.preventDefault();
-    editQuestionTitle(
-      params.id,
-      formatToTemplateLiteral(questionTitle),
-      onSuccess
-    );
+    const editTitle = formatToTemplateLiteral(questionTitle);
+    editQuestionTitle(params.id, editTitle, onSuccess);
   };
 
   const onAddAnswer = (e: SyntheticEvent) => {
     e.preventDefault();
-    createAnswer(
-      params.id,
-      formatToTemplateLiteral(answer),
-      isCorrect,
-      onSuccess
-    );
+    const dbAnswer = formatToTemplateLiteral(answer);
+    createAnswer(params.id, dbAnswer, isCorrect, onSuccess);
   };
 
   const fetchQuestion = async () => {
     setLoading(true);
     const myQuestion = await getQuestion(params.id);
     setQuestion(myQuestion);
-
-    setQuestionTitle(formatToMarkdown(myQuestion.title));
+    const markdownQuestion = formatToMarkdown(myQuestion.title);
+    setQuestionTitle(markdownQuestion);
     setLoading(false);
+  };
+
+  const onDelete = () => {
+    //delete question
+    //redirect to parent quiz
   };
 
   const onSuccess = () => {
@@ -66,10 +69,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     setShowAnswers(false);
     setAnswer("");
   };
-  const onDelete = () => {
-    //delete question
-    //redirect to parent quiz
-  };
+
   useEffect(() => {
     fetchQuestion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,22 +129,19 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
             buttonText="Show answers"
           />
           {showAnswers && (
-            <div className="max-w-md">
+            <div className="w-full">
               {question?.answers.length === 0 && <p> No questions yet </p>}
               {question?.answers.length > 0 && (
                 <div className="flex flex-col gap-2">
                   {question?.answers?.map((ans, idx) => (
-                    <div className="" key={ans._id}>
-                      {idx + 1}. {formatToMarkdown(ans.answer)} ... +edit button
-                      ... +delete button
-                    </div>
+                    <AnswerWrapper idx={idx + 1} answer={ans} key={idx} />
                   ))}
                 </div>
               )}
             </div>
           )}
 
-          <DeleteButton onDelete={onDelete} />
+          <DeleteButton onDelete={onDelete} deleteText={"question"} />
         </>
       )}
     </main>

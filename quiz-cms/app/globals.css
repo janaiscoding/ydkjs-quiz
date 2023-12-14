@@ -5,3 +5,8 @@
 .link {
   @apply text-2xl text-blue-400 hover:text-blue-500;
 }
+
+.answer__code > p >  code {
+  background-color: #111B27;
+  padding: 0.5em;
+}
