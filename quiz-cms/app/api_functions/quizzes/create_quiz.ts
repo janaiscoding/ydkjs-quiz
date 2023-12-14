@@ -12,8 +12,9 @@ const createQuiz = (title: string, onSuccess: () => void) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data); 
-      //handle success
+      if(data.message) {
+        onSuccess()
+      }
     })
     .catch((err) => {
       console.log(err);

@@ -7,29 +7,36 @@ import createQuiz from "./api_functions/quizzes/create_quiz";
 import AddQuizForm from "./components/quizzes/AddQuizForm";
 
 export default function Home() {
+  // Protected.
   useTokenAuth();
-
-  const [isLoading, setLoading] = useState(true);
-  const [title, setTitle] = useState("");
-
   const quizzesContext = useContext(QuizzesContext);
-
+  // Loading effect
+  const [isLoading, setLoading] = useState(true);
+  // New quiz title
+  const [title, setTitle] = useState("");
+  // Fetch and set context
   const fetchQuizzes = async () => {
     setLoading(true);
     const myQuizzes = await getQuizzes();
     quizzesContext.setQuizzes(myQuizzes);
     setLoading(false);
   };
+  // Submit a new quiz
   const onSubmit = (e: SyntheticEvent) => {
-    //add new quizz
-
-    createQuiz(title, fetchQuizzes);
-
+    e.preventDefault();
+    createQuiz(title, onSuccess);
   };
+  // Refetch after new quiz success + clear form
+  const onSuccess = () => {
+    fetchQuizzes();
+    setTitle("");
+  };
+  // Initial render
   useEffect(() => {
     fetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <main className="min-h-screen py-10 px-4">
       <h2 className="text-yellow-300 text-xl"> My quizzes </h2>

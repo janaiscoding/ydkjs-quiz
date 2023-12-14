@@ -65,9 +65,13 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     setShowAddQuestion(false);
   };
 
-  const onDelete = async () => {
-    await deleteQuiz(quiz._id);
-    router.push("/");
+  const onDelete = () => {
+    //@ts-ignore
+    deleteQuiz(quiz.id);
+    setShowDelete(false);
+    setTimeout(() => {
+      router.push("/");
+    }, 100);
   };
 
   useEffect(() => {
