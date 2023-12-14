@@ -1,13 +1,17 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import useTokenAuth from "./hooks/useTokenAuth";
 import { QuizzesContext } from "./context/quizzesContext";
 import getQuizzes from "./api_functions/quizzes/get_quizzes";
+import createQuiz from "./api_functions/quizzes/create_quiz";
+import AddQuizForm from "./components/quizzes/AddQuizForm";
 
 export default function Home() {
   useTokenAuth();
 
   const [isLoading, setLoading] = useState(true);
+  const [title, setTitle] = useState("");
+
   const quizzesContext = useContext(QuizzesContext);
 
   const fetchQuizzes = async () => {
@@ -16,14 +20,19 @@ export default function Home() {
     quizzesContext.setQuizzes(myQuizzes);
     setLoading(false);
   };
+  const onSubmit = (e: SyntheticEvent) => {
+    //add new quizz
 
+    createQuiz(title, fetchQuizzes);
+
+  };
   useEffect(() => {
     fetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <main className="min-h-screen py-10 px-4">
-      <h2 className="text-yellow-300 text-2xl"> Quizzes </h2>
+      <h2 className="text-yellow-300 text-xl"> My quizzes </h2>
       {isLoading ? (
         <p>Loading quizzes...</p>
       ) : (
@@ -35,6 +44,8 @@ export default function Home() {
               </a>
             </div>
           ))}
+
+          <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
         </div>
       )}
     </main>

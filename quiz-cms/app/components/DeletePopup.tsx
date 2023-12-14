@@ -13,7 +13,7 @@ const DeletePopup = ({
       <h1>This content will be deleted permanently</h1>
       <p> Are you sure?</p>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-2">
         <DeleteButton onDelete={onDelete} />
         <CancelButton onCancel={onCancel} />
       </div>
