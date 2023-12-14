@@ -37,7 +37,6 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   // Loaders, state togglers
   const [isLoading, setLoading] = useState(true);
-  const [showAnswers, setShowAnswers] = useState(false);
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showAddAnswer, setShowAddAnswer] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -65,16 +64,21 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   const onDelete = () => {
     //delete question
-    deleteQuestion(question._id);
+    deleteQuestion(question._id, onSuccessDelete);
     //redirect to parent quiz
-    router.push(`/quizzes/${question?.parent_quiz}`);
+  };
+  const onSuccessDelete = () => {
+    //show delete success popup
+    setTimeout(() => {
+      router.push(`/quizzes/${question?.parent_quiz}`);
+    }, 1000);
   };
 
   const onSuccess = () => {
     fetchQuestion();
     setShowEditTitle(false);
     setShowAddAnswer(false);
-    setShowAnswers(false);
+
     setAnswer("");
   };
 
@@ -123,11 +127,6 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
             />
 
             <ToggleButton
-              target={showAnswers}
-              toggler={setShowAnswers}
-              buttonText="Show answers"
-            />
-            <ToggleButton
               target={showDelete}
               toggler={setShowDelete}
               buttonText="Delete question"
@@ -170,24 +169,24 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
           )}
 
           {/* DISPLAY ALL QUESTIONS ANSWERS */}
-          {showAnswers && (
-            <div className="w-full">
-              {question?.answers.length === 0 && <p> No questions yet </p>}
-              {question?.answers.length > 0 && (
-                <div className="flex flex-col gap-2 ">
-                  {question?.answers?.map((ans, idx) => (
-                    <AnswerWrapper
-                      idx={idx + 1}
-                      answer={ans}
-                      key={idx}
-                      onSucces={onSuccess}
-                      setShowAnswers={setShowAnswers}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+
+          <div className="w-full">
+            {question?.answers.length === 0 && (
+              <p> No answers yet, let&apos;s add one </p>
+            )}
+            {question?.answers.length > 0 && (
+              <div className="flex flex-col gap-2 ">
+                {question?.answers?.map((ans, idx) => (
+                  <AnswerWrapper
+                    idx={idx + 1}
+                    answer={ans}
+                    key={idx}
+                    onSucces={onSuccess}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </>
       )}
     </main>

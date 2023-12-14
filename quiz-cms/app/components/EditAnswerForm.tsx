@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 
 type EditTitleFormProps = {
   defaultAnswer: string;
-  defaultCorrect: boolean;
+  isCorrect: boolean;
   setAnswer: React.Dispatch<SetStateAction<string>>;
   setIsCorrect: React.Dispatch<SetStateAction<boolean>>;
   onSubmit: (e: SyntheticEvent) => void;
@@ -15,13 +15,14 @@ import DeleteButton from "./DeleteButton";
 
 const EditAnswerForm = ({
   defaultAnswer,
-  defaultCorrect,
+  isCorrect,
   setAnswer,
   setIsCorrect,
   onSubmit,
   onCancel,
   onDeleteAnswer,
 }: EditTitleFormProps) => {
+
   return (
     <form
       className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
@@ -51,7 +52,7 @@ const EditAnswerForm = ({
         <input
           type="checkbox"
           className="checkbox checkbox-success"
-          checked={defaultCorrect}
+          checked={isCorrect}
           onChange={(e) => setIsCorrect(e.target.checked)}
         />
       </label>

@@ -14,12 +14,12 @@ const AnswerWrapper = ({
   idx,
   answer,
   onSucces,
-  setShowAnswers,
+
 }: {
   idx: number;
   answer: Answer;
   onSucces: () => void;
-  setShowAnswers: React.Dispatch<SetStateAction<boolean>>;
+
 }) => {
   const [showEditAnswer, setShowEditAnswer] = useState(false);
 
@@ -36,7 +36,7 @@ const AnswerWrapper = ({
   const onSuccessAns = () => {
     onSucces();
     setShowEditAnswer(false);
-    setShowAnswers(true);
+
   };
   return (
     <article
@@ -61,7 +61,7 @@ const AnswerWrapper = ({
       {showEditAnswer && (
         <PopupWrapper>
           <EditAnswerForm
-            defaultCorrect={answer.isCorrect}
+            isCorrect={isCorrect}
             defaultAnswer={formatToMarkdown(answer.answer)}
             setAnswer={setEdittedAnswer}
             setIsCorrect={setIsCorrect}
