@@ -1,4 +1,5 @@
 import { SetStateAction, SyntheticEvent } from "react";
+import { IoMdClose } from "react-icons/io";
 import { IoCheckboxOutline } from "react-icons/io5";
 
 type AddQuestionFormProps = {
@@ -21,18 +22,29 @@ const AddQuestionForm = ({
       <label className="flex flex-col gap-4">
         Question title
         <textarea
+          rows={10}
           onChange={(e) => setQuestion(e.target.value)}
           className="text-slate-950"
         ></textarea>
       </label>
 
-      <button
-        type="submit"
-        className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-400"
-      >
-        <IoCheckboxOutline />
-        Save title
-      </button>
+      <div className="flex gap-4">
+        <button
+          type="submit"
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
+        >
+          <IoCheckboxOutline />
+          Add new question
+        </button>
+        <button
+          onClick={onCancel}
+          type="button"
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-100"
+        >
+          <IoMdClose />
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

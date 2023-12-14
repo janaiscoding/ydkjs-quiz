@@ -53,7 +53,7 @@ const AddAnswerForm = ({
         <button
           onClick={onCancel}
           type="button"
-          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-400"
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-100"
         >
           <IoMdClose />
           Cancel
