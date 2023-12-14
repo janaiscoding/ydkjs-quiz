@@ -64,7 +64,7 @@ const EditAnswerForm = ({
           Save answer
         </button>
 
-        <DeleteButton onDelete={onDeleteAnswer} deleteText={"answer"} />
+        <DeleteButton onDelete={onDeleteAnswer} />
       </div>
     </form>
   );

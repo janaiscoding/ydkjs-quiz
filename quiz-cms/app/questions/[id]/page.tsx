@@ -8,6 +8,7 @@ import getQuestion from "@/app/api_functions/questions/get_question";
 import AddAnswerForm from "@/app/components/AddAnswerForm";
 import AnswerWrapper from "@/app/components/AnswerWrapper";
 import DeleteButton from "@/app/components/DeleteButton";
+import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
@@ -142,6 +143,16 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
                 setTitle={setQuestionTitle}
                 onSubmit={onEditQuestion}
                 onCancel={() => setShowEditTitle(false)}
+              />
+            </PopupWrapper>
+          )}
+
+          {/* DELETE QUESTION POPUP  */}
+          {showDelete && (
+            <PopupWrapper>
+              <DeletePopup
+                onDelete={onDelete}
+                onCancel={() => setShowDelete(false)}
               />
             </PopupWrapper>
           )}
