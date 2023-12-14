@@ -1,4 +1,4 @@
-import { getJwtToken } from "../utils/auth";
+import { getJwtToken } from "@/app/utils/auth";
 
 const deleteQuiz = async (quiz_id: string) => {
   const res = await fetch(`https://js-quiz-api.fly.dev/quizzes/${quiz_id}`, {

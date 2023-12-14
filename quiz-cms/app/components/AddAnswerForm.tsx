@@ -26,6 +26,7 @@ const AddAnswerForm = ({
           Answer
           <textarea
             className="text-slate-950"
+            rows={6}
             onChange={(e) => setAnswer(e.target.value)}
           ></textarea>
         </label>
@@ -43,7 +44,7 @@ const AddAnswerForm = ({
       <div className="flex gap-4">
         <button
           type="submit"
-          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-400"
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
         >
           <IoCheckboxOutline />
           Add answer

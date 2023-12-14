@@ -21,7 +21,15 @@ const EditTitleForm = ({
       className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
       onSubmit={(e) => onSubmit(e)}
     >
-      <legend>Edit {legend} title</legend>
+      <legend className="flex justify-between">
+        <span>Edit {legend} title</span>
+        <button
+          onClick={onCancel}
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-gray-200"
+        >
+          <IoMdClose />
+        </button>
+      </legend>
       <label className="flex flex-col gap-2">
         Your current {legend} title
         <textarea
@@ -32,22 +40,13 @@ const EditTitleForm = ({
         ></textarea>
       </label>
 
-      <div className="flex gap-4">
-        <button
-          type="submit"
-          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-400"
-        >
-          <IoCheckboxOutline />
-          Save {legend}
-        </button>
-        <button
-          onClick={onCancel}
-          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-400"
-        >
-          <IoMdClose />
-          Cancel
-        </button>
-      </div>
+      <button
+        type="submit"
+        className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
+      >
+        <IoCheckboxOutline />
+        Save {legend}
+      </button>
     </form>
   );
 };

@@ -1,7 +1,6 @@
-import { SetStateAction } from "react";
-import { Quiz } from "../utils/types";
-import { getJwtToken } from "../utils/auth";
-import { quizzesAPI } from "../utils/endpoints";
+import { Quiz } from "@/app/utils/types";
+import { getJwtToken } from "@/app/utils/auth";
+import { quizzesAPI } from "@/app/utils/endpoints";
 
 const getQuizzes = async () => {
   let quizzes: Quiz[];

@@ -1,23 +1,42 @@
 import MarkdownWrapper from "../utils/MarkdownWrapper";
-import { formatToMarkdown } from "../utils/stringFormatters";
+import {
+  formatToMarkdown,
+  formatToTemplateLiteral,
+} from "../utils/stringFormatters";
 import { Answer } from "../utils/types";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteForever } from "react-icons/md";
 import ToggleButton from "./ToggleButton";
-import { SyntheticEvent, useState } from "react";
-import DeleteButton from "./DeleteButton";
-import EditTitleForm from "./EditTitleForm";
+import { SetStateAction, SyntheticEvent, useState } from "react";
 import EditAnswerForm from "./EditAnswerForm";
 import PopupWrapper from "../utils/PopupWrapper";
-const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
+import editAnswer from "../api_functions/answers/edit_answer";
+
+const AnswerWrapper = ({
+  idx,
+  answer,
+  onSucces,
+  setShowAnswers,
+}: {
+  idx: number;
+  answer: Answer;
+  onSucces: () => void;
+  setShowAnswers: React.Dispatch<SetStateAction<boolean>>;
+}) => {
   const [showEditAnswer, setShowEditAnswer] = useState(false);
 
-  const [editAnswer, setEditAnswer] = useState("");
+  const [edittedAnswer, setEdittedAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState(answer.isCorrect);
 
   const onDeleteAnswer = () => {};
   const onEditAnswer = (e: SyntheticEvent) => {
     e.preventDefault();
+    const newAnswer = formatToTemplateLiteral(edittedAnswer);
+
+    editAnswer(answer._id, newAnswer, isCorrect, onSuccessAns);
+  };
+  const onSuccessAns = () => {
+    onSucces();
+    setShowEditAnswer(false);
+    setShowAnswers(true);
   };
   return (
     <article
@@ -44,7 +63,7 @@ const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
           <EditAnswerForm
             defaultCorrect={answer.isCorrect}
             defaultAnswer={formatToMarkdown(answer.answer)}
-            setAnswer={setEditAnswer}
+            setAnswer={setEdittedAnswer}
             setIsCorrect={setIsCorrect}
             onSubmit={onEditAnswer}
             onCancel={() => setShowEditAnswer(false)}

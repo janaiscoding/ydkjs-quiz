@@ -1,8 +1,9 @@
 "use client";
-import createQuestion from "@/app/api_functions/create_question";
-import deleteQuiz from "@/app/api_functions/delete_quiz";
-import editQuizTitle from "@/app/api_functions/edit_quiz_title";
-import getQuizz from "@/app/api_functions/get_quiz";
+
+import createQuestion from "@/app/api_functions/questions/create_question";
+import deleteQuiz from "@/app/api_functions/quizzes/delete_quiz";
+import editQuizTitle from "@/app/api_functions/quizzes/edit_quiz_title";
+import getQuiz from "@/app/api_functions/quizzes/get_quiz";
 import AddQuestionForm from "@/app/components/AddQuestionForm";
 import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
@@ -33,7 +34,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   const fetchQuiz = async () => {
     setLoading(true);
-    const myQuiz = await getQuizz(params.id);
+    const myQuiz = await getQuiz(params.id);
     setQuiz(myQuiz);
     setLoading(false);
     setQuizTitle(myQuiz.title.trim().split("\\n").join("\n"));

@@ -1,4 +1,4 @@
-import { Question } from "../utils/types";
+import { Question } from "@/app/utils/types";
 
 const getQuestion = async (question_id: string) => {
   let question: Question;

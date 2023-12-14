@@ -1,7 +1,9 @@
 "use client";
-import createAnswer from "@/app/api_functions/create_answer";
-import editQuestionTitle from "@/app/api_functions/edit_question_title";
-import getQuestion from "@/app/api_functions/get_question";
+
+import createAnswer from "@/app/api_functions/answers/create_answer";
+import editQuestionTitle from "@/app/api_functions/questions/edit_question_title";
+import getQuestion from "@/app/api_functions/questions/get_question";
+
 import AddAnswerForm from "@/app/components/AddAnswerForm";
 import AnswerWrapper from "@/app/components/AnswerWrapper";
 import DeleteButton from "@/app/components/DeleteButton";
@@ -9,6 +11,7 @@ import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
+import PopupWrapper from "@/app/utils/PopupWrapper";
 import {
   formatToMarkdown,
   formatToTemplateLiteral,
@@ -77,6 +80,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
+      {/* BREADCRUMBS */}
       <div className="text-sm breadcrumbs text-gray-400">
         <ul>
           <li>
@@ -87,62 +91,84 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
           </li>
         </ul>
       </div>
+
+      {/* LOADING EFFECT */}
       {isLoading && <p>Loading your question...</p>}
+
       {!isLoading && (
         <>
+          <p>You are now editting...</p>
+          {/* QUESTION WITH SYNTAX HIGHLIGHT  */}
+
           <div className="md:text-2xl text-yellow-400">
             <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
 
-          <ToggleButton
-            target={showEditTitle}
-            toggler={setShowEditTitle}
-            buttonText="Edit title"
-          />
+          {/* CONTROLLER BUTTONS */}
+          <div className="flex flex-col md:flex-row gap-4 justify-between">
+            <ToggleButton
+              target={showEditTitle}
+              toggler={setShowEditTitle}
+              buttonText="Edit title"
+            />
+            <ToggleButton
+              target={showAddAnswer}
+              toggler={setShowAddAnswer}
+              buttonText="Add answer"
+            />
+
+            <ToggleButton
+              target={showAnswers}
+              toggler={setShowAnswers}
+              buttonText="Show answers"
+            />
+            <DeleteButton onDelete={onDelete} deleteText={"question"} />
+          </div>
+
+          {/* EDIT QUESTION POPUP FORM */}
           {showEditTitle && (
-            <EditTitleForm
-              defaultTitle={questionTitle}
-              legend="question"
-              setTitle={setQuestionTitle}
-              onSubmit={onEditQuestion}
-              onCancel={() => setShowEditTitle(false)}
-            />
+            <PopupWrapper>
+              <EditTitleForm
+                defaultTitle={questionTitle}
+                legend="question"
+                setTitle={setQuestionTitle}
+                onSubmit={onEditQuestion}
+                onCancel={() => setShowEditTitle(false)}
+              />
+            </PopupWrapper>
           )}
 
-          <ToggleButton
-            target={showAddAnswer}
-            toggler={setShowAddAnswer}
-            buttonText="Add answer"
-          />
-
+          {/* ADD ANSWER POPUP FORM */}
           {showAddAnswer && (
-            <AddAnswerForm
-              setAnswer={setAnswer}
-              setIsCorrect={setIsCorrect}
-              onSubmit={onAddAnswer}
-              onCancel={() => setShowAddAnswer(false)}
-            />
+            <PopupWrapper>
+              <AddAnswerForm
+                setAnswer={setAnswer}
+                setIsCorrect={setIsCorrect}
+                onSubmit={onAddAnswer}
+                onCancel={() => setShowAddAnswer(false)}
+              />
+            </PopupWrapper>
           )}
 
-          <ToggleButton
-            target={showAnswers}
-            toggler={setShowAnswers}
-            buttonText="Show answers"
-          />
+          {/* DISPLAY ALL QUESTIONS ANSWERS */}
           {showAnswers && (
             <div className="w-full">
               {question?.answers.length === 0 && <p> No questions yet </p>}
               {question?.answers.length > 0 && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 ">
                   {question?.answers?.map((ans, idx) => (
-                    <AnswerWrapper idx={idx + 1} answer={ans} key={idx} />
+                    <AnswerWrapper
+                      idx={idx + 1}
+                      answer={ans}
+                      key={idx}
+                      onSucces={onSuccess}
+                      setShowAnswers={setShowAnswers}
+                    />
                   ))}
                 </div>
               )}
             </div>
           )}
-
-          <DeleteButton onDelete={onDelete} deleteText={"question"} />
         </>
       )}
     </main>

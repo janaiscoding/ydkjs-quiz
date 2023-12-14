@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import useTokenAuth from "./hooks/useTokenAuth";
 import { QuizzesContext } from "./context/quizzesContext";
-import getQuizzes from "./api_functions/get_quizzes";
+import getQuizzes from "./api_functions/quizzes/get_quizzes";
 
 export default function Home() {
   useTokenAuth();

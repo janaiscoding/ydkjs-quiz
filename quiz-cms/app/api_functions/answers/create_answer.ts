@@ -1,4 +1,4 @@
-import { getJwtToken } from "../utils/auth";
+import { getJwtToken } from "@/app/utils/auth";
 
 const createAnswer = async (
   question_id: string,

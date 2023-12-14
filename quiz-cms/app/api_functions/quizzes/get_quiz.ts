@@ -1,7 +1,8 @@
-import { Quiz } from "../utils/types";
-import { getJwtToken } from "../utils/auth";
+import { Quiz } from "@/app/utils/types";
+import { getJwtToken } from "@/app/utils/auth";
 
-const getQuizz = async (quiz_id: string) => {
+
+const getQuiz = async (quiz_id: string) => {
   let quizz: Quiz;
   await fetch(`https://js-quiz-api.fly.dev/quizzes/${quiz_id}`, {
     headers: {
@@ -19,4 +20,4 @@ const getQuizz = async (quiz_id: string) => {
   return quizz!;
 };
 
-export default getQuizz;
+export default getQuiz;

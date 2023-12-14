@@ -1,4 +1,4 @@
-import { getJwtToken } from "../utils/auth";
+import { getJwtToken } from "@/app/utils/auth";
 
 const editQuestionTitle = async (
   question_id: string,
