@@ -1,6 +1,7 @@
 "use client";
 
 import createAnswer from "@/app/api_functions/answers/create_answer";
+import deleteQuestion from "@/app/api_functions/questions/delete_question";
 import editQuestionTitle from "@/app/api_functions/questions/edit_question_title";
 import getQuestion from "@/app/api_functions/questions/get_question";
 
@@ -38,6 +39,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const [showAnswers, setShowAnswers] = useState(false);
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showAddAnswer, setShowAddAnswer] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const onEditQuestion = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -62,7 +64,9 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   const onDelete = () => {
     //delete question
+    deleteQuestion(question._id);
     //redirect to parent quiz
+    router.push(`/quizzes/${question?.parent_quiz}`);
   };
 
   const onSuccess = () => {
@@ -122,7 +126,11 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               toggler={setShowAnswers}
               buttonText="Show answers"
             />
-            <DeleteButton onDelete={onDelete} deleteText={"question"} />
+            <ToggleButton
+              target={showDelete}
+              toggler={setShowDelete}
+              buttonText="Delete question"
+            />
           </div>
 
           {/* EDIT QUESTION POPUP FORM */}
