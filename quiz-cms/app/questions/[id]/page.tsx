@@ -6,13 +6,19 @@ import AddAnswerForm from "@/app/components/AddAnswerForm";
 import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
-import useTokenVerification from "@/app/hooks/useTokenVerification";
+import useTokenAuth from "@/app/hooks/useTokenAuth";
+import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
+import {
+  formatToMarkdown,
+  formatToTemplateLiteral,
+} from "@/app/utils/stringFormatters";
+
 import { Question } from "@/app/utils/types";
 
 import { SyntheticEvent, useEffect, useState } from "react";
 
 const QuestionPage = ({ params }: { params: { id: string } }) => {
-  useTokenVerification();
+  useTokenAuth();
 
   const [isLoading, setLoading] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
@@ -27,21 +33,29 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   const onEditQuestion = (e: SyntheticEvent) => {
     e.preventDefault();
-    let title = questionTitle.trim().split(/\n/).join("\\n");
-    editQuestionTitle(params.id, title, onSuccess);
+    editQuestionTitle(
+      params.id,
+      formatToTemplateLiteral(questionTitle),
+      onSuccess
+    );
   };
 
   const onAddAnswer = (e: SyntheticEvent) => {
     e.preventDefault();
-    let formattedAnswer = answer.trim().split(/\n/).join("\\n");
-    createAnswer(params.id, formattedAnswer, isCorrect, onSuccess);
+    createAnswer(
+      params.id,
+      formatToTemplateLiteral(answer),
+      isCorrect,
+      onSuccess
+    );
   };
 
   const fetchQuestion = async () => {
     setLoading(true);
     const myQuestion = await getQuestion(params.id);
     setQuestion(myQuestion);
-    setQuestionTitle(myQuestion.title.trim().split("\\n").join("\n"));
+
+    setQuestionTitle(formatToMarkdown(myQuestion.title));
     setLoading(false);
   };
 
@@ -78,8 +92,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
       {!isLoading && (
         <>
           <div className="text-2xl text-yellow-400">
-            You are now editing:
-            <p>{question?.title?.trim().split("\\n").join("\n")}</p>
+            <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
 
           <ToggleButton
@@ -120,9 +133,10 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               {question?.answers.length === 0 && <p> No questions yet </p>}
               {question?.answers.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  {question?.answers?.map((a, idx) => (
-                    <div className="" key={a._id}>
-                      {idx + 1}. {a.answer} ... +edit button ... +delete button
+                  {question?.answers?.map((ans, idx) => (
+                    <div className="" key={ans._id}>
+                      {idx + 1}. {formatToMarkdown(ans.answer)} ... +edit button
+                      ... +delete button
                     </div>
                   ))}
                 </div>

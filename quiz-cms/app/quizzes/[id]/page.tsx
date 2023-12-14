@@ -1,28 +1,36 @@
 "use client";
 import createQuestion from "@/app/api_functions/create_question";
+import deleteQuiz from "@/app/api_functions/delete_quiz";
 import editQuizTitle from "@/app/api_functions/edit_quiz_title";
 import getQuizz from "@/app/api_functions/get_quiz";
 import AddQuestionForm from "@/app/components/AddQuestionForm";
 import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
+import useTokenAuth from "@/app/hooks/useTokenAuth";
 
-import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { Quiz } from "@/app/utils/types";
+import { useRouter } from "next/navigation";
 import { SyntheticEvent, useEffect, useState } from "react";
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
-  useTokenVerification();
+  // Auth
+  useTokenAuth();
+  const router = useRouter();
 
-  const [showQuestions, setShowQuestions] = useState(false);
-  const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
+  // Loaders and togglers on/off
   const [isLoading, setLoading] = useState(true);
-
+  const [showQuestions, setShowQuestions] = useState(false);
   const [showAddQuestion, setShowAddQuestion] = useState(false);
-  const [questionTitle, setQuestionTitle] = useState("");
-
   const [showEditTitle, setShowEditTitle] = useState(false);
+
+  // quiz content
+  const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
+  // state for a new question title
+  const [questionTitle, setQuestionTitle] = useState("");
+  // state for editting quiz title
   const [quizTitle, setQuizTitle] = useState("");
+
 
   const fetchQuiz = async () => {
     setLoading(true);
@@ -33,6 +41,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   };
 
   const onSuccess = () => {
+    // Perform this everytime an action happens
     fetchQuiz();
     setShowAddQuestion(false);
     setShowEditTitle(false);
@@ -51,10 +60,12 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     let formattedTitle = questionTitle.trim().split(/\n/).join("\\n");
     createQuestion(params.id, formattedTitle, onSuccess);
   };
-  const onDelete = () => {
-    //delete quiz
-    //redirect to homepage
+
+  const onDelete = async () => {
+    await deleteQuiz(quiz._id);
+    router.push("/");
   };
+
   useEffect(() => {
     fetchQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps

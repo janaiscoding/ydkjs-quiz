@@ -1,13 +1,14 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import useTokenVerification from "./hooks/useTokenVerification";
+import useTokenAuth from "./hooks/useTokenAuth";
 import { QuizzesContext } from "./context/quizzesContext";
 import getQuizzes from "./api_functions/get_quizzes";
 
 export default function Home() {
-  useTokenVerification();
-  const quizzesContext = useContext(QuizzesContext);
+  useTokenAuth();
+
   const [isLoading, setLoading] = useState(true);
+  const quizzesContext = useContext(QuizzesContext);
 
   const fetchQuizzes = async () => {
     setLoading(true);
@@ -28,9 +29,11 @@ export default function Home() {
       ) : (
         <div className="flex gap-2 flex-col">
           {quizzesContext.quizzes?.map((quiz, idx) => (
-            <a href={`/quizzes/${quiz._id}`} key={quiz._id} className="link">
-              {idx + 1}. {quiz.title}
-            </a>
+            <div key={quiz._id}>
+              <a href={`/quizzes/${quiz._id}`} className="link">
+                {idx + 1}. {quiz.title}
+              </a>
+            </div>
           ))}
         </div>
       )}

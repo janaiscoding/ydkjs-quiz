@@ -6,8 +6,8 @@ import { User } from "../utils/types";
 import { getJwtToken, removeJwtToken } from "../utils/auth";
 import verifyToken from "../api_functions/verify_token";
 
-// Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid. Returns valid boolean.
-const useTokenVerification = () => {
+// Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid.
+const useTokenAuth = () => {
   const router = useRouter();
   const userContext = useContext(UserContext);
 
@@ -35,4 +35,4 @@ const useTokenVerification = () => {
   }, []);
 };
 
-export default useTokenVerification;
+export default useTokenAuth;
