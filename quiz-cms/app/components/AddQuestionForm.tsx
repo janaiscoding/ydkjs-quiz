@@ -9,7 +9,7 @@ type AddQuestionFormProps = {
 const AddQuestionForm = ({ setQuestion, onSubmit }: AddQuestionFormProps) => {
   return (
     <form
-      className="p-4 border border-solid border-yellow-400 flex flex-col gap-4 w-full"
+      className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
       onSubmit={(e) => onSubmit(e)}
     >
       <legend>Add a new question</legend>
@@ -20,6 +20,7 @@ const AddQuestionForm = ({ setQuestion, onSubmit }: AddQuestionFormProps) => {
           className="text-slate-950"
         ></textarea>
       </label>
+      
 
       <button
         type="submit"

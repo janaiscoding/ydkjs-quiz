@@ -72,9 +72,13 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
-      <a href="/" className="text-neutral-400 hover:text-blue-500 underline">
-        Home
-      </a>
+      <div className="text-sm breadcrumbs text-gray-400">
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+        </ul>
+      </div>
       {isLoading && <p>Loading your quiz...</p>}
 
       {!isLoading && (

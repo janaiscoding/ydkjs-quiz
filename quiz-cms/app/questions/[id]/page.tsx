@@ -77,16 +77,15 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
-      <div className="flex gap-1">
-        <a href="/" className="text-neutral-400 hover:text-blue-500 underline">
-          Home
-        </a>
-        <a
-          href={`/quizzes/${question?.parent_quiz}`}
-          className="text-neutral-400 hover:text-blue-500 underline"
-        >
-          Parent Quiz
-        </a>
+      <div className="text-sm breadcrumbs text-gray-400">
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href={`/quizzes/${question?.parent_quiz}`}>Parent quiz</a>
+          </li>
+        </ul>
       </div>
       {isLoading && <p>Loading your question...</p>}
       {!isLoading && (
@@ -121,6 +120,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               setAnswer={setAnswer}
               setIsCorrect={setIsCorrect}
               onSubmit={onAddAnswer}
+              onCancel={() => setShowAddAnswer(false)}
             />
           )}
 

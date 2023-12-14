@@ -8,6 +8,7 @@ import { SyntheticEvent, useState } from "react";
 import DeleteButton from "./DeleteButton";
 import EditTitleForm from "./EditTitleForm";
 import EditAnswerForm from "./EditAnswerForm";
+import PopupWrapper from "../utils/PopupWrapper";
 const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
   const [showEditAnswer, setShowEditAnswer] = useState(false);
 
@@ -20,7 +21,7 @@ const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
   };
   return (
     <article
-      className="flex flex-col gap-4 border border-yellow-400 p-4 border-solid"
+      className="flex flex-col items-start gap-4 border border-yellow-200/20 p-4 border-solid"
       key={answer._id}
     >
       <div className="flex gap-1">
@@ -30,23 +31,26 @@ const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
         </div>
       </div>
 
-      <div className="flex gap-4">
+      {!showEditAnswer && (
         <ToggleButton
           target={showEditAnswer}
           toggler={setShowEditAnswer}
           buttonText="Edit answer"
         />
-        <DeleteButton onDelete={onDeleteAnswer} deleteText={"answer"} />
-      </div>
+      )}
 
       {showEditAnswer && (
-        <EditAnswerForm
-          defaultAnswer={formatToMarkdown(answer.answer)}
-          setAnswer={setEditAnswer}
-          setIsCorrect={setIsCorrect}
-          onSubmit={onEditAnswer}
-          onCancel={() => setShowEditAnswer(false)}
-        />
+        <PopupWrapper>
+          <EditAnswerForm
+            defaultCorrect={answer.isCorrect}
+            defaultAnswer={formatToMarkdown(answer.answer)}
+            setAnswer={setEditAnswer}
+            setIsCorrect={setIsCorrect}
+            onSubmit={onEditAnswer}
+            onCancel={() => setShowEditAnswer(false)}
+            onDeleteAnswer={onDeleteAnswer}
+          />
+        </PopupWrapper>
       )}
     </article>
   );
