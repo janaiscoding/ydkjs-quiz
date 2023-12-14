@@ -1,4 +1,5 @@
 import { Question } from "@/app/utils/types";
+import QuestionWrapper from "./QuestionWrapper";
 
 const QuizQuestions = ({ questions }: { questions: Question[] }) => {
   return (
@@ -7,15 +8,12 @@ const QuizQuestions = ({ questions }: { questions: Question[] }) => {
       {questions.length > 0 && (
         <div className="flex flex-col gap-2">
           {questions.map((q, idx) => (
-            <a className="link" href={`/questions/${q._id}`} key={q._id}>
-              {idx + 1}. {q.title}
-            </a>
+            <QuestionWrapper question={q} idx={idx} key={idx} />
           ))}
         </div>
       )}
     </div>
   );
 };
-
 
 export default QuizQuestions;
