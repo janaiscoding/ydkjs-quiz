@@ -1,5 +1,6 @@
 import { SetStateAction, SyntheticEvent } from "react";
 import { IoMdClose } from "react-icons/io";
+import { IoCheckboxOutline } from "react-icons/io5";
 
 type EditTitleFormProps = {
   defaultTitle: string;
@@ -8,7 +9,7 @@ type EditTitleFormProps = {
   onSubmit: (e: SyntheticEvent) => void;
   onCancel: () => void;
 };
-import { IoCheckboxOutline } from "react-icons/io5";
+
 const EditTitleForm = ({
   defaultTitle,
   legend,
@@ -25,6 +26,7 @@ const EditTitleForm = ({
         <span>Edit {legend} title</span>
         <button
           onClick={onCancel}
+          type="button"
           className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-gray-200"
         >
           <IoMdClose />

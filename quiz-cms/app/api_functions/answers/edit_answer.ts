@@ -6,17 +6,25 @@ const editAnswer = async (
   isCorrect: boolean,
   onSuccess: () => void
 ) => {
-  const res = await fetch(`https://js-quiz-api.fly.dev/answers/${answer_id}`, {
+  fetch(`https://js-quiz-api.fly.dev/answers/${answer_id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ answer, isCorrect }),
-  });
-  if (res.ok) {
-    onSuccess();
-  }
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.message) {
+        onSuccess();
+      } else {
+        console.log(data);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export default editAnswer;

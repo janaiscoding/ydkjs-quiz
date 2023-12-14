@@ -33,6 +33,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [quizTitle, setQuizTitle] = useState("");
 
   const fetchQuiz = async () => {
+    console.log('fetching...')
     setLoading(true);
     const myQuiz = await getQuiz(params.id);
     setQuiz(myQuiz);
@@ -70,7 +71,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     fetchQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
       <div className="text-sm breadcrumbs text-gray-400">
@@ -85,7 +86,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
       {!isLoading && (
         <>
           <h1 className="text-2xl text-yellow-400">
-            You are now editing: {quiz?.title}
+            You are now editing: {quiz.title}
           </h1>
 
           <ToggleButton

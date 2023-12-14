@@ -8,10 +8,9 @@ type EditTitleFormProps = {
   setIsCorrect: React.Dispatch<SetStateAction<boolean>>;
   onSubmit: (e: SyntheticEvent) => void;
   onCancel: () => void;
-  onDeleteAnswer: () => void;
 };
 import { IoCheckboxOutline } from "react-icons/io5";
-import DeleteButton from "./DeleteButton";
+
 
 const EditAnswerForm = ({
   defaultAnswer,
@@ -20,9 +19,7 @@ const EditAnswerForm = ({
   setIsCorrect,
   onSubmit,
   onCancel,
-  onDeleteAnswer,
 }: EditTitleFormProps) => {
-
   return (
     <form
       className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
@@ -64,8 +61,13 @@ const EditAnswerForm = ({
           <IoCheckboxOutline />
           Save answer
         </button>
-
-        <DeleteButton onDelete={onDeleteAnswer} />
+        <button
+          onClick={onCancel}
+          className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-100"
+        >
+          <IoMdClose />
+          Close
+        </button>
       </div>
     </form>
   );

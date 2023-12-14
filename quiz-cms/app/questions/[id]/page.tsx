@@ -4,13 +4,11 @@ import createAnswer from "@/app/api_functions/answers/create_answer";
 import deleteQuestion from "@/app/api_functions/questions/delete_question";
 import editQuestionTitle from "@/app/api_functions/questions/edit_question_title";
 import getQuestion from "@/app/api_functions/questions/get_question";
-
-import AddAnswerForm from "@/app/components/AddAnswerForm";
-import AnswerWrapper from "@/app/components/AnswerWrapper";
-import DeleteButton from "@/app/components/DeleteButton";
 import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
+import AddAnswerForm from "@/app/components/answers/AddAnswerForm";
+import QuestionAnswers from "@/app/components/answers/AllAnswers";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import PopupWrapper from "@/app/utils/PopupWrapper";
@@ -19,7 +17,7 @@ import {
   formatToTemplateLiteral,
 } from "@/app/utils/stringFormatters";
 
-import { Question } from "@/app/utils/types";
+import { Answer, Question } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
 
 import { SyntheticEvent, useEffect, useState } from "react";
@@ -29,6 +27,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   // Current page question, will be fetched
   const [question, setQuestion] = useState({} as Question);
+  const [answers, setAnswers] = useState([] as Answer[]);
   // Edit question title
   const [questionTitle, setQuestionTitle] = useState(" ");
   // New answer content
@@ -59,6 +58,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     setQuestion(myQuestion);
     const markdownQuestion = formatToMarkdown(myQuestion.title);
     setQuestionTitle(markdownQuestion);
+    setAnswers(myQuestion.answers);
     setLoading(false);
   };
 
@@ -78,10 +78,11 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     fetchQuestion();
     setShowEditTitle(false);
     setShowAddAnswer(false);
-
     setAnswer("");
   };
 
+  const onCancelAddAnswer = () => setShowAddAnswer(false);
+  const onCancelEditTitle = () => setShowEditTitle(false);
   useEffect(() => {
     fetchQuestion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,7 +110,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
           <p>You are now editting...</p>
           {/* QUESTION WITH SYNTAX HIGHLIGHT  */}
 
-          <div className="md:text-2xl text-yellow-400">
+          <div className="md:text-xl text-yellow-400">
             <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
 
@@ -133,60 +134,37 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
             />
           </div>
 
+          {/* DISPLAY ALL QUESTIONS ANSWERS */}
+          <QuestionAnswers answers={answers} onRefetch={onSuccess} />
+
           {/* EDIT QUESTION POPUP FORM */}
-          {showEditTitle && (
-            <PopupWrapper>
-              <EditTitleForm
-                defaultTitle={questionTitle}
-                legend="question"
-                setTitle={setQuestionTitle}
-                onSubmit={onEditQuestion}
-                onCancel={() => setShowEditTitle(false)}
-              />
-            </PopupWrapper>
-          )}
+          <PopupWrapper isShown={showEditTitle}>
+            <EditTitleForm
+              defaultTitle={questionTitle}
+              legend="question"
+              setTitle={setQuestionTitle}
+              onSubmit={onEditQuestion}
+              onCancel={onCancelEditTitle}
+            />
+          </PopupWrapper>
 
           {/* DELETE QUESTION POPUP  */}
-          {showDelete && (
-            <PopupWrapper>
-              <DeletePopup
-                onDelete={onDelete}
-                onCancel={() => setShowDelete(false)}
-              />
-            </PopupWrapper>
-          )}
+          <PopupWrapper isShown={showDelete}>
+            <DeletePopup
+              onDelete={onDelete}
+              onCancel={() => setShowDelete(false)}
+            />
+          </PopupWrapper>
 
           {/* ADD ANSWER POPUP FORM */}
-          {showAddAnswer && (
-            <PopupWrapper>
-              <AddAnswerForm
-                setAnswer={setAnswer}
-                setIsCorrect={setIsCorrect}
-                onSubmit={onAddAnswer}
-                onCancel={() => setShowAddAnswer(false)}
-              />
-            </PopupWrapper>
-          )}
-
-          {/* DISPLAY ALL QUESTIONS ANSWERS */}
-
-          <div className="w-full">
-            {question?.answers.length === 0 && (
-              <p> No answers yet, let&apos;s add one </p>
-            )}
-            {question?.answers.length > 0 && (
-              <div className="flex flex-col gap-2 ">
-                {question?.answers?.map((ans, idx) => (
-                  <AnswerWrapper
-                    idx={idx + 1}
-                    answer={ans}
-                    key={idx}
-                    onSucces={onSuccess}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          <PopupWrapper isShown={showAddAnswer}>
+            <AddAnswerForm
+              setAnswer={setAnswer}
+              setIsCorrect={setIsCorrect}
+              onSubmit={onAddAnswer}
+              onCancel={onCancelAddAnswer}
+            />
+          </PopupWrapper>
         </>
       )}
     </main>

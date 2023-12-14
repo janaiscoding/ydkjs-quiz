@@ -25,6 +25,7 @@ const ToggleButton = ({ target, toggler, buttonText }: ToggleButtonProps) => {
       setType("delete");
     }
   }, [buttonText]);
+
   return (
     <button
       onClick={() => toggler(!target)}
