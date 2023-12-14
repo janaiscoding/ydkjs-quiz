@@ -9,6 +9,8 @@ import { SyntheticEvent, useState } from "react";
 import EditAnswerForm from "./EditAnswerForm";
 import PopupWrapper from "../../utils/PopupWrapper";
 import editAnswer from "../../api_functions/answers/edit_answer";
+import DeletePopup from "../DeletePopup";
+import deleteAnswer from "@/app/api_functions/answers/delete_answer";
 
 const AnswerWrapper = ({
   idx,
@@ -25,15 +27,26 @@ const AnswerWrapper = ({
   const [edittedAnswer, setEdittedAnswer] = useState(answer.answer);
   const [isCorrect, setIsCorrect] = useState(answer.isCorrect);
 
-  const onDeleteAnswer = () => {};
+  const onDeleteAnswer = () => {
+    deleteAnswer(answer._id, onSuccessDelete)
+
+  };
+  const onSuccessDelete = () => {
+    onSucces();
+  }
+
+  const onCancelDelete = () => setShowDeleteAnswer(false);
   const onEditAnswer = (e: SyntheticEvent) => {
     e.preventDefault();
     const newAnswer = formatToTemplateLiteral(edittedAnswer);
 
     editAnswer(answer._id, newAnswer, isCorrect, onSuccessAns);
   };
+
   const onSuccessAns = () => {
+    // perform refetch and cleanup
     onSucces();
+    // close the form
     setShowEditAnswer(false);
   };
 
@@ -49,7 +62,7 @@ const AnswerWrapper = ({
         </div>
       </div>
 
-      {/* BUTTON CONTROLLER */}
+      {/* BUTTON CONTROLLERS */}
       <div className="flex justify-between gap-1 w-full">
         <ToggleButton
           target={showEditAnswer}
@@ -63,9 +76,10 @@ const AnswerWrapper = ({
           buttonText="Delete answer"
         />
       </div>
-
+      <PopupWrapper isShown={showDeleteAnswer}>
+        <DeletePopup onDelete={onDeleteAnswer} onCancel={onCancelDelete} />
+      </PopupWrapper>
       {/* EDIT ANSWER FORM POPUP */}
-
       <PopupWrapper isShown={showEditAnswer}>
         <EditAnswerForm
           isCorrect={isCorrect}

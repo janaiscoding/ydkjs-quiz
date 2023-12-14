@@ -11,7 +11,6 @@ type EditTitleFormProps = {
 };
 import { IoCheckboxOutline } from "react-icons/io5";
 
-
 const EditAnswerForm = ({
   defaultAnswer,
   isCorrect,
@@ -30,6 +29,7 @@ const EditAnswerForm = ({
 
         <button
           onClick={onCancel}
+          type="button"
           className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-100"
         >
           <IoMdClose />
@@ -63,6 +63,7 @@ const EditAnswerForm = ({
         </button>
         <button
           onClick={onCancel}
+          type="button"
           className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-red-100"
         >
           <IoMdClose />
