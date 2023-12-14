@@ -4,11 +4,14 @@ import createQuestion from "@/app/api_functions/questions/create_question";
 import deleteQuiz from "@/app/api_functions/quizzes/delete_quiz";
 import editQuizTitle from "@/app/api_functions/quizzes/edit_quiz_title";
 import getQuiz from "@/app/api_functions/quizzes/get_quiz";
-import AddQuestionForm from "@/app/components/AddQuestionForm";
+
 import DeleteButton from "@/app/components/DeleteButton";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
+import AddQuestionForm from "@/app/components/questions/AddQuestionForm";
+import QuizQuestions from "@/app/components/questions/AllQuestions";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
+import PopupWrapper from "@/app/utils/PopupWrapper";
 
 import { Quiz } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
@@ -24,6 +27,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [showQuestions, setShowQuestions] = useState(false);
   const [showAddQuestion, setShowAddQuestion] = useState(false);
   const [showEditTitle, setShowEditTitle] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   // quiz content
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
@@ -33,7 +37,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [quizTitle, setQuizTitle] = useState("");
 
   const fetchQuiz = async () => {
-    console.log('fetching...')
+    console.log("fetching...");
     setLoading(true);
     const myQuiz = await getQuiz(params.id);
     setQuiz(myQuiz);
@@ -71,7 +75,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     fetchQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
       <div className="text-sm breadcrumbs text-gray-400">
@@ -81,20 +85,38 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
           </li>
         </ul>
       </div>
+
+      {/* LOADING EFFECT */}
       {isLoading && <p>Loading your quiz...</p>}
 
       {!isLoading && (
         <>
-          <h1 className="text-2xl text-yellow-400">
-            You are now editing: {quiz.title}
-          </h1>
+          <p>You are now editting...</p>
+          <h1 className="md:text-xl text-yellow-400">{quiz.title}</h1>
+          {/* CONTROLLER BUTTONS */}
+          <div className="flex flex-col md:flex-row gap-4 justify-between">
+            <ToggleButton
+              target={showEditTitle}
+              toggler={setShowEditTitle}
+              buttonText="Edit title"
+            />
+            <ToggleButton
+              target={showAddQuestion}
+              toggler={setShowAddQuestion}
+              buttonText="Add question"
+            />
 
-          <ToggleButton
-            target={showEditTitle}
-            toggler={setShowEditTitle}
-            buttonText="Edit title"
-          />
-          {showEditTitle && (
+            <ToggleButton
+              target={showDelete}
+              toggler={setShowDelete}
+              buttonText="Delete quiz"
+            />
+          </div>
+          {/* SHOW ALL QUIZ QUESTIONS HERE */}
+          <QuizQuestions questions={quiz.questions} />
+
+          {/* EDIT QUIZ TITLE FORM POPUP  */}
+          <PopupWrapper isShown={showEditTitle}>
             <EditTitleForm
               defaultTitle={quizTitle}
               legend={"quiz"}
@@ -102,46 +124,15 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
               onSubmit={onEditQuizTitle}
               onCancel={() => setShowEditTitle(false)}
             />
-          )}
+          </PopupWrapper>
 
-          <ToggleButton
-            target={showAddQuestion}
-            toggler={setShowAddQuestion}
-            buttonText="Add question"
-          />
-
-          {showAddQuestion && (
+          {/* ADD QUESTION POPUP FORM */}
+          <PopupWrapper isShown={showAddQuestion}>
             <AddQuestionForm
               setQuestion={setQuestionTitle}
               onSubmit={onAddQuestion}
             />
-          )}
-
-          <ToggleButton
-            target={showQuestions}
-            toggler={setShowQuestions}
-            buttonText="Show questions"
-          />
-          {showQuestions && (
-            <div>
-              {quiz?.questions?.length === 0 && <p> No questions yet </p>}
-              {quiz?.questions?.length > 0 && (
-                <div className="flex flex-col gap-2">
-                  {quiz?.questions?.map((q, idx) => (
-                    <a
-                      className="link"
-                      href={`/questions/${q._id}`}
-                      key={q._id}
-                    >
-                      {idx + 1}. {q.title}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          <DeleteButton onDelete={onDelete} />
+          </PopupWrapper>
         </>
       )}
     </main>

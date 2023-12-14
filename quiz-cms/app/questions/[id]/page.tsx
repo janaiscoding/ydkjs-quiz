@@ -63,15 +63,16 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   };
 
   const onDelete = () => {
-    //delete question
     deleteQuestion(question._id, onSuccessDelete);
-    //redirect to parent quiz
   };
+
   const onSuccessDelete = () => {
+    // close delete popup
+    setShowDelete(false);
     //show delete success popup
     setTimeout(() => {
       router.push(`/quizzes/${question?.parent_quiz}`);
-    }, 1000);
+    }, 100);
   };
 
   const onSuccess = () => {
