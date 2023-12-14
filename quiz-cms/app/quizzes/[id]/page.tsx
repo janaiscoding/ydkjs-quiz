@@ -4,8 +4,7 @@ import createQuestion from "@/app/api_functions/questions/create_question";
 import deleteQuiz from "@/app/api_functions/quizzes/delete_quiz";
 import editQuizTitle from "@/app/api_functions/quizzes/edit_quiz_title";
 import getQuiz from "@/app/api_functions/quizzes/get_quiz";
-
-import DeleteButton from "@/app/components/DeleteButton";
+import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import AddQuestionForm from "@/app/components/questions/AddQuestionForm";
@@ -24,7 +23,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   // Loaders and togglers on/off
   const [isLoading, setLoading] = useState(true);
-  const [showQuestions, setShowQuestions] = useState(false);
   const [showAddQuestion, setShowAddQuestion] = useState(false);
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -37,7 +35,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const [quizTitle, setQuizTitle] = useState("");
 
   const fetchQuiz = async () => {
-    console.log("fetching...");
     setLoading(true);
     const myQuiz = await getQuiz(params.id);
     setQuiz(myQuiz);
@@ -50,7 +47,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     fetchQuiz();
     setShowAddQuestion(false);
     setShowEditTitle(false);
-    setShowQuestions(false);
     setQuestionTitle("");
     setQuizTitle("");
   };
@@ -64,6 +60,9 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
     e.preventDefault();
     let formattedTitle = questionTitle.trim().split(/\n/).join("\\n");
     createQuestion(params.id, formattedTitle, onSuccess);
+  };
+  const onCancelAdd = () => {
+    setShowAddQuestion(false);
   };
 
   const onDelete = async () => {
@@ -131,6 +130,15 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             <AddQuestionForm
               setQuestion={setQuestionTitle}
               onSubmit={onAddQuestion}
+              onCancel={onCancelAdd}
+            />
+          </PopupWrapper>
+
+          {/* DELETE QUIZ POPUP */}
+          <PopupWrapper isShown={showDelete}>
+            <DeletePopup
+              onDelete={onDelete}
+              onCancel={() => setShowDelete(false)}
             />
           </PopupWrapper>
         </>

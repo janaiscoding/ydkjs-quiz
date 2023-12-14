@@ -4,9 +4,14 @@ import { IoCheckboxOutline } from "react-icons/io5";
 type AddQuestionFormProps = {
   setQuestion: React.Dispatch<SetStateAction<string>>;
   onSubmit: (e: SyntheticEvent) => void;
+  onCancel: () => void;
 };
 
-const AddQuestionForm = ({ setQuestion, onSubmit }: AddQuestionFormProps) => {
+const AddQuestionForm = ({
+  setQuestion,
+  onSubmit,
+  onCancel,
+}: AddQuestionFormProps) => {
   return (
     <form
       className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
@@ -20,7 +25,6 @@ const AddQuestionForm = ({ setQuestion, onSubmit }: AddQuestionFormProps) => {
           className="text-slate-950"
         ></textarea>
       </label>
-      
 
       <button
         type="submit"
