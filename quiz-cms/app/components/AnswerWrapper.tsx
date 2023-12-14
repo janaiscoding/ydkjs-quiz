@@ -4,11 +4,20 @@ import { Answer } from "../utils/types";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import ToggleButton from "./ToggleButton";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import DeleteButton from "./DeleteButton";
+import EditTitleForm from "./EditTitleForm";
+import EditAnswerForm from "./EditAnswerForm";
 const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
   const [showEditAnswer, setShowEditAnswer] = useState(false);
-  const onDelete = () => {};
+
+  const [editAnswer, setEditAnswer] = useState("");
+  const [isCorrect, setIsCorrect] = useState(answer.isCorrect);
+
+  const onDeleteAnswer = () => {};
+  const onEditAnswer = (e: SyntheticEvent) => {
+    e.preventDefault();
+  };
   return (
     <article
       className="flex flex-col gap-4 border border-yellow-400 p-4 border-solid"
@@ -27,8 +36,18 @@ const AnswerWrapper = ({ idx, answer }: { idx: number; answer: Answer }) => {
           toggler={setShowEditAnswer}
           buttonText="Edit answer"
         />
-        <DeleteButton onDelete={onDelete} deleteText={"answer"} />
+        <DeleteButton onDelete={onDeleteAnswer} deleteText={"answer"} />
       </div>
+
+      {showEditAnswer && (
+        <EditAnswerForm
+          defaultAnswer={formatToMarkdown(answer.answer)}
+          setAnswer={setEditAnswer}
+          setIsCorrect={setIsCorrect}
+          onSubmit={onEditAnswer}
+          onCancel={() => setShowEditAnswer(false)}
+        />
+      )}
     </article>
   );
 };

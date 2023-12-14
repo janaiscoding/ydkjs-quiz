@@ -31,7 +31,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   // state for editting quiz title
   const [quizTitle, setQuizTitle] = useState("");
 
-
   const fetchQuiz = async () => {
     setLoading(true);
     const myQuiz = await getQuizz(params.id);
@@ -95,6 +94,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
               legend={"quiz"}
               setTitle={setQuizTitle}
               onSubmit={onEditQuizTitle}
+              onCancel={() => setShowEditTitle(false)}
             />
           )}
 
@@ -135,7 +135,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             </div>
           )}
 
-          <DeleteButton onDelete={onDelete} deleteText={'quiz'}/>
+          <DeleteButton onDelete={onDelete} deleteText={"quiz"} />
         </>
       )}
     </main>

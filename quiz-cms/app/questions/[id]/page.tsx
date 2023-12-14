@@ -91,7 +91,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
       {isLoading && <p>Loading your question...</p>}
       {!isLoading && (
         <>
-          <div className="text-2xl text-yellow-400">
+          <div className="md:text-2xl text-yellow-400">
             <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
 
@@ -106,6 +106,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               legend="question"
               setTitle={setQuestionTitle}
               onSubmit={onEditQuestion}
+              onCancel={() => setShowEditTitle(false)}
             />
           )}
 
