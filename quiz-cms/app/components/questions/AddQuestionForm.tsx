@@ -33,19 +33,19 @@ const AddQuestionForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-4 w-full"
+      className="flex flex-col gap-4 px-4 md:min-w-[30rem]"
       onSubmit={(e) => onSubmitQuestion(e)}
     >
       <label className="flex flex-col gap-2 hover:cursor-pointer">
-        <span className="text-2xl text-indigo-400">Add a new question</span>
+        <span className="md:text-2xl text-indigo-400">Add a new question</span>
         <textarea
           rows={10}
           onChange={(e) => setQuestion(e.target.value)}
-          className="text-slate-950 bg-neutral-100 p-4"
+          className="text-neutral-50 bg-neutral-800 border border-indigo-400 p-4"
         ></textarea>
       </label>
       <label className="text-slate-950 flex flex-col gap-2 hover:cursor-pointer">
-        <span className="text-slate-50">Select parent quiz</span>
+        <span className="text-indigo-400">Select parent quiz</span>
         <select onChange={(e) => setParentQuiz(e.target.value)}>
           <option>Select parent quiz for this question</option>
           {quizzes.quizzes?.map((quiz) => (
@@ -58,10 +58,10 @@ const AddQuestionForm = () => {
 
       <button
         type="submit"
-        className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
+        className="self-center flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
       >
         <IoCheckboxOutline />
-        Add question
+        Add and go to question page
       </button>
     </form>
   );

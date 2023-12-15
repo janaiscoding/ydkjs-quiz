@@ -8,7 +8,6 @@ import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import AddAnswerForm from "@/app/components/answers/AddAnswerForm";
-import QuestionAnswers from "@/app/components/answers/AllAnswers";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
 import MarkdownWrapper from "@/app/components/ui/MarkdownWrapper";
 import PopupWrapper from "@/app/components/ui/PopupWrapper";
@@ -21,6 +20,7 @@ import { Answer, Question } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
 
 import { SyntheticEvent, useEffect, useState } from "react";
+import AnswerContainer from "@/app/components/answers/AnswerContainer";
 
 const QuestionPage = ({ params }: { params: { id: string } }) => {
   useTokenAuth();
@@ -80,6 +80,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     setShowEditTitle(false);
     setShowAddAnswer(false);
     setAnswer("");
+    setIsCorrect(false);
   };
 
   const onCancelAddAnswer = () => setShowAddAnswer(false);
@@ -90,7 +91,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
+    <main className="p-4 flex flex-col gap-4 items-start">
       {/* BREADCRUMBS */}
       <a href={`/quizzes/${question?.parent_quiz}`}>Go back to quiz</a>
       {/* LOADING EFFECT */}
@@ -100,7 +101,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
       {!isLoading && (
         <>
-          <p className="text-neutral-400">You are now editting...</p>
+          <p className="text-neutral-400">You are now editting the question...</p>
           {/* QUESTION WITH SYNTAX HIGHLIGHT  */}
 
           <div className="md:text-2xl text-indigo-400">
@@ -128,7 +129,19 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
           </div>
 
           {/* DISPLAY ALL QUESTIONS ANSWERS */}
-          <QuestionAnswers answers={answers} onRefetch={onSuccess} />
+          {answers.length === 0 && <p> No answers yet, let&apos;s add one </p>}
+          {answers.length > 0 && (
+            <div className="flex flex-col gap-4">
+              {answers.map((ans, idx) => (
+                <AnswerContainer
+                  idx={idx + 1}
+                  answer={ans}
+                  key={idx}
+                  onSucces={onSuccess}
+                />
+              ))}
+            </div>
+          )}
 
           {/* EDIT QUESTION POPUP FORM */}
           <PopupWrapper isShown={showEditTitle}>

@@ -11,8 +11,9 @@ import PopupWrapper from "../ui/PopupWrapper";
 import editAnswer from "../../api_functions/answers/edit_answer";
 import DeletePopup from "../DeletePopup";
 import deleteAnswer from "@/app/api_functions/answers/delete_answer";
+import ContentWrapper from "../ui/ContentWrapper";
 
-const AnswerWrapper = ({
+const AnswerContainer = ({
   idx,
   answer,
   onSucces,
@@ -51,47 +52,49 @@ const AnswerWrapper = ({
   };
 
   return (
-    <article
-      className="flex flex-col items-start gap-4 border border-yellow-200/20 p-4 border-solid"
-      key={answer._id}
-    >
-      <div className={`flex gap-1 ${answer.isCorrect && "text-green-400"}`}>
-        <p>{idx}.</p>
-        <div className="answer__code">
-          <MarkdownWrapper content={formatToMarkdown(answer.answer)} />
+    <ContentWrapper>
+      <article
+        className="flex flex-col items-start gap-4 min-w-[30rem]"
+        key={answer._id}
+      >
+        <div className={`flex gap-1 ${answer.isCorrect && "text-green-400"}`}>
+          <p>{idx}.</p>
+          <div className="answer__code">
+            <MarkdownWrapper content={formatToMarkdown(answer.answer)} />
+          </div>
         </div>
-      </div>
 
-      {/* BUTTON CONTROLLERS */}
-      <div className="flex justify-between gap-1 w-full">
-        <ToggleButton
-          target={showEditAnswer}
-          toggler={setShowEditAnswer}
-          buttonText="Edit answer"
-        />
+        {/* BUTTON CONTROLLERS */}
+        <div className="flex justify-between gap-1 w-full">
+          <ToggleButton
+            target={showEditAnswer}
+            toggler={setShowEditAnswer}
+            buttonText="Edit answer"
+          />
 
-        <ToggleButton
-          target={showDeleteAnswer}
-          toggler={setShowDeleteAnswer}
-          buttonText="Delete answer"
-        />
-      </div>
-      <PopupWrapper isShown={showDeleteAnswer}>
-        <DeletePopup onDelete={onDeleteAnswer} onCancel={onCancelDelete} />
-      </PopupWrapper>
-      {/* EDIT ANSWER FORM POPUP */}
-      <PopupWrapper isShown={showEditAnswer}>
-        <EditAnswerForm
-          isCorrect={isCorrect}
-          defaultAnswer={formatToMarkdown(edittedAnswer)}
-          setAnswer={setEdittedAnswer}
-          setIsCorrect={setIsCorrect}
-          onSubmit={onEditAnswer}
-          onCancel={() => setShowEditAnswer(false)}
-        />
-      </PopupWrapper>
-    </article>
+          <ToggleButton
+            target={showDeleteAnswer}
+            toggler={setShowDeleteAnswer}
+            buttonText="Delete answer"
+          />
+        </div>
+        <PopupWrapper isShown={showDeleteAnswer}>
+          <DeletePopup onDelete={onDeleteAnswer} onCancel={onCancelDelete} />
+        </PopupWrapper>
+        {/* EDIT ANSWER FORM POPUP */}
+        <PopupWrapper isShown={showEditAnswer}>
+          <EditAnswerForm
+            isCorrect={isCorrect}
+            defaultAnswer={formatToMarkdown(edittedAnswer)}
+            setAnswer={setEdittedAnswer}
+            setIsCorrect={setIsCorrect}
+            onSubmit={onEditAnswer}
+            onCancel={() => setShowEditAnswer(false)}
+          />
+        </PopupWrapper>
+      </article>
+    </ContentWrapper>
   );
 };
 
-export default AnswerWrapper;
+export default AnswerContainer;
