@@ -14,10 +14,15 @@ const AddQuizForm = () => {
 
   // New quiz title
   const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
   // Submit a new quiz
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    createQuiz(title, onSuccessToQuizPage);
+    if (!title) {
+      setError("Quiz needs a title");
+    } else {
+      createQuiz(title, onSuccessToQuizPage);
+    }
   };
 
   // Refetch after new quiz success + clear form
@@ -27,14 +32,19 @@ const AddQuizForm = () => {
   };
 
   const handleSubmitToHomepage = () => {
-    createQuiz(title, (quiz_id) => {
-      onSuccessToHomepage();
-    });
+    if (!title) {
+      setError("Quiz needs a title");
+    } else {
+      createQuiz(title, (quiz_id) => {
+        onSuccessToHomepage();
+      });
+    }
   };
 
   // Fetch and set context and go to homepage
   const onSuccessToHomepage = async () => {
     setTitle("");
+    setError("");
     viewContext.setView("quizzes");
     const myQuizzes = await getQuizzes();
     quizzesContext.setQuizzes(myQuizzes);
@@ -49,12 +59,17 @@ const AddQuizForm = () => {
       <label className="flex flex-col gap-4">
         <span className="hidden">Quiz title</span>
         <input
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            if (error) {
+              setError("");
+            }
+          }}
           placeholder="Quiz Title"
           className="text-slate-950 h-10 p-4 w-full"
         />
       </label>
-
+      {error && <p className="text-xs text-red-200">Error: {error}</p>}
       <button
         type="button"
         onClick={handleSubmitToHomepage}
