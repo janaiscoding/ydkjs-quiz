@@ -8,11 +8,16 @@ import AddQuizForm from "./components/quizzes/AddQuizForm";
 import AddQuestionForm from "./components/questions/AddQuestionForm";
 import Sidebar from "./components/navigation/Sidebar";
 import Navbar from "./components/navigation/Navbar";
+import { ViewContext } from "./context/viewContext";
+import Footer from "./components/navigation/Footer";
 
 export default function Home() {
   // Protected.
   useTokenAuth();
+
   const quizzesContext = useContext(QuizzesContext);
+  const viewContext = useContext(ViewContext);
+
   // Loading effect
   const [isLoading, setLoading] = useState(true);
   // New quiz title
@@ -39,30 +44,30 @@ export default function Home() {
     fetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(viewContext.view);
   return (
-    <main className="flex flex-col w-full bg-zinc-900 min-h-screen">
-      <Navbar />
-      <div className="p-4 md:p-0 flex gap-0 md:gap-20 w-full h-full min-h-[96rem]">
-        <Sidebar />
-        {isLoading ? (
-          <p>Loading quizzes...</p>
-        ) : (
-          <div className="flex gap-2 flex-col py-4">
-            {quizzesContext.quizzes?.map((quiz, idx) => (
-              <div key={quiz._id}>
-                <a href={`/quizzes/${quiz._id}`} className="link">
-                  {idx + 1}. {quiz.title}
-                </a>
-              </div>
-            ))}
+    <div className="p-4 md:p-0 flex gap-0 md:gap-20 w-full h-full">
 
-            <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
+      {viewContext.view === "quizzes" && isLoading && <p>Loading quizzes...</p>}
 
-            <AddQuestionForm />
-          </div>
-        )}
-      </div>
-    </main>
+      
+      {viewContext.view === "quizzes" && !isLoading && (
+        <div className="flex gap-2 flex-col py-4">
+          {quizzesContext.quizzes?.map((quiz, idx) => (
+            <div key={quiz._id}>
+              <a href={`/quizzes/${quiz._id}`} className="link">
+                {idx + 1}. {quiz.title}
+              </a>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {viewContext.view === "add-quiz" && (
+        <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
+      )}
+
+      {viewContext.view === "add-question" && <AddQuestionForm />}
+    </div>
   );
 }
