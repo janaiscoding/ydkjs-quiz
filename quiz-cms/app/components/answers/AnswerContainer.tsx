@@ -54,7 +54,7 @@ const AnswerContainer = ({
   return (
     <ContentWrapper>
       <article
-        className="flex flex-col items-start gap-4 min-w-[30rem]"
+        className="flex flex-col items-start gap-4 md:min-w-[30rem]"
         key={answer._id}
       >
         <div className={`flex gap-1 ${answer.isCorrect && "text-green-400"}`}>

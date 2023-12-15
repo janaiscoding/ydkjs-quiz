@@ -19,8 +19,12 @@ import {
 import { Answer, Question } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
 
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import AnswerContainer from "@/app/components/answers/AnswerContainer";
+import EditQuestionForm from "@/app/components/questions/EditQuestionForm";
+import ChangeParentForm from "@/app/components/questions/ChangeParentForm";
+import getQuizzes from "@/app/api_functions/quizzes/get_quizzes";
+import { QuizzesContext } from "@/app/context/quizzesContext";
 
 const QuestionPage = ({ params }: { params: { id: string } }) => {
   useTokenAuth();
@@ -29,7 +33,8 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const [question, setQuestion] = useState({} as Question);
   const [answers, setAnswers] = useState([] as Answer[]);
   // Edit question title
-  const [questionTitle, setQuestionTitle] = useState(" ");
+  const [questionTitle, setQuestionTitle] = useState("");
+
   // New answer content
   const [answer, setAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
@@ -39,6 +44,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showAddAnswer, setShowAddAnswer] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showEditParent, setShowEditParent] = useState(false);
 
   const onEditQuestion = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -58,6 +64,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
     setQuestion(myQuestion);
     const markdownQuestion = formatToMarkdown(myQuestion.title);
     setQuestionTitle(markdownQuestion);
+    // getParentName()
     setAnswers(myQuestion.answers);
     setLoading(false);
   };
@@ -85,10 +92,36 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
   const onCancelAddAnswer = () => setShowAddAnswer(false);
   const onCancelEditTitle = () => setShowEditTitle(false);
+  // const onCancelEditParent = () => setShowEditParent(false);
+
   useEffect(() => {
     fetchQuestion();
+    // fetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Handler in case we go straight to question page
+  // const quizzesContext = useContext(QuizzesContext);
+  // const [parentQuizName, setParentQuizName] = useState("");
+  // const getParentName = () => {
+  //   const currentParent = quizzesContext?.quizzes?.find(
+  //     (quiz) => question?.parent_quiz === quiz._id
+  //   );
+  //   if (currentParent) {
+  //     setParentQuizName(currentParent.title);
+  //   }
+  // };
+
+  // const onSuccessEditParent = () => {
+  //   setShowEditParent(false);
+  //   fetchQuestion();
+  //   getParentName();
+  // };
+
+  // const fetchQuizzes = async () => {
+  //   const myQuizzes = await getQuizzes();
+  //   quizzesContext.setQuizzes(myQuizzes);
+  // };
 
   return (
     <main className="p-4 flex flex-col gap-4 items-start">
@@ -101,13 +134,15 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
       {!isLoading && (
         <>
-          <p className="text-neutral-400">You are now editting the question...</p>
+          <p className="text-neutral-400">
+            You are now editting the question...
+          </p>
           {/* QUESTION WITH SYNTAX HIGHLIGHT  */}
 
           <div className="md:text-2xl text-indigo-400">
             <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
-
+          {/* <div>Contained by {parentQuizName}</div> */}
           {/* CONTROLLER BUTTONS */}
           <div className="flex flex-col md:flex-row gap-4 justify-between">
             <ToggleButton
@@ -120,6 +155,12 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               toggler={setShowAddAnswer}
               buttonText="Add answer"
             />
+
+            {/* <ToggleButton
+              target={showEditParent}
+              toggler={setShowEditParent}
+              buttonText="Change parent"
+            /> */}
 
             <ToggleButton
               target={showDelete}
@@ -145,7 +186,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
 
           {/* EDIT QUESTION POPUP FORM */}
           <PopupWrapper isShown={showEditTitle}>
-            <EditTitleForm
+            <EditQuestionForm
               defaultTitle={questionTitle}
               legend="question"
               setTitle={setQuestionTitle}
@@ -153,6 +194,16 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
               onCancel={onCancelEditTitle}
             />
           </PopupWrapper>
+
+          {/* EDIT QUESTION PARENT POPUP FORM
+          <PopupWrapper isShown={showEditParent}>
+            <ChangeParentForm
+              question_id={params.id}
+              onSuccess={onSuccessEditParent}
+              onCancel={onCancelEditParent}
+            />
+          </PopupWrapper>
+         */}
 
           {/* DELETE QUESTION POPUP  */}
           <PopupWrapper isShown={showDelete}>

@@ -21,6 +21,8 @@ const ToggleButton = ({ target, toggler, buttonText }: ToggleButtonProps) => {
       setType("add");
     } else if (buttonText.charAt(0) === "S") {
       setType("show");
+    } else if (buttonText.charAt(0) === "C") {
+      setType("change");
     } else {
       setType("delete");
     }
@@ -33,6 +35,9 @@ const ToggleButton = ({ target, toggler, buttonText }: ToggleButtonProps) => {
         type === "add" && "bg-green-400"
       }
       ${type === "edit" && "bg-yellow-200"}
+
+      ${type === "change" && "bg-neutral-200"}
+
       ${type === "show" && "bg-gray-200"}
       ${type === "delete" && "bg-red-200"}
       `}
@@ -45,6 +50,9 @@ const ToggleButton = ({ target, toggler, buttonText }: ToggleButtonProps) => {
 
       {type === "delete" && <CiWarning />}
       {type === "delete" && buttonText}
+
+      {type === "change" && <MdEdit />}
+      {type === "change" && buttonText}
 
       {type === "show" && !target && <FaRegEye />}
       {type === "show" && !target && buttonText}
