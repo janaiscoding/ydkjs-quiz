@@ -6,6 +6,8 @@ import getQuizzes from "./api_functions/quizzes/get_quizzes";
 import createQuiz from "./api_functions/quizzes/create_quiz";
 import AddQuizForm from "./components/quizzes/AddQuizForm";
 import AddQuestionForm from "./components/questions/AddQuestionForm";
+import Sidebar from "./components/navigation/Sidebar";
+import Navbar from "./components/navigation/Navbar";
 
 export default function Home() {
   // Protected.
@@ -39,25 +41,28 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen py-10 px-4">
-      <h2 className="text-yellow-300 text-xl"> My quizzes </h2>
-      {isLoading ? (
-        <p>Loading quizzes...</p>
-      ) : (
-        <div className="flex gap-2 flex-col">
-          {quizzesContext.quizzes?.map((quiz, idx) => (
-            <div key={quiz._id}>
-              <a href={`/quizzes/${quiz._id}`} className="link">
-                {idx + 1}. {quiz.title}
-              </a>
-            </div>
-          ))}
+    <main className="flex flex-col w-full bg-zinc-900 min-h-screen">
+      <Navbar />
+      <div className="p-4 md:p-0 flex gap-0 md:gap-20 w-full h-full min-h-[96rem]">
+        <Sidebar />
+        {isLoading ? (
+          <p>Loading quizzes...</p>
+        ) : (
+          <div className="flex gap-2 flex-col py-4">
+            {quizzesContext.quizzes?.map((quiz, idx) => (
+              <div key={quiz._id}>
+                <a href={`/quizzes/${quiz._id}`} className="link">
+                  {idx + 1}. {quiz.title}
+                </a>
+              </div>
+            ))}
 
-          <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
+            <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
 
-          <AddQuestionForm />
-        </div>
-      )}
+            <AddQuestionForm />
+          </div>
+        )}
+      </div>
     </main>
   );
 }

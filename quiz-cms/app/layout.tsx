@@ -3,6 +3,7 @@ import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { UserContextProvider } from "./context/userContext";
 import { QuizzesContextProvider } from "./context/quizzesContext";
+import { ViewContextProvider } from "./context/viewContext";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
         className={`${roboto.className} flex flex-col items-center bg-neutral-950 text-neutral-50`}
       >
         <UserContextProvider>
-          <QuizzesContextProvider>{children}</QuizzesContextProvider>
+          <ViewContextProvider>
+            <QuizzesContextProvider>{children}</QuizzesContextProvider>
+          </ViewContextProvider>
         </UserContextProvider>
       </body>
     </html>
