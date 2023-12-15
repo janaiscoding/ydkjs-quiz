@@ -1,5 +1,4 @@
 "use client";
-import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
 import { usePathname, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -11,9 +10,27 @@ const Navbar = () => {
   const pathname = usePathname();
   const viewContext = useContext(ViewContext);
 
-  const handleQuizView = () => viewContext.setView("quizzes");
-  const handleAddQuizView = () => viewContext.setView("add-quiz");
-  const handleAddQuestionView = () => viewContext.setView("add-question");
+  const handleQuizView = () => {
+    viewContext.setView("quizzes");
+    if (pathname !== "/") {
+      router.push("/");
+    }
+    window.scroll(0, 0);
+  };
+  const handleAddQuizView = () => {
+    viewContext.setView("add-quiz");
+    if (pathname !== "/") {
+      router.push("/");
+    }
+    window.scroll(0, 0);
+  };
+  const handleAddQuestionView = () => {
+    viewContext.setView("add-question");
+    if (pathname !== "/") {
+      router.push("/");
+    }
+    window.scroll(0, 0);
+  };
 
   const handleLogo = () => {
     if (pathname !== "/") {
