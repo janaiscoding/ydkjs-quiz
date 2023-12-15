@@ -9,7 +9,7 @@ const Sidebar = () => {
   const handleAddQuestionView = () => viewContext.setView("add-question");
 
   return (
-    <nav className="max-w-sm min-h-fit bg-sky-950 p-4 text-neutral-400 border-r border-sky-900 hidden md:block z-50">
+    <nav className="max-w-sm min-h-fit bg-sky-950 p-4 text-neutral-400 z-50">
       <ul>
         <li
           onClick={handleQuizView}

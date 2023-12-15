@@ -23,29 +23,29 @@ const LoginPage = () => {
     e.preventDefault();
     loginRequest(email, password, onSucces, onError);
   };
+  
   useEffect(() => {
     if (getJwtToken()) {
       removeJwtToken();
     }
   }, []);
+
   return (
-    <div className="min-h-screen p-4 items-center justify-center flex flex-col gap-4 text-slate-50">
-      <form
-        className="flex flex-col gap-4 text-2xl"
-        onSubmit={(e) => onLogin(e)}
-      >
+    <div className="p-4 flex flex-col gap-4 text-slate-50">
+      <form className="flex flex-col gap-4" onSubmit={(e) => onLogin(e)}>
+        <legend className="text-indigo-400 text-4xl">Log in </legend>
         <label className="flex flex-col">
           <span>Email</span>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="text-slate-950 h-10"
+            className="text-slate-950 h-10 p-2"
           />
         </label>
         <label className="flex flex-col">
           <span>Password</span>
           <input
             type="password"
-            className="text-slate-950 h-10"
+            className="text-slate-950 h-10 p-2"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
@@ -57,6 +57,11 @@ const LoginPage = () => {
           Log In
         </button>
       </form>
+
+      <p className="text-indigo-400 text-sm">
+        P.S.: You need an admin account, sorry :/
+      </p>
+
       {loginError && <p> {loginError}</p>}
     </div>
   );

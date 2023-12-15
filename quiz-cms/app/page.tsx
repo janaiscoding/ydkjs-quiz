@@ -43,6 +43,9 @@ export default function Home() {
 
       {viewContext.view === "quizzes" && !isLoading && (
         <div className="flex gap-4 flex-col py-4">
+          <h1 className="text-xl text-indigo-400">
+            Welcome to the quiz dashboard
+          </h1>
           {quizzesContext.quizzes?.map((quiz, idx) => (
             <QuizContainer key={idx} quiz={quiz} idx={idx} />
           ))}
