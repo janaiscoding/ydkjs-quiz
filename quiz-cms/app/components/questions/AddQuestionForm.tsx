@@ -33,11 +33,11 @@ const AddQuestionForm = () => {
 
   return (
     <form
-      className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
+      className="flex flex-col gap-4 w-full"
       onSubmit={(e) => onSubmitQuestion(e)}
     >
       <label className="flex flex-col gap-2 hover:cursor-pointer">
-        Add a new question
+        <span className="text-2xl text-indigo-400">Add a new question</span>
         <textarea
           rows={10}
           onChange={(e) => setQuestion(e.target.value)}

@@ -11,7 +11,7 @@ import Navbar from "./components/navigation/Navbar";
 import { ViewContext } from "./context/viewContext";
 import Footer from "./components/navigation/Footer";
 import ToggleButton from "./components/ToggleButton";
-import HomeQuizWrapper from "./components/quizzes/HomeQuizWrapper";
+import QuizContainer from "./components/quizzes/QuizContainer";
 
 export default function Home() {
   // Protected.
@@ -24,7 +24,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
 
   // Fetch and set context
-  const fetchQuizzes = async  () => {
+  const fetchQuizzes = async () => {
     setLoading(true);
     const myQuizzes = await getQuizzes();
     quizzesContext.setQuizzes(myQuizzes);
@@ -42,9 +42,9 @@ export default function Home() {
       {viewContext.view === "quizzes" && isLoading && <p>Loading quizzes...</p>}
 
       {viewContext.view === "quizzes" && !isLoading && (
-        <div className="flex gap-2 flex-col py-4">
+        <div className="flex gap-4 flex-col py-4">
           {quizzesContext.quizzes?.map((quiz, idx) => (
-            <HomeQuizWrapper key={idx} quiz={quiz} idx={idx} />
+            <QuizContainer key={idx} quiz={quiz} idx={idx} />
           ))}
         </div>
       )}

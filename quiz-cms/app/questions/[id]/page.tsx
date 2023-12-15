@@ -10,8 +10,8 @@ import ToggleButton from "@/app/components/ToggleButton";
 import AddAnswerForm from "@/app/components/answers/AddAnswerForm";
 import QuestionAnswers from "@/app/components/answers/AllAnswers";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
-import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
-import PopupWrapper from "@/app/utils/PopupWrapper";
+import MarkdownWrapper from "@/app/components/ui/MarkdownWrapper";
+import PopupWrapper from "@/app/components/ui/PopupWrapper";
 import {
   formatToMarkdown,
   formatToTemplateLiteral,
@@ -92,26 +92,18 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
   return (
     <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
       {/* BREADCRUMBS */}
-      <div className="text-sm breadcrumbs text-gray-400">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href={`/quizzes/${question?.parent_quiz}`}>Parent quiz</a>
-          </li>
-        </ul>
-      </div>
-
+      <a href={`/quizzes/${question?.parent_quiz}`}>Go back to quiz</a>
       {/* LOADING EFFECT */}
-      {isLoading && <p>Loading your question...</p>}
+      {isLoading && (
+        <p className="text-neutral-400">Loading your question...</p>
+      )}
 
       {!isLoading && (
         <>
-          <p>You are now editting...</p>
+          <p className="text-neutral-400">You are now editting...</p>
           {/* QUESTION WITH SYNTAX HIGHLIGHT  */}
 
-          <div className="md:text-xl text-yellow-400">
+          <div className="md:text-2xl text-indigo-400">
             <MarkdownWrapper content={formatToMarkdown(question.title)} />
           </div>
 
@@ -120,7 +112,7 @@ const QuestionPage = ({ params }: { params: { id: string } }) => {
             <ToggleButton
               target={showEditTitle}
               toggler={setShowEditTitle}
-              buttonText="Edit title"
+              buttonText="Edit question"
             />
             <ToggleButton
               target={showAddAnswer}

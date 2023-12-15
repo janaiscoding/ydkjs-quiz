@@ -6,14 +6,13 @@ import getQuiz from "@/app/api_functions/quizzes/get_quiz";
 import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
-import QuizQuestions from "@/app/components/questions/AllQuestions";
-import { QuizzesContext } from "@/app/context/quizzesContext";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
-import PopupWrapper from "@/app/utils/PopupWrapper";
+import PopupWrapper from "@/app/components/ui/PopupWrapper";
 
 import { Quiz } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
+import QuestionContainer from "@/app/components/questions/QuestionContainer";
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
   // Auth
@@ -66,28 +65,20 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <main className="min-h-screen py-10 px-4 max-w-4xl flex flex-col gap-4 items-start">
-      <div className="text-sm breadcrumbs text-gray-400">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-        </ul>
-      </div>
-
+    <div className="p-4 flex flex-col gap-4 items-start m-auto">
       {/* LOADING EFFECT */}
       {isLoading && <p>Loading your quiz...</p>}
 
       {!isLoading && (
         <>
-          <p>You are now editting...</p>
-          <h1 className="md:text-xl text-yellow-400">{quiz.title}</h1>
+          <p className="text-neutral-400">You are now editting the quiz...</p>
+          <h1 className="md:text-2xl text-indigo-400">{quiz.title}</h1>
           {/* CONTROLLER BUTTONS */}
           <div className="flex flex-col md:flex-row gap-4 justify-between">
             <ToggleButton
               target={showEditTitle}
               toggler={setShowEditTitle}
-              buttonText="Edit quiz title"
+              buttonText="Edit title"
             />
 
             <ToggleButton
@@ -97,7 +88,15 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             />
           </div>
           {/* SHOW ALL QUIZ QUESTIONS HERE */}
-          <QuizQuestions questions={quiz.questions} />
+          <p className="text-neutral-400">Quiz questions:</p>
+          {quiz.questions.length === 0 && <p> No questions yet </p>}
+          {quiz.questions.length > 0 && (
+            <div className="flex flex-col gap-4">
+              {quiz.questions.map((q, idx) => (
+                <QuestionContainer question={q} idx={idx} key={idx} />
+              ))}
+            </div>
+          )}
 
           {/* EDIT QUIZ TITLE FORM POPUP  */}
           <PopupWrapper isShown={showEditTitle}>
@@ -119,7 +118,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
           </PopupWrapper>
         </>
       )}
-    </main>
+    </div>
   );
 };
 

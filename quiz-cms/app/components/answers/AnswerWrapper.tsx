@@ -1,4 +1,4 @@
-import MarkdownWrapper from "../../utils/MarkdownWrapper";
+import MarkdownWrapper from "../ui/MarkdownWrapper";
 import {
   formatToMarkdown,
   formatToTemplateLiteral,
@@ -7,7 +7,7 @@ import { Answer } from "../../utils/types";
 import ToggleButton from "../ToggleButton";
 import { SyntheticEvent, useState } from "react";
 import EditAnswerForm from "./EditAnswerForm";
-import PopupWrapper from "../../utils/PopupWrapper";
+import PopupWrapper from "../ui/PopupWrapper";
 import editAnswer from "../../api_functions/answers/edit_answer";
 import DeletePopup from "../DeletePopup";
 import deleteAnswer from "@/app/api_functions/answers/delete_answer";
@@ -28,12 +28,12 @@ const AnswerWrapper = ({
   const [isCorrect, setIsCorrect] = useState(answer.isCorrect);
 
   const onDeleteAnswer = () => {
-    deleteAnswer(answer._id, onSuccessDelete)
-
+    deleteAnswer(answer._id, onSuccessDelete);
   };
   const onSuccessDelete = () => {
+    setShowDeleteAnswer(false);
     onSucces();
-  }
+  };
 
   const onCancelDelete = () => setShowDeleteAnswer(false);
   const onEditAnswer = (e: SyntheticEvent) => {

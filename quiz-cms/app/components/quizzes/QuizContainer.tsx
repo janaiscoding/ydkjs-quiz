@@ -1,18 +1,17 @@
 import { Quiz } from "@/app/utils/types";
 import ToggleButton from "../ToggleButton";
 import { SyntheticEvent, useContext, useState } from "react";
-import PopupWrapper from "@/app/utils/PopupWrapper";
+import PopupWrapper from "@/app/components/ui/PopupWrapper";
 import { QuizzesContext } from "@/app/context/quizzesContext";
 import getQuizzes from "@/app/api_functions/quizzes/get_quizzes";
 import DeletePopup from "../DeletePopup";
 import deleteQuiz from "@/app/api_functions/quizzes/delete_quiz";
-import { MdEdit } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import EditTitleForm from "../EditTitleForm";
 import editQuizTitle from "@/app/api_functions/quizzes/edit_quiz_title";
 import { FaRegEye } from "react-icons/fa";
+import ContentWrapper from "../ui/ContentWrapper";
 
-const HomeQuizWrapper = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
+const QuizContainer = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
@@ -26,7 +25,6 @@ const HomeQuizWrapper = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
     setQuizTitle("");
   };
 
-  const router = useRouter();
   const quizzesContext = useContext(QuizzesContext);
 
   // Fetch and set context after deleting a quiz on the homepage
@@ -45,25 +43,21 @@ const HomeQuizWrapper = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
     fetchQuizzes();
   };
 
-  const handleRedirect = () => {
-    router.push(`/quizzes/${quiz._id}`);
-  };
-
   return (
-    <div className="bg-sky-950 p-4 flex flex-col gap-4">
-      <h1 className="text-2xl">
+    <ContentWrapper>
+      <h1 className="text-2xl cursor-default">
         {idx + 1}. {quiz.title} ({quiz.questions.length} questions)
       </h1>
 
       {/* CONTROLLER BUTTONS */}
       <div className="flex flex-col md:flex-row gap-4 justify-between">
-        <button
-          onClick={handleRedirect}
+        <a
+          href={`/quizzes/${quiz._id}`}
           className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-yellow-200"
         >
           <FaRegEye />
           Go to quiz
-        </button>
+        </a>
 
         <ToggleButton
           target={showEditTitle}
@@ -96,8 +90,8 @@ const HomeQuizWrapper = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
           onCancel={() => setShowEditTitle(false)}
         />
       </PopupWrapper>
-    </div>
+    </ContentWrapper>
   );
 };
 
-export default HomeQuizWrapper;
+export default QuizContainer;
