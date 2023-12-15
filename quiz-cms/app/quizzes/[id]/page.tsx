@@ -1,13 +1,11 @@
 "use client";
 
-import createQuestion from "@/app/api_functions/questions/create_question";
 import deleteQuiz from "@/app/api_functions/quizzes/delete_quiz";
 import editQuizTitle from "@/app/api_functions/quizzes/edit_quiz_title";
 import getQuiz from "@/app/api_functions/quizzes/get_quiz";
 import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
-import AddQuestionForm from "@/app/components/questions/AddQuestionForm";
 import QuizQuestions from "@/app/components/questions/AllQuestions";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
 import PopupWrapper from "@/app/utils/PopupWrapper";
@@ -23,14 +21,12 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
 
   // Loaders and togglers on/off
   const [isLoading, setLoading] = useState(true);
-  const [showAddQuestion, setShowAddQuestion] = useState(false);
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
   // quiz content
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   // state for a new question title
-  const [questionTitle, setQuestionTitle] = useState("");
   // state for editting quiz title
   const [quizTitle, setQuizTitle] = useState("");
 
@@ -45,24 +41,13 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
   const onSuccess = () => {
     // Perform this everytime an action happens
     fetchQuiz();
-    setShowAddQuestion(false);
     setShowEditTitle(false);
-    setQuestionTitle("");
     setQuizTitle("");
   };
 
   const onEditQuizTitle = (e: SyntheticEvent) => {
     e.preventDefault();
     editQuizTitle(params.id, quizTitle, onSuccess);
-  };
-
-  const onAddQuestion = (e: SyntheticEvent) => {
-    e.preventDefault();
-    let formattedTitle = questionTitle.trim().split(/\n/).join("\\n");
-    createQuestion(params.id, formattedTitle, onSuccess);
-  };
-  const onCancelAdd = () => {
-    setShowAddQuestion(false);
   };
 
   const onDelete = () => {
@@ -101,12 +86,7 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
             <ToggleButton
               target={showEditTitle}
               toggler={setShowEditTitle}
-              buttonText="Edit title"
-            />
-            <ToggleButton
-              target={showAddQuestion}
-              toggler={setShowAddQuestion}
-              buttonText="Add question"
+              buttonText="Edit quiz title"
             />
 
             <ToggleButton
@@ -126,15 +106,6 @@ const QuizPage = ({ params }: { params: { id: string } }) => {
               setTitle={setQuizTitle}
               onSubmit={onEditQuizTitle}
               onCancel={() => setShowEditTitle(false)}
-            />
-          </PopupWrapper>
-
-          {/* ADD QUESTION POPUP FORM */}
-          <PopupWrapper isShown={showAddQuestion}>
-            <AddQuestionForm
-              setQuestion={setQuestionTitle}
-              onSubmit={onAddQuestion}
-              onCancel={onCancelAdd}
             />
           </PopupWrapper>
 

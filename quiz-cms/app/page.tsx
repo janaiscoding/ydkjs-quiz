@@ -5,6 +5,7 @@ import { QuizzesContext } from "./context/quizzesContext";
 import getQuizzes from "./api_functions/quizzes/get_quizzes";
 import createQuiz from "./api_functions/quizzes/create_quiz";
 import AddQuizForm from "./components/quizzes/AddQuizForm";
+import AddQuestionForm from "./components/questions/AddQuestionForm";
 
 export default function Home() {
   // Protected.
@@ -53,6 +54,8 @@ export default function Home() {
           ))}
 
           <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
+
+          <AddQuestionForm />
         </div>
       )}
     </main>

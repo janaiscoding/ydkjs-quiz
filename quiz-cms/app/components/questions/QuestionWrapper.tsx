@@ -1,8 +1,6 @@
 import MarkdownWrapper from "../../utils/MarkdownWrapper";
 import { formatToMarkdown } from "../../utils/stringFormatters";
 import { Question } from "../../utils/types";
-import ToggleButton from "../ToggleButton";
-import { useState } from "react";
 
 const QuestionWrapper = ({
   idx,
