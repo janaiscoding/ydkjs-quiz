@@ -1,6 +1,7 @@
 import createQuestion from "@/app/api_functions/questions/create_question";
 import { QuizzesContext } from "@/app/context/quizzesContext";
 import { formatToTemplateLiteral } from "@/app/utils/stringFormatters";
+import { useRouter } from "next/navigation";
 import { FormEvent, useContext, useState } from "react";
 import { IoCheckboxOutline } from "react-icons/io5";
 
@@ -8,23 +9,32 @@ const AddQuestionForm = () => {
   const [question, setQuestion] = useState("");
   const quizzes = useContext(QuizzesContext);
   const [parentQuiz, setParentQuiz] = useState("");
+  const router = useRouter();
 
-  const onAddQuestion = (e: FormEvent) => {
+  const onSubmitQuestion = (e: FormEvent) => {
     e.preventDefault();
+    if (parentQuiz.includes("Select")) {
+      // add a new error that no quiz was selected
+      return;
+    }
     if (question && parentQuiz) {
       createQuestion(parentQuiz, formatToTemplateLiteral(question), onSuccess);
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = (new_question_id: string) => {
     setQuestion("");
     setParentQuiz("");
+    console.log("redirect..."); // add a visual effect here
+    setTimeout(() => {
+      router.push(`/questions/${new_question_id}`);
+    }, 100);
   };
 
   return (
     <form
       className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
-      onSubmit={(e) => onAddQuestion(e)}
+      onSubmit={(e) => onSubmitQuestion(e)}
     >
       <label className="flex flex-col gap-2 hover:cursor-pointer">
         Add a new question
@@ -37,7 +47,7 @@ const AddQuestionForm = () => {
       <label className="text-slate-950 flex flex-col gap-2 hover:cursor-pointer">
         <span className="text-slate-50">Select parent quiz</span>
         <select onChange={(e) => setParentQuiz(e.target.value)}>
-          <option disabled>--Please choose a parent quiz--</option>
+          <option>Select parent quiz for this question</option>
           {quizzes.quizzes?.map((quiz) => (
             <option key={quiz._id} value={quiz._id}>
               {quiz.title}

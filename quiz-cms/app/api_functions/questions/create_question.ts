@@ -3,8 +3,9 @@ import { getJwtToken } from "@/app/utils/auth";
 const createQuestion = (
   quiz_id: string,
   title: string,
-  onSuccess: () => void
+  onSuccess: (new_question_id: string) => void
 ) => {
+  console.log(quiz_id, title);
   fetch(`https://js-quiz-api.fly.dev/quizzes/${quiz_id}`, {
     method: "POST",
     headers: {
@@ -15,7 +16,12 @@ const createQuestion = (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      if (data.newQuestion) {
+        onSuccess(data.newQuestion._id);
+      } else {
+        console.log(data);
+        //handle error
+      }
     })
     .catch((err) => {
       console.log(err);
