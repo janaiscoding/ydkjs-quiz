@@ -20,8 +20,7 @@ export default function Home() {
 
   // Loading effect
   const [isLoading, setLoading] = useState(true);
-  // New quiz title
-  const [title, setTitle] = useState("");
+
   // Fetch and set context
   const fetchQuizzes = async () => {
     setLoading(true);
@@ -29,34 +28,25 @@ export default function Home() {
     quizzesContext.setQuizzes(myQuizzes);
     setLoading(false);
   };
-  // Submit a new quiz
-  const onSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    createQuiz(title, onSuccess);
-  };
-  // Refetch after new quiz success + clear form
-  const onSuccess = () => {
-    fetchQuizzes();
-    setTitle("");
-  };
+
   // Initial render
   useEffect(() => {
     fetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(viewContext.view);
+
   return (
-    <div className="p-4 md:p-0 flex gap-0 md:gap-20 w-full h-full">
+    <div className="p-4 flex gap-0 md:gap-20 w-full h-full">
 
       {viewContext.view === "quizzes" && isLoading && <p>Loading quizzes...</p>}
 
-      
+
       {viewContext.view === "quizzes" && !isLoading && (
         <div className="flex gap-2 flex-col py-4">
           {quizzesContext.quizzes?.map((quiz, idx) => (
             <div key={quiz._id}>
-              <a href={`/quizzes/${quiz._id}`} className="link">
-                {idx + 1}. {quiz.title}
+              <a href={`/quizzes/${quiz._id}`} className="">
+                {idx + 1}. {quiz.title} ({quiz.questions.length} questions)
               </a>
             </div>
           ))}
@@ -64,7 +54,7 @@ export default function Home() {
       )}
 
       {viewContext.view === "add-quiz" && (
-        <AddQuizForm setQuizTitle={setTitle} onSubmit={onSubmit} />
+        <AddQuizForm />
       )}
 
       {viewContext.view === "add-question" && <AddQuestionForm />}

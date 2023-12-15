@@ -29,7 +29,7 @@ export default function RootLayout({
           <ViewContextProvider>
             <QuizzesContextProvider>
               <Navbar />
-              <main className="p-4">
+              <main>
                 {children}
               </main>
               <Background />

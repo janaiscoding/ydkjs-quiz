@@ -1,24 +1,38 @@
-import { SetStateAction, SyntheticEvent } from "react";
-import { IoMdClose } from "react-icons/io";
+import createQuiz from "@/app/api_functions/quizzes/create_quiz";
+import { useRouter } from "next/navigation";
+import { SyntheticEvent, useState } from "react";
+
 import { IoCheckboxOutline } from "react-icons/io5";
 
-type AddQuestionFormProps = {
-  setQuizTitle: React.Dispatch<SetStateAction<string>>;
-  onSubmit: (e: SyntheticEvent) => void;
-};
+const AddQuizForm = () => {
+  const router = useRouter();
+  // New quiz title
+  const [title, setTitle] = useState("");
+  // Submit a new quiz
+  const onSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log(title)
+    createQuiz(title, onSuccess);
+  };
 
-const AddQuizForm = ({ setQuizTitle, onSubmit }: AddQuestionFormProps) => {
+  // Refetch after new quiz success + clear form
+  const onSuccess = (quiz_id: string) => {
+    setTitle("");
+    router.push(`quizzes/${quiz_id}`);
+  };
+
   return (
     <form
-      className="p-4 border border-solid border-yellow-200/20 flex flex-col gap-4 w-full"
+      className="flex flex-col items-start gap-4 w-full min-w-full"
       onSubmit={(e) => onSubmit(e)}
     >
-      <legend>Add a new quiz</legend>
+      <legend className="text-indigo-400 text-2xl">Add a new quiz</legend>
       <label className="flex flex-col gap-4">
-        Quiz title
+        <span className="hidden">Quiz title</span>
         <input
-          onChange={(e) => setQuizTitle(e.target.value)}
-          className="text-slate-950 h-10"
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Quiz Title"
+          className="text-slate-950 h-10 p-4"
         />
       </label>
 

@@ -1,7 +1,8 @@
 import { getJwtToken } from "@/app/utils/auth";
 import { quizzesAPI } from "@/app/utils/endpoints";
 
-const createQuiz = (title: string, onSuccess: () => void) => {
+const createQuiz = (title: string, onSuccess: (quiz_id: string) => void) => {
+  console.log(title);
   fetch(quizzesAPI, {
     method: "POST",
     headers: {
@@ -12,8 +13,10 @@ const createQuiz = (title: string, onSuccess: () => void) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      if(data.message) {
-        onSuccess()
+      if (data.message) {
+        onSuccess(data.newQuiz._id);
+      } else {
+        //handle error --- quiz title too long
       }
     })
     .catch((err) => {
