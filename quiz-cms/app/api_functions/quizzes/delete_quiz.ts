@@ -1,6 +1,6 @@
 import { getJwtToken } from "@/app/utils/auth";
 
-const deleteQuiz = (quiz_id: string) => {
+const deleteQuiz = (quiz_id: string, onSuccess: () => void) => {
   fetch(`https://js-quiz-api.fly.dev/quizzes/${quiz_id}`, {
     method: "DELETE",
     headers: {
@@ -9,7 +9,11 @@ const deleteQuiz = (quiz_id: string) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      if (data.message.includes("deleted")) {
+        onSuccess();
+      } else {
+        console.log(data);
+      }
     })
     .catch((err) => {
       console.log(err);

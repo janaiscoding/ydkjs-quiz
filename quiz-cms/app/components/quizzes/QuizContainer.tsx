@@ -32,17 +32,19 @@ const QuizContainer = ({ quiz, idx }: { quiz: Quiz; idx: number }) => {
     const myQuizzes = await getQuizzes();
     quizzesContext.setQuizzes(myQuizzes);
   };
+
   const onEditQuizTitle = (e: SyntheticEvent) => {
     e.preventDefault();
     editQuizTitle(quiz._id, quizTitle, onSuccess);
   };
 
   const onDelete = () => {
-    deleteQuiz(quiz._id);
+    deleteQuiz(quiz._id, onSuccesDelete);
+  };
+  const onSuccesDelete = () => {
     setShowDelete(false);
     fetchQuizzes();
   };
-
   return (
     <ContentWrapper>
       <h1 className="text-2xl cursor-default">

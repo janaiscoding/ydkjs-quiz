@@ -2,7 +2,6 @@ import { getJwtToken } from "@/app/utils/auth";
 import { quizzesAPI } from "@/app/utils/endpoints";
 
 const createQuiz = (title: string, onSuccess: (quiz_id: string) => void) => {
-  console.log(title);
   fetch(quizzesAPI, {
     method: "POST",
     headers: {
