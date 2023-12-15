@@ -47,7 +47,7 @@ const EditTitleForm = ({
         className="flex gap-1 items-center justify-center p-2 text-slate-950 bg-green-400"
       >
         <IoCheckboxOutline />
-        Save {legend}
+        Save
       </button>
     </form>
   );
