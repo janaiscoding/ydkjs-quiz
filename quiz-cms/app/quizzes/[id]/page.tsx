@@ -7,12 +7,13 @@ import DeletePopup from "@/app/components/DeletePopup";
 import EditTitleForm from "@/app/components/EditTitleForm";
 import ToggleButton from "@/app/components/ToggleButton";
 import QuizQuestions from "@/app/components/questions/AllQuestions";
+import { QuizzesContext } from "@/app/context/quizzesContext";
 import useTokenAuth from "@/app/hooks/useTokenAuth";
 import PopupWrapper from "@/app/utils/PopupWrapper";
 
 import { Quiz } from "@/app/utils/types";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 
 const QuizPage = ({ params }: { params: { id: string } }) => {
   // Auth

@@ -10,6 +10,8 @@ import Sidebar from "./components/navigation/Sidebar";
 import Navbar from "./components/navigation/Navbar";
 import { ViewContext } from "./context/viewContext";
 import Footer from "./components/navigation/Footer";
+import ToggleButton from "./components/ToggleButton";
+import HomeQuizWrapper from "./components/quizzes/HomeQuizWrapper";
 
 export default function Home() {
   // Protected.
@@ -22,7 +24,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
 
   // Fetch and set context
-  const fetchQuizzes = async () => {
+  const fetchQuizzes = async  () => {
     setLoading(true);
     const myQuizzes = await getQuizzes();
     quizzesContext.setQuizzes(myQuizzes);
@@ -37,25 +39,17 @@ export default function Home() {
 
   return (
     <div className="p-4 flex gap-0 md:gap-20 w-full h-full">
-
       {viewContext.view === "quizzes" && isLoading && <p>Loading quizzes...</p>}
-
 
       {viewContext.view === "quizzes" && !isLoading && (
         <div className="flex gap-2 flex-col py-4">
           {quizzesContext.quizzes?.map((quiz, idx) => (
-            <div key={quiz._id}>
-              <a href={`/quizzes/${quiz._id}`} className="">
-                {idx + 1}. {quiz.title} ({quiz.questions.length} questions)
-              </a>
-            </div>
+            <HomeQuizWrapper key={idx} quiz={quiz} idx={idx} />
           ))}
         </div>
       )}
 
-      {viewContext.view === "add-quiz" && (
-        <AddQuizForm />
-      )}
+      {viewContext.view === "add-quiz" && <AddQuizForm />}
 
       {viewContext.view === "add-question" && <AddQuestionForm />}
     </div>
