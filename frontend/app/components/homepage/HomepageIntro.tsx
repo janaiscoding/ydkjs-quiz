@@ -16,12 +16,13 @@ export const HomepageIntro = ({
   ];
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  
   const handleAnimation = () => {
     if (imageRef.current && textRef.current) {
       imageRef.current.classList.add("animate__exit");
       textRef.current.classList.add("animate__exit");
     }
-
+    // Giving time for the animate__exit (0.5s) to finish before removing it from the DOM
     setTimeout(() => {
       setShown(true);
     }, 500);
