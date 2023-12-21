@@ -2,10 +2,10 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import QuizNavigation from "./quiz-navigation";
 import { IoCheckmark } from "react-icons/io5";
-import { TQuestion, TQuiz } from "@/app/utils/types";
+import { Question, Quiz } from "@/app/utils/types";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 
-const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
+const QuizGame = ({ quiz }: { quiz: Quiz }) => {
   console.log(quiz)
   // const {
   //   questions,
@@ -17,7 +17,7 @@ const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
   // Active question index, is used to keep track of array index position (not uniqid, array index)
   const [index, setIndex] = useState<number>(0);
   // Moves active question based on array index from above - by default starts at 0 - set in useEffect
-  const [currentQ, setCurrentQ] = useState<TQuestion>();
+  const [currentQ, setCurrentQ] = useState<Question>();
 
   // Form validator
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
@@ -41,14 +41,14 @@ const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
 
   const handleQuestionSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (selectedAnswer === currentQ!.correctAnswer) {
-      setCorrect(true);
-      console.log(selectedAnswer);
-      //update score
-      //update userselectecorrect
-    } else {
-      setCorrect(false);
-    }
+    // if (selectedAnswer === selectedAnswer) {
+    //   setCorrect(true);
+    //   console.log(selectedAnswer);
+    //   //update score
+    //   //update userselectecorrect
+    // } else {
+    //   setCorrect(false);
+    // }
     // display correct status
     // display button to move to next q
   };
@@ -84,13 +84,13 @@ const QuizGame = ({ quiz }: { quiz: TQuiz }) => {
           >
             <input
               type="checkbox"
-              value={ans}
-              id={ans}
+              value={ans.answer}
+              id={ans._id}
               onChange={onValueChange}
-              checked={ans === selectedAnswer}
+              checked={ans.answer === selectedAnswer}
               className="checkbox checkbox-warning checkbox-sm"
             />
-            <MarkdownWrapper content={ans} />
+            <MarkdownWrapper content={ans.answer} />
           </label>
         ))}
       </div>

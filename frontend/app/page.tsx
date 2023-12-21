@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuizzes } from "./hooks/useQuizzes";
-import Image from "next/image";
-import React, { SetStateAction, useEffect, useRef, useState } from "react";
-import TypewriterComponent from "typewriter-effect";
+import React, { useState } from "react";
 import { HomepageIntro } from "./components/homepage/HomepageIntro";
+import { FaRegEye } from "react-icons/fa";
 
 export default function Homepage() {
   const [isShown, setShown] = useState(false);
@@ -16,9 +15,13 @@ export default function Homepage() {
       {!isShown && <HomepageIntro setShown={setShown} />}
 
       <div className={`${isShown ? "animate__enter" : "hidden"}`}>
-        <div>Your quizzes</div>
-        {quizzes?.map((quiz) => (
-          <p key={quiz._id}> {quiz.title}</p>
+        <h1>Select your quiz!</h1>
+        {quizzes?.map((quiz, idx) => (
+          <div key={quiz._id}>
+            <a className="text-2xl" href={`/quiz/${quiz._id}`}>
+              {idx + 1}. {quiz.title} ({quiz.questions.length} questions)
+            </a>
+          </div>
         ))}
       </div>
     </div>

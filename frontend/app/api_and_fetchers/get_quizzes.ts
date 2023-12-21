@@ -1,6 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
 import { quizzesAPI } from "../utils/endpoints";
-import { Quiz } from "../utils/types";
 
 const getQuizzes = async () => {
   return fetch(quizzesAPI)
