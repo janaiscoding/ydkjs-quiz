@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { QuizzesContext } from "../context/QuizzesContext";
 import getQuizzes from "../api_and_fetchers/get_quizzes";
 
@@ -14,5 +14,5 @@ export const useQuizzes = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return quizzesContext.quizzes
+  return quizzesContext.quizzes;
 };
