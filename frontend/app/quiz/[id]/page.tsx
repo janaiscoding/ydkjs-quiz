@@ -1,19 +1,37 @@
 "use client";
 import useQuiz from "@/app/hooks/useQuiz";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
 
+  // Question trigger logic 
   const [idx, setIdx] = useState(0);
+  const questionRef = useRef<HTMLDivElement>(null);
 
   const incrementIdx = () => {
-    setIdx((prevIdx) => prevIdx + 1);
+    if (questionRef.current) {
+      questionRef.current!.classList.remove("animate__enter");
+      questionRef.current.classList.add("animate__exit");
+
+      setTimeout(() => {
+        setIdx((prevIdx) => prevIdx + 1);
+        questionRef.current!.classList.remove("animate__exit");
+        questionRef.current!.classList.add("animate__enter");
+      }, 500);
+    }
   };
 
   const decrementIdx = () => {
-    if (idx > 0) {
-      setIdx((prevIdx) => prevIdx - 1);
+    if (idx > 0 && questionRef.current) {
+      questionRef.current.classList.remove("animate__enter");
+      questionRef.current.classList.add("animate__exit");
+
+      setTimeout(() => {
+        setIdx((prevIdx) => prevIdx - 1);
+        questionRef.current!.classList.remove("animate__exit");
+        questionRef.current!.classList.add("animate__enter");
+      }, 500);
     }
   };
 
@@ -27,7 +45,8 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
           <div>
             Progress: {idx + 1} / {questions?.length}
           </div>
-          <div>
+
+          <div className="bg-slate-400 p-10 text-slate-950" ref={questionRef}>
             <p>{questions[idx]?.title}</p>
           </div>
 

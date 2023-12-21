@@ -104,7 +104,7 @@ legend > p > code {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50px);
   }
 }
 
@@ -114,7 +114,7 @@ legend > p > code {
 
 @keyframes enter {
   0% {
-    transform: translateX(100%);
+    transform: translateX(50px);
   }
   100% {
     transform: translateX(0);
