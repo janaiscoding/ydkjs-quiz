@@ -3,16 +3,10 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { fromBottom } from "@/app/utils/animation_variants";
 
-
 export default function Footer() {
   return (
     <footer className="flex items-center justify-center mt-auto">
-      <motion.div
-        animate="visible"
-        initial="hidden"
-        variants={fromBottom}
-        className="text-md text-neutral-200 flex gap-2 items-center"
-      >
+      <div className="text-md text-neutral-200 flex gap-2 items-center animate__from__bottom">
         Made by
         <a
           aria-label="github link for website maker"
@@ -22,7 +16,7 @@ export default function Footer() {
         >
           <FaGithub /> <span> @janaiscoding</span>
         </a>
-      </motion.div>
+      </div>
     </footer>
   );
 }

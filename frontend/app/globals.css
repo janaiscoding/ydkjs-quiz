@@ -47,6 +47,7 @@ legend > p > code {
     scale: 1.01;
   }
 }
+
 .gradient__text {
   background: linear-gradient(300deg, #ab4bff, #5ca2ff);
   background-size: 300% 300%;
@@ -68,29 +69,54 @@ legend > p > code {
   }
 }
 
-.border_animate::before {
-  content: "";
-  background-image: conic-gradient(#ffd800 20deg, transparent 80deg);
-  position: absolute;
-  inset: -110px;
-  z-index: -1;
-  border-radius: 12px;
-  animation: rotate 4s infinite linear;
+.animate__from__top {
+  animation: from_top 0.5s ease-in;
 }
 
-@keyframes rotate {
-  from {
-    rotate: 0deg;
+@keyframes from_top {
+  0% {
+    transform: translateY(-10px);
   }
-  to {
-    rotate: -360deg;
+  100% {
+    transform: translateY(0);
   }
 }
 
-.border_animate::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: 12px;
-  z-index: -1;
+.animate__from__bottom {
+  animation: from_bottom 0.5s ease-in;
+}
+
+@keyframes from_bottom {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate__exit {
+  animation: exit 0.5s ease-in;
+}
+
+@keyframes exit {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate__enter {
+  animation: enter 0.5s ease-in;
+}
+
+@keyframes enter {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

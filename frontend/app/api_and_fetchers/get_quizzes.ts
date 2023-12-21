@@ -1,21 +1,20 @@
+import { Dispatch, SetStateAction } from "react";
 import { quizzesAPI } from "../utils/endpoints";
 import { Quiz } from "../utils/types";
 
 const getQuizzes = async () => {
-  let quizzes: Quiz[];
-  
-  await fetch(quizzesAPI)
+  return fetch(quizzesAPI)
     .then((res) => res.json())
     .then((data) => {
       if (data.quizzes) {
-        quizzes = data.quizzes;
+        return data.quizzes;
+        //quizzes = data.quizzes;
       } else {
+        console.log(data);
         //handle error
       }
     })
     .catch((err) => console.log(err));
-
-   return quizzes!; 
 };
 
 export default getQuizzes;

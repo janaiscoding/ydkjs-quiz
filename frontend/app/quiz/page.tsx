@@ -1,9 +1,11 @@
-'use client'
+"use client";
+import { useContext, useEffect } from "react";
 import { useQuizzes } from "../hooks/useQuizzes";
+import { QuizzesContext } from "../context/QuizzesContext";
+import getQuizzes from "../api_and_fetchers/get_quizzes";
 
-const Quiz = () => {
+const QuizzesPage = () => {
   const quizzes = useQuizzes();
-
   return (
     <div className="flex flex-col justify-center gap-4 md:gap-10 my-6 md:my-20">
       <div className="text-sm breadcrumbs">
@@ -13,11 +15,11 @@ const Quiz = () => {
               Home
             </a>
           </li>
-          <li>Quiz</li>
+          <li>Quizzes</li>
         </ul>
       </div>
       <div className="text-4xl gradient__text">select your chapter</div>
-
+      {quizzes?.length === 0 && <p>loading...</p>}
       <ul>
         {quizzes?.map((chap) => (
           <li
@@ -34,4 +36,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default QuizzesPage;

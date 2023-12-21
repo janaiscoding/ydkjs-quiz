@@ -6,14 +6,13 @@ export const useQuizzes = () => {
   const quizzesContext = useContext(QuizzesContext);
 
   const fetchData = async () => {
-    const appQuizzes = await getQuizzes();
-    quizzesContext.setQuizzes(appQuizzes);
+    const data = await getQuizzes();
+    quizzesContext.setQuizzes(data);
   };
-
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return quizzesContext.quizzes;
+  return quizzesContext.quizzes
 };
