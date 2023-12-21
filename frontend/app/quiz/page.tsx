@@ -1,6 +1,9 @@
-import quiz from "../data/full-quiz-data";
+'use client'
+import { useQuizzes } from "../hooks/useQuizzes";
 
 const Quiz = () => {
+  const quizzes = useQuizzes();
+
   return (
     <div className="flex flex-col justify-center gap-4 md:gap-10 my-6 md:my-20">
       <div className="text-sm breadcrumbs">
@@ -16,14 +19,14 @@ const Quiz = () => {
       <div className="text-4xl gradient__text">select your chapter</div>
 
       <ul>
-        {quiz.map((chap) => (
-          <li key={chap.id} className="text-2xl hover:text-foreground transition p-1">
-            <a
-              href={`/quiz/${chap.url}`}
-              aria-labelledby={`link for the ${chap.title} quiz chapter`}
-            >
+        {quizzes?.map((chap) => (
+          <li
+            key={chap._id}
+            className="text-2xl hover:text-foreground transition p-1"
+          >
+            <h1 aria-labelledby={`link for the ${chap.title} quiz chapter`}>
               {chap.title}
-            </a>
+            </h1>
           </li>
         ))}
       </ul>
