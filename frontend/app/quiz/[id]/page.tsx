@@ -52,17 +52,24 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   // we created this for storing the user selected answers so we can see when we go prev/next
   const [playedQ, setPlayedQ] = useState([] as Question[]);
+  const [userScore, setUserScore] = useState(0);
+
   const onCheckAns = () => {
     if (isCorrectAns === null && userAns.answer) {
+      // check if correct and set that for displaying correct/wrong
       setIsCorrAns(userAns.isCorrect);
 
+      // increment score only if correct
+      if (userAns.isCorrect) {
+        setUserScore((score) => score + 1);
+      }
       //update user state for the current quiz questions
       let prevState = [...playedQ];
       prevState[idx] = {
         ...prevState[idx],
         userAns: userAns,
       };
-
+      // update game app state
       setPlayedQ(prevState);
     }
   };
@@ -90,7 +97,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               </li>
             </ul>
           </div>
-
+          <div>Your current score: {userScore}</div>
           <div
             className="w-full flex flex-col justify-between gap-4 bg-sky-950 p-2 md:p-6"
             ref={questionRef}
