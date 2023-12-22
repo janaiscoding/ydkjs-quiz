@@ -48,11 +48,10 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   // answer handle logic
   // must store the user answers
   const [userAns, setUserAns] = useState({} as Answer);
-
   const [isCorrectAns, setIsCorrAns] = useState<boolean | null>(null);
 
+  // we created this for storing the user selected answers so we can see when we go prev/next
   const [playedQ, setPlayedQ] = useState([] as Question[]);
-
   const onCheckAns = () => {
     if (isCorrectAns === null && userAns.answer) {
       setIsCorrAns(userAns.isCorrect);
@@ -106,23 +105,14 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               {playedQ[idx].answers.map((ans, i) => (
                 <label
                   key={i}
-                  className={`flex gap-2 items-center hover:text-slate-50 hover:cursor-pointer
-                  
+                  className={`flex gap-2 items-center hover:cursor-pointer
                   ${
-                    //initial checking
-                    isCorrectAns !== null && ans.isCorrect && "text-green-400"
+                    isCorrectAns !== null || playedQ[idx].userAns !== undefined
+                      ? ans.isCorrect
+                        ? "text-green-400"
+                        : "text-red-400"
+                      : " "
                   }
-                 ${
-                   // if answer was already submitted show different colors
-                   playedQ[idx].userAns !== undefined
-                     ? playedQ[idx].userAns.answer === ans.answer
-                       ? playedQ[idx].userAns.isCorrect
-                         ? "text-green-400"
-                         : "text-red-400"
-                       : ""
-                     : " "
-                 }
-                  
                   `}
                 >
                   <input
@@ -133,7 +123,10 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
                         setUserAns(ans);
                       }
                     }}
-                    checked={ans.answer === userAns.answer || playedQ[idx]?.userAns?.answer === ans.answer}
+                    checked={
+                      ans.answer === userAns.answer ||
+                      playedQ[idx]?.userAns?.answer === ans.answer
+                    }
                     className="checkbox checkbox-warning checkbox-sm"
                     disabled={playedQ[idx].userAns !== undefined}
                   />
@@ -141,8 +134,6 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
                 </label>
               ))}
             </div>
-            {playedQ[idx].userAns && <p>user already chose</p>}
-
             {isCorrectAns && <p>Correct!</p>}
             {isCorrectAns === false && <p>Wrong!</p>}
           </div>
