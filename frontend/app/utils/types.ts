@@ -22,6 +22,7 @@ type Question = {
   title: string;
   parent_quiz: string;
   answers: Answer[];
+  userAns: Answer;
 };
 
 type Answer = {

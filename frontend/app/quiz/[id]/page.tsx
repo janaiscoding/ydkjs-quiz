@@ -1,10 +1,10 @@
 "use client";
 import useQuiz from "@/app/hooks/useQuiz";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Loader from "@/app/ui/Loader";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { formatToMarkdown } from "@/app/utils/stringFormatters";
-import { Answer } from "@/app/utils/types";
+import { Answer, Question } from "@/app/utils/types";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
@@ -15,6 +15,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   const incrementIdx = () => {
     setIsCorrAns(null);
+    setUserAns({} as Answer);
     if (idx + 1 < questions.length && questionRef.current) {
       questionRef.current!.classList.remove("animate__enter");
       questionRef.current.classList.add("animate__exit");
@@ -31,6 +32,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   const decrementIdx = () => {
     setIsCorrAns(null);
+    setUserAns({} as Answer);
     if (idx > 0 && questionRef.current) {
       questionRef.current.classList.remove("animate__come__from__left");
       questionRef.current.classList.add("animate__go__to__right");
@@ -44,14 +46,31 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   };
 
   // answer handle logic
+  // must store the user answers
   const [userAns, setUserAns] = useState({} as Answer);
+
   const [isCorrectAns, setIsCorrAns] = useState<boolean | null>(null);
+
+  const [playedQ, setPlayedQ] = useState([] as Question[]);
 
   const onCheckAns = () => {
     if (isCorrectAns === null && userAns.answer) {
       setIsCorrAns(userAns.isCorrect);
+
+      //update user state for the current quiz questions
+      let prevState = [...playedQ];
+      prevState[idx] = {
+        ...prevState[idx],
+        userAns: userAns,
+      };
+
+      setPlayedQ(prevState);
     }
   };
+
+  useEffect(() => {
+    setPlayedQ(questions);
+  }, [questions]);
 
   return (
     <div className="w-full bg-sky-950/20 min-h-[95vh] md:px-16 p-6 flex justify-between flex-col md:justify-start">
@@ -84,12 +103,27 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              {questions[idx].answers.map((ans, i) => (
+              {playedQ[idx].answers.map((ans, i) => (
                 <label
                   key={i}
-                  className={`flex gap-2 items-center hover:text-slate-50 hover:cursor-pointer ${
+                  className={`flex gap-2 items-center hover:text-slate-50 hover:cursor-pointer
+                  
+                  ${
+                    //initial checking
                     isCorrectAns !== null && ans.isCorrect && "text-green-400"
-                  }`}
+                  }
+                 ${
+                   // if answer was already submitted show different colors
+                   playedQ[idx].userAns !== undefined
+                     ? playedQ[idx].userAns.answer === ans.answer
+                       ? playedQ[idx].userAns.isCorrect
+                         ? "text-green-400"
+                         : "text-red-400"
+                       : ""
+                     : " "
+                 }
+                  
+                  `}
                 >
                   <input
                     type="checkbox"
@@ -99,13 +133,16 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
                         setUserAns(ans);
                       }
                     }}
-                    checked={ans.answer === userAns.answer}
+                    checked={ans.answer === userAns.answer || playedQ[idx]?.userAns?.answer === ans.answer}
                     className="checkbox checkbox-warning checkbox-sm"
+                    disabled={playedQ[idx].userAns !== undefined}
                   />
                   <MarkdownWrapper content={ans.answer} />
                 </label>
               ))}
             </div>
+            {playedQ[idx].userAns && <p>user already chose</p>}
+
             {isCorrectAns && <p>Correct!</p>}
             {isCorrectAns === false && <p>Wrong!</p>}
           </div>
