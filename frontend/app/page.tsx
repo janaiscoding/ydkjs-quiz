@@ -15,7 +15,7 @@ export default function Homepage() {
     }, 2000);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-10">
+    <div className="flex flex-col items-center justify-center gap-4 py-10 min-h-[95vh]">
       {isLoading && <Loader />}
 
       {!isLoading && !isShown && <HomepageIntro setShown={setShown} />}

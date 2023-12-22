@@ -1,14 +1,13 @@
-import Lottie from "react-lottie";
+import { Player } from '@lottiefiles/react-lottie-player';
+
 import * as Reindeer from "@/public/reindeer_animation.json";
 const Loader = () => {
   return (
     <div className="max-w-6xl mx-auto">
-      <Lottie
-        options={{
-          loop: true,
-          animationData: Reindeer,
-          autoplay: true,
-        }}
+      <Player
+        src={Reindeer}
+        loop
+        autoplay   
       />
     </div>
   );
