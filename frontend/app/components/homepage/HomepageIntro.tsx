@@ -45,7 +45,7 @@ export const HomepageIntro = ({
         ref={textRef}
         className="basis-full flex flex-col gap-6 items-center justify-center text-center animate__from__bottom"
       >
-        <div className="text-4xl max-w-3xl" data-testid="homepage-text">
+        <div className="text-2xl md:text-4xl max-w-3xl" data-testid="homepage-text">
           A fun, educative quiz inspired by
           <TypewriterComponent
             options={{

@@ -7,7 +7,7 @@ import { formatToMarkdown } from "@/app/utils/stringFormatters";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
-
+  //const isLoading = true
   // Question trigger logic
   const [idx, setIdx] = useState(0);
   const questionRef = useRef<HTMLDivElement>(null);
@@ -41,8 +41,10 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="w-full bg-sky-950/20 min-h-[95vh] md:px-16 px-6">
-      <div className="max-w-2xl m-auto">{isLoading && <Loader />}</div>
+    <div className="w-full bg-sky-950/20 min-h-[95vh] md:px-16 p-6 flex justify-between flex-col md:justify-start">
+      <div className={`${!isLoading && "hidden"} max-w-2xl m-auto`}>
+        {isLoading && <Loader />}
+      </div>
 
       {!isLoading && quiz && questions && (
         <>
@@ -52,14 +54,14 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
                 <a href="/">Home</a>
               </li>
               <li>{quiz.title}</li>
+              <li>
+                Question {idx + 1} of {questions.length}
+              </li>
             </ul>
           </div>
 
-          <p>
-            Question {idx + 1} of {questions.length}
-          </p>
           <div
-            className="w-full flex flex-col justify-between gap-4 bg-sky-950 p-6"
+            className="w-full flex flex-col justify-between gap-4 bg-sky-950 p-2 md:p-6"
             ref={questionRef}
             id="question-ref"
           >

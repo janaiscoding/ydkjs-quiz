@@ -15,13 +15,13 @@ export default function Homepage() {
     }, 2000);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-10 min-h-[95vh]">
+    <div className="flex flex-col items-center justify-center gap-4 min-h-[95vh]">
       {isLoading && <Loader />}
 
       {!isLoading && !isShown && <HomepageIntro setShown={setShown} />}
 
       {!isLoading && (
-        <div className={`${isShown ? "animate__enter" : "hidden"}`}>
+        <div className={`${isShown ? "animate__enter" : "hidden"} flex gap-4 flex-col px-16`}>
           <h1 className="text-xl text-indigo-400">Select your quiz!</h1>
           {quizzes?.map((quiz, idx) => (
             <div key={quiz._id}>
