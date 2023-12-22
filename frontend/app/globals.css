@@ -83,7 +83,7 @@ legend > p > code {
 
 @keyframes from_top {
   0% {
-    transform: translateY(-10px);
+    transform: translateY(-1em);
   }
   100% {
     transform: translateY(0);
@@ -96,7 +96,7 @@ legend > p > code {
 
 @keyframes from_bottom {
   0% {
-    transform: translateY(10px);
+    transform: translateY(1rem);
   }
   100% {
     transform: translateY(0);
@@ -112,7 +112,7 @@ legend > p > code {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50px);
+    transform: translateX(-1rem);
   }
 }
 
@@ -122,7 +122,7 @@ legend > p > code {
 
 @keyframes enter {
   0% {
-    transform: translateX(50px);
+    transform: translateX(1rem);
   }
   100% {
     transform: translateX(0);
@@ -138,7 +138,7 @@ legend > p > code {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(50px);
+    transform: translateX(1rem);
   }
 }
 
@@ -148,7 +148,7 @@ legend > p > code {
 
 @keyframes previous_anim_in {
   0% {
-    transform: translateX(-50px);
+    transform: translateX(-1rem);
   }
   100% {
     transform: translateX(0);

@@ -41,7 +41,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="w-full bg-sky-950 min-h-[95vh] px-16">
+    <div className="w-full bg-sky-950/20 min-h-[95vh] md:px-16 px-6">
       <div className="max-w-2xl m-auto">{isLoading && <Loader />}</div>
 
       {!isLoading && quiz && questions && (
@@ -55,14 +55,15 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
             </ul>
           </div>
 
+          <p>
+            Question {idx + 1} of {questions.length}
+          </p>
           <div
-            className="py-6 w-full flex flex-col justify-between gap-4"
+            className="w-full flex flex-col justify-between gap-4 bg-sky-950 p-6"
             ref={questionRef}
+            id="question-ref"
           >
-            <p>
-              Question {idx + 1} of {questions.length}
-            </p>
-            <div id="question" className="text-neutral-50 py-2 max-w-md">
+            <div className="text-neutral-50 py-2 max-w-md">
               <MarkdownWrapper
                 content={formatToMarkdown(questions[idx]?.title)}
               />
