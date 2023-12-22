@@ -1,11 +1,14 @@
 "use client";
+import Navbar from "@/app/components/navigation/Navbar";
 import useQuiz from "@/app/hooks/useQuiz";
 import { useRef, useState } from "react";
+import Loader from "@/app/ui/Loader";
+
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
 
-  // Question trigger logic 
+  // Question trigger logic
   const [idx, setIdx] = useState(0);
   const questionRef = useRef<HTMLDivElement>(null);
 
@@ -37,13 +40,20 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20 md:min-w-5xl">
-      {isLoading && <p>loading...</p>}
+      {isLoading && <Loader />}
 
-      {quiz && questions && (
+      {!isLoading && quiz && questions && (
         <div className="max-w-md">
-          <h1>{quiz.title} Quiz</h1>
+          <div className="text-sm breadcrumbs">
+            <ul>
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>{quiz.title}</li>
+            </ul>
+          </div>
           <div>
-            Progress: {idx + 1} / {questions?.length}
+            Progress: {idx + 1} / {questions.length}
           </div>
 
           <div className="bg-slate-400 p-10 text-slate-950" ref={questionRef}>

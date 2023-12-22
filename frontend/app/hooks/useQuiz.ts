@@ -6,11 +6,14 @@ const useQuiz = (id: string) => {
   const [isLoading, setLoading] = useState(true);
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   const [questions, setQuestions] = useState<Question[]>([] as Question[]);
+
   const fetchQuiz = async () => {
     const data = await getQuiz(id);
     setQuiz(data);
     setQuestions(data.questions);
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
