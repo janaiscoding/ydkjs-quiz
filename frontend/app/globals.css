@@ -16,6 +16,14 @@
 legend > div > p {
   font-size: 1.5rem;
 }
+
+#question > p > code {
+  background-color: #111b27;
+  padding: 0.2em;
+  border-radius: 2px;
+  color: #ab4bff;
+}
+
 form {
   box-shadow: 0 4px 6px -1px rgb(157 172 124 / 26%),
     0 2px 4px -2px rgb(175 173 70 / 56%);
@@ -115,6 +123,32 @@ legend > p > code {
 @keyframes enter {
   0% {
     transform: translateX(50px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate__go__to__right {
+  animation: previous_anim_out 0.5s ease-in;
+}
+
+@keyframes previous_anim_out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+.animate__come__from__left {
+  animation: previous_anim_in 0.5s ease-in;
+}
+
+@keyframes previous_anim_in {
+  0% {
+    transform: translateX(-50px);
   }
   100% {
     transform: translateX(0);

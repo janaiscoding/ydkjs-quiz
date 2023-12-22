@@ -13,7 +13,6 @@ const config: Config = {
         foreground: "#FFD800",
         border: "#404040",
         purple: "#ab4bff",
-        blue: "#5ca2ff",
         codeGreen: "#91d076", 
         codeBlue: "#111b27", 
         codeError: "#e9ae7e", 

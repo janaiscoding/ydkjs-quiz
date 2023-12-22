@@ -1,9 +1,9 @@
 "use client";
-import Navbar from "@/app/components/navigation/Navbar";
 import useQuiz from "@/app/hooks/useQuiz";
 import { useRef, useState } from "react";
 import Loader from "@/app/ui/Loader";
-
+import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
+import { formatToMarkdown } from "@/app/utils/stringFormatters";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
@@ -13,13 +13,15 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   const questionRef = useRef<HTMLDivElement>(null);
 
   const incrementIdx = () => {
-    if (questionRef.current) {
+    if (idx + 1 < questions.length && questionRef.current) {
       questionRef.current!.classList.remove("animate__enter");
       questionRef.current.classList.add("animate__exit");
+      questionRef.current.classList.remove("animate__come__from__left");
 
       setTimeout(() => {
         setIdx((prevIdx) => prevIdx + 1);
         questionRef.current!.classList.remove("animate__exit");
+        questionRef.current!.classList.remove("animate__come__from__left");
         questionRef.current!.classList.add("animate__enter");
       }, 500);
     }
@@ -27,23 +29,23 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   const decrementIdx = () => {
     if (idx > 0 && questionRef.current) {
-      questionRef.current.classList.remove("animate__enter");
-      questionRef.current.classList.add("animate__exit");
+      questionRef.current.classList.remove("animate__come__from__left");
+      questionRef.current.classList.add("animate__go__to__right");
 
       setTimeout(() => {
         setIdx((prevIdx) => prevIdx - 1);
-        questionRef.current!.classList.remove("animate__exit");
-        questionRef.current!.classList.add("animate__enter");
+        questionRef.current!.classList.remove("animate__go__to__right");
+        questionRef.current!.classList.add("animate__come__from__left");
       }, 500);
     }
   };
 
   return (
-    <div className="flex flex-col items-start justify-center gap-4 md:gap-10 my-6 md:my-20 md:min-w-5xl">
-      {isLoading && <Loader />}
+    <div className="w-full bg-sky-950 min-h-[95vh] px-16">
+      <div className="max-w-2xl m-auto">{isLoading && <Loader />}</div>
 
       {!isLoading && quiz && questions && (
-        <div className="max-w-md">
+        <>
           <div className="text-sm breadcrumbs">
             <ul>
               <li>
@@ -52,19 +54,31 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               <li>{quiz.title}</li>
             </ul>
           </div>
-          <div>
-            Progress: {idx + 1} / {questions.length}
-          </div>
 
-          <div className="bg-slate-400 p-10 text-slate-950" ref={questionRef}>
-            <p>{questions[idx]?.title}</p>
+          <div
+            className="py-6 w-full flex flex-col justify-between gap-4"
+            ref={questionRef}
+          >
+            <p>
+              Question {idx + 1} of {questions.length}
+            </p>
+            <div id="question" className="text-neutral-50 py-2 max-w-md">
+              <MarkdownWrapper
+                content={formatToMarkdown(questions[idx]?.title)}
+              />
+            </div>
+            <div>
+              {questions[idx].answers.map((ans) => (
+                <div key={ans._id}>{ans.answer}</div>
+              ))}
+            </div>
           </div>
-
-          <div>
+          <div className="flex gap-4">
             <button onClick={decrementIdx}>prev</button>
+            <button>submit</button>
             <button onClick={incrementIdx}>next</button>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
