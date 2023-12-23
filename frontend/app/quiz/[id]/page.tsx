@@ -1,6 +1,6 @@
 "use client";
 import useQuiz from "@/app/hooks/useQuiz";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, RefObject, useEffect, useRef, useState } from "react";
 import Loader from "@/app/ui/Loader";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { formatToMarkdown } from "@/app/utils/stringFormatters";
@@ -8,33 +8,33 @@ import { Answer, Question } from "@/app/utils/types";
 import QuizApp from "./QuizApp";
 import { on } from "events";
 import QuizButtons from "./QuizButtons";
+import QuizFeedback from "./QuizFeedback";
+import { animateEnter, animateExit } from "@/app/utils/refAnimateHandlers";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
 
+  // current displayed question index
   const [idx, setIdx] = useState(0);
+  // used for manipulating enter and exit animations
   const questionRef = useRef<HTMLDivElement>(null);
 
   const onIncrementIdx = () => {
-    setIsCorrAns(null);
-    setUserAns({} as Answer);
+    resetCurrentAns();
     if (idx + 1 < questions.length && questionRef.current) {
-      questionRef.current!.classList.remove("animate__enter");
-      questionRef.current.classList.add("animate__exit");
-      questionRef.current.classList.remove("animate__come__from__left");
-
+      // we make the old question exit
+      animateExit(questionRef);
       setTimeout(() => {
+        //after 500ms we make the new question enter
+        animateEnter(questionRef);
         setIdx((prevIdx) => prevIdx + 1);
-        questionRef.current!.classList.remove("animate__exit");
-        questionRef.current!.classList.remove("animate__come__from__left");
-        questionRef.current!.classList.add("animate__enter");
       }, 500);
     }
   };
 
   const onDecrementIdx = () => {
-    setIsCorrAns(null);
-    setUserAns({} as Answer);
+    resetCurrentAns();
+
     if (idx > 0 && questionRef.current) {
       questionRef.current.classList.remove("animate__come__from__left");
       questionRef.current.classList.add("animate__go__to__right");
@@ -56,7 +56,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   const onSubmitAnswer = () => {
     // only when an answer is picked
-    if (isCorrectAns === null && userAns.answer) {
+    if (isCorrectAns === null || userAns.answer) {
       // in case there is an empty error now we clean it
       setEmptyError(null);
       // check if correct and set that for displaying correct/wrong
@@ -80,11 +80,19 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  // only allow change if the answer wasn't submitted
   const onChangeAns = (ans: Answer) => {
     if (isCorrectAns === null) {
       setUserAns(ans);
     }
   };
+
+  // used because we need to show feedback for each question
+  const resetCurrentAns = () => {
+    setIsCorrAns(null);
+    setUserAns({} as Answer);
+  };
+
   useEffect(() => {
     setSessionQ(questions);
   }, [questions]);
@@ -119,15 +127,15 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               onChangeAns={onChangeAns}
               userAns={userAns}
             />
-            {emptyError && <p>You must pick an answer</p>}
-            {isCorrectAns && <p>Correct!</p>}
-            {isCorrectAns === false && <p>Wrong!</p>}
+            <QuizFeedback isCorrect={isCorrectAns} emptyError={emptyError} />
           </div>
           <QuizButtons
             onSubmit={onSubmitAnswer}
             onIncrement={onIncrementIdx}
             onDecrement={onDecrementIdx}
-            disabledStatus={isCorrectAns !== null && true}
+            disabledStatus={
+              isCorrectAns !== null || (sessionQ[idx]?.userAns && true)
+            }
           />
         </>
       )}
