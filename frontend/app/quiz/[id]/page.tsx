@@ -5,15 +5,17 @@ import Loader from "@/app/ui/Loader";
 import MarkdownWrapper from "@/app/utils/MarkdownWrapper";
 import { formatToMarkdown } from "@/app/utils/stringFormatters";
 import { Answer, Question } from "@/app/utils/types";
+import QuizApp from "./QuizApp";
+import { on } from "events";
+import QuizButtons from "./QuizButtons";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
 
-  // Question trigger logic
   const [idx, setIdx] = useState(0);
   const questionRef = useRef<HTMLDivElement>(null);
 
-  const incrementIdx = () => {
+  const onIncrementIdx = () => {
     setIsCorrAns(null);
     setUserAns({} as Answer);
     if (idx + 1 < questions.length && questionRef.current) {
@@ -30,7 +32,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const decrementIdx = () => {
+  const onDecrementIdx = () => {
     setIsCorrAns(null);
     setUserAns({} as Answer);
     if (idx > 0 && questionRef.current) {
@@ -45,17 +47,18 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  // answer handle logic
-  // must store the user answers
-  const [userAns, setUserAns] = useState({} as Answer);
-  const [isCorrectAns, setIsCorrAns] = useState<boolean | null>(null);
-
-  // we created this for storing the user selected answers so we can see when we go prev/next
-  const [playedQ, setPlayedQ] = useState([] as Question[]);
   const [userScore, setUserScore] = useState(0);
+  const [userAns, setUserAns] = useState({} as Answer); // helper for storing session
+  const [emptyError, setEmptyError] = useState<boolean | null>(null);
+  const [isCorrectAns, setIsCorrAns] = useState<boolean | null>(null); //display right or wrong for each question
 
-  const onCheckAns = () => {
+  const [sessionQ, setSessionQ] = useState([] as Question[]);
+
+  const onSubmitAnswer = () => {
+    // only when an answer is picked
     if (isCorrectAns === null && userAns.answer) {
+      // in case there is an empty error now we clean it
+      setEmptyError(null);
       // check if correct and set that for displaying correct/wrong
       setIsCorrAns(userAns.isCorrect);
 
@@ -63,19 +66,27 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
       if (userAns.isCorrect) {
         setUserScore((score) => score + 1);
       }
+
       //update user state for the current quiz questions
-      let prevState = [...playedQ];
+      let prevState = [...sessionQ];
       prevState[idx] = {
         ...prevState[idx],
         userAns: userAns,
       };
       // update game app state
-      setPlayedQ(prevState);
+      setSessionQ(prevState);
+    } else {
+      setEmptyError(true);
     }
   };
 
+  const onChangeAns = (ans: Answer) => {
+    if (isCorrectAns === null) {
+      setUserAns(ans);
+    }
+  };
   useEffect(() => {
-    setPlayedQ(questions);
+    setSessionQ(questions);
   }, [questions]);
 
   return (
@@ -92,69 +103,32 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
                 <a href="/">Home</a>
               </li>
               <li>{quiz.title}</li>
-              <li>
-                Question {idx + 1} of {questions.length}
-              </li>
             </ul>
           </div>
-          <div>Your current score: {userScore}</div>
+          <p>
+            Question {idx + 1} out of {questions.length}
+          </p>
           <div
             className="w-full flex flex-col justify-between gap-4 bg-sky-950 p-2 md:p-6"
             ref={questionRef}
             id="question-ref"
           >
-            <div className="text-neutral-50 py-2 max-w-md">
-              <MarkdownWrapper
-                content={formatToMarkdown(questions[idx]?.title)}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              {playedQ[idx].answers.map((ans, i) => (
-                <label
-                  key={i}
-                  className={`flex gap-2 items-center hover:cursor-pointer
-                  ${
-                    isCorrectAns !== null || playedQ[idx].userAns !== undefined
-                      ? ans.isCorrect
-                        ? "text-green-400"
-                        : "text-red-400"
-                      : " "
-                  }
-                  `}
-                >
-                  <input
-                    type="checkbox"
-                    value={ans.answer}
-                    onChange={() => {
-                      if (isCorrectAns === null) {
-                        setUserAns(ans);
-                      }
-                    }}
-                    checked={
-                      ans.answer === userAns.answer ||
-                      playedQ[idx]?.userAns?.answer === ans.answer
-                    }
-                    className="checkbox checkbox-warning checkbox-sm"
-                    disabled={playedQ[idx].userAns !== undefined}
-                  />
-                  <MarkdownWrapper content={ans.answer} />
-                </label>
-              ))}
-            </div>
+            <QuizApp
+              idx={idx}
+              questions={sessionQ}
+              onChangeAns={onChangeAns}
+              userAns={userAns}
+            />
+            {emptyError && <p>You must pick an answer</p>}
             {isCorrectAns && <p>Correct!</p>}
             {isCorrectAns === false && <p>Wrong!</p>}
           </div>
-          <div className="flex gap-4">
-            <button onClick={decrementIdx}>prev</button>
-            <button
-              className={"bg-sky-950 p-2 disabled:bg-slate-700"}
-              disabled={isCorrectAns !== null && true}
-              onClick={onCheckAns}
-            >
-              submit
-            </button>
-            <button onClick={incrementIdx}>next</button>
-          </div>
+          <QuizButtons
+            onSubmit={onSubmitAnswer}
+            onIncrement={onIncrementIdx}
+            onDecrement={onDecrementIdx}
+            disabledStatus={isCorrectAns !== null && true}
+          />
         </>
       )}
     </div>
