@@ -18,17 +18,25 @@ import QuizButtons from "@/app/components/quiz/QuizButtons";
 
 const ChapterPage = ({ params }: { params: { id: string } }) => {
   const { isLoading, quiz, questions } = useQuiz(params.id);
+  const [sessionQ, setSessionQ] = useState([] as Question[]);
 
   // current displayed question index
   const [idx, setIdx] = useState(0);
+  // session score
+  const [score, setScore] = useState(0);
+  // helper for storing session
+  const [userAns, setUserAns] = useState({} as Answer);
+  const [emptyError, setEmptyError] = useState<boolean | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); //display right or wrong for each question
+
   // used for manipulating enter and exit animations
   const questionRef = useRef<HTMLDivElement>(null);
 
   const onIncrementIdx = () => {
-    resetCurrentAns();
     if (idx + 1 < questions.length && questionRef.current) {
       // we make the old question exit
       animateNextExit(questionRef);
+      resetCurrentAns();
       setTimeout(() => {
         //after 500ms we make the new question enter
         animateNextEnter(questionRef);
@@ -38,7 +46,6 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   };
 
   const onDecrementIdx = () => {
-    resetCurrentAns();
     if (idx > 0 && questionRef.current) {
       animatePrevExit(questionRef);
       setTimeout(() => {
@@ -46,14 +53,9 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
         animatePrevEnter(questionRef);
       }, 500);
     }
+
+    resetCurrentAns();
   };
-
-  const [userScore, setUserScore] = useState(0); // session score
-  const [userAns, setUserAns] = useState({} as Answer); // helper for storing session
-  const [emptyError, setEmptyError] = useState<boolean | null>(null);
-  const [isCorrectAns, setIsCorrAns] = useState<boolean | null>(null); //display right or wrong for each question
-
-  const [sessionQ, setSessionQ] = useState([] as Question[]);
 
   const onSubmitAnswer = () => {
     //if we submit with no answer, display error and stop
@@ -65,11 +67,11 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
     // in case there is an empty error now we clean it
     setEmptyError(null);
     // look at Answer.isCorrect and display feedback
-    setIsCorrAns(userAns.isCorrect);
+    setIsCorrect(userAns.isCorrect);
 
     // increment score only if correct
     if (userAns.isCorrect) {
-      setUserScore((score) => score + 1);
+      setScore((s) => s + 1);
     }
 
     // Update session state with the new user session submission
@@ -84,7 +86,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
 
   // only allow change if the answer wasn't submitted
   const onChangeAns = (ans: Answer) => {
-    if (isCorrectAns === null) {
+    if (isCorrect === null) {
       setUserAns(ans);
     }
   };
@@ -92,7 +94,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
   // used because we need to show feedback for each question
   const resetCurrentAns = () => {
     setEmptyError(null);
-    setIsCorrAns(null);
+    setIsCorrect(null);
     setUserAns({} as Answer);
   };
 
@@ -108,11 +110,7 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
       {!isLoading && (
         <>
           <QuizNav title={quiz.title} />
-          <QuizStats
-            score={userScore}
-            current={idx + 1}
-            total={questions.length}
-          />
+          <QuizStats score={score} current={idx + 1} total={questions.length} />
         </>
       )}
 
@@ -129,14 +127,16 @@ const ChapterPage = ({ params }: { params: { id: string } }) => {
               onChangeAns={onChangeAns}
               userAns={userAns}
             />
-            <QuizFeedback isCorrect={isCorrectAns} emptyError={emptyError} />
+            <QuizFeedback isCorrect={isCorrect} emptyError={emptyError} />
           </div>
           <QuizButtons
+            current={idx + 1}
+            total={questions.length}
             onSubmit={onSubmitAnswer}
             onIncrement={onIncrementIdx}
             onDecrement={onDecrementIdx}
             disabledStatus={
-              isCorrectAns !== null || (sessionQ[idx]?.userAns && true)
+              isCorrect !== null || (sessionQ[idx]?.userAns && true)
             }
           />
         </>

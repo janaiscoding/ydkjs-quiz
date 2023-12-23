@@ -1,4 +1,6 @@
 type QuizButtonProps = {
+  current: number;
+  total: number;
   onIncrement: () => void;
   onDecrement: () => void;
   onSubmit: () => void;
@@ -6,6 +8,8 @@ type QuizButtonProps = {
 };
 
 const QuizButtons = ({
+  current,
+  total,
   onIncrement,
   onDecrement,
   onSubmit,
@@ -13,7 +17,12 @@ const QuizButtons = ({
 }: QuizButtonProps) => {
   return (
     <div className="flex gap-4">
-      <button onClick={onDecrement}>prev</button>
+      {current === 1 ? (
+        <button disabled>No prev</button>
+      ) : (
+        <button onClick={onDecrement}>prev</button>
+      )}
+
       <button
         className={"bg-sky-950 p-2 disabled:bg-slate-700"}
         disabled={disabledStatus}
@@ -21,7 +30,12 @@ const QuizButtons = ({
       >
         submit
       </button>
-      <button onClick={onIncrement}>next</button>
+
+      {current === total ? (
+        <button disabled>No next</button>
+      ) : (
+        <button onClick={onIncrement}>Next</button>
+      )}
     </div>
   );
 };

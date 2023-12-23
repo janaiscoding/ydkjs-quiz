@@ -13,7 +13,7 @@ const QuizStats = ({
         Question {current} out of {total}
       </p>
 
-      <p>Current score: {score}</p>
+      <p>Your score: {score}</p>
     </div>
   );
 };
