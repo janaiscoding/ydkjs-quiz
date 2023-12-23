@@ -19,9 +19,16 @@ const QuizApp = ({ idx, questions, onChangeAns, userAns }: QuizAppProps) => {
         {questions[idx].answers.map((ans, i) => (
           <label
             key={i}
-            className={`flex gap-2 items-center hover:cursor-pointer
+            className={`flex gap-2 items-center  ${
+              questions[idx].userAns === undefined &&
+              "hover:cursor-pointer hover:text-slate-50"
+            }
                   ${
-                    questions[idx].userAns !== undefined ? ans.isCorrect ? "text-green-400" : "text-red-400" : " "
+                    questions[idx].userAns !== undefined
+                      ? ans.isCorrect
+                        ? "text-green-400"
+                        : "text-red-400"
+                      : " "
                   }
                   `}
           >
