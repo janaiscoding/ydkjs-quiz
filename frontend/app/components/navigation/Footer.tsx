@@ -3,7 +3,7 @@ import { FaGithub } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="text-md text-center text-neutral-200 flex gap-2 items-center justify-center h-[5vh]">
+    <footer className="h-[5vh]">
       footer stuff here
       {/* Made by
       <a

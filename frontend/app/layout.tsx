@@ -21,12 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QuizzesContextProvider>
-
-        <body
-          className={`${roboto.className} tracking-tighter bg-background text-stone-400 min-h-screen flex flex-col justify-between`}
-        >
-        <Navbar />
-         <main>{children}</main>
+        <body className={roboto.className}>
+          <Navbar />
+          <main className="bg-background text-stone-400 w-full h-[95vh]">{children}</main>
           <Footer />
           <Background />
         </body>

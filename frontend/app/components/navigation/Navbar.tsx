@@ -11,9 +11,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-sky-950 flex justify-between gap-4 items-center p-4">
+    <nav className="bg-sky-950 py-2 h-[5vh]">
+      <ul className="max-w-4xl flex justify-between gap-4 items-center m-auto">
       <a href="/">Home</a>
-      <a href="/">Login</a>
+      <button>Login</button>
+      </ul>
 
       <button className="md:hidden" onClick={handleMobileNav}>
         <RxHamburgerMenu />

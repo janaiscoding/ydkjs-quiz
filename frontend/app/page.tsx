@@ -8,7 +8,7 @@ export default function Homepage() {
   const title = "Select your quiz!";
 
   return (
-    <div className="flex flex-col items-start p-16 gap-4 min-h-[95vh]">
+    <div className="flex flex-col items-start gap-4 max-w-4xl m-auto py-6">
       <PageTitle title={title} />
       {quizzes?.map((quiz, idx) => (
         <a
