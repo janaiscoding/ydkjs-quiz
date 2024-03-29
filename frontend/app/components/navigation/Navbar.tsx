@@ -14,7 +14,7 @@ const Navbar = () => {
     <nav className="bg-sky-950 py-2 h-[5vh]">
       <ul className="max-w-4xl flex justify-between gap-4 items-center m-auto">
       <a href="/">Home</a>
-      <button>Login</button>
+      <a href="/login">Login</a>
       </ul>
 
       <button className="md:hidden" onClick={handleMobileNav}>

@@ -29,6 +29,10 @@ form {
     0 2px 4px -2px rgb(175 173 70 / 56%);
 }
 
+input {
+  padding: 0.75em 0.4em;
+}
+
 label > p > code,
 legend > p > code {
   background-color: #0d0d0b68;
